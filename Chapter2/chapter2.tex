@@ -16,12 +16,137 @@
 \section{Introduction} %Section - 2.1
 \label{section2.1}
 
+Due to the complexity and nonlinearity of Einstein field equations, it is extremely difficult to obtain analytical solution even for the simplest dynamical evolution systems.
+Therefore, the accurate discription of the such systems can only be derived through numerical simulation.
+For this, we need to reformulate the Einstein equations as an initial-value problem or Cauchy problem.
+In this chapter, we will introduction the Arnowitt-Deser-Misner (ADM) formulation, which is the foundation of the 3+1 numerical relativity.
+In particular, we will focus on the constrained scheme for the Einstein equations.
+
 %********************************** %Second Section  *************************************
 \section{The 3+1 decomposition of spacetime} %Section - 2.2 
 \label{section2.2}
+\subsection{Foliation of spacetime} \label{section2.2.1}
 
-\subsection{The ADM formulation} %Section - 2.2.1
+In the 3+1 decomposition, the spacetime manifold $\mathcal{M}$ is foliated into a set of non-intersecting spacelike hypersurfaces $\Sigma_t$ parameterized by the coordinate time $t$.
+We denote a future-directed timelike unit four-vector $n^\mu$ normal to the hypersurface $\Sigma_t$ (i.e. $n_{\mu} \propto \nabla_\mu t$).
+The induced spacetime metric $\gamma_{\mu\nu}$ on each hypersurfuce can then be defined as
+\begin{align}\label{eq:2.2.spatial}
+    \gamma_{\mu\nu} \coloneqq g_{\mu\nu} + n_{\mu} n_{\nu}.
+\end{align}
+Thus, we can construct spatial projection tensor $\gamma^{\mu}{}_{\nu}$ and time projection tensor $N^{\mu}{}_{\nu}$ as
+\begin{align}
+    \gamma^{\mu}{}_{\nu} \coloneqq \delta^{\mu}{}_{\nu} + n^{\mu} n_{\nu}, \quad N^{\mu}{}_{\nu} \coloneqq - n^{\mu} n_{\nu},
+\end{align}
+which decompose any generic four-vector $U^\mu$ into spatial part $\gamma^{\mu}{}_{\nu}U^{\nu}$ and timelike part $N^{\mu}{}_{\nu}U^{\nu}$.
+Therefore, we can decompose the timelike vector field $t^\mu = \left( \partial/\partial t \right)^{\mu} = \alpha n^{\mu} + \beta^{\mu}$ into two components as
+\begin{align}
+    \alpha \coloneqq - t^\mu n_\mu, \quad \beta^{\mu} \coloneqq t^{\nu} \gamma^{\mu}{}_{\nu},
+\end{align}
+where the lapse function $\alpha$ measures the physical proper time ($\alpha\Delta t$) between two neighboring spatial hypersurface $\Sigma_t$ and $\Sigma_{t+\Delta t}$
+, and the shift vector $\beta^i$ measures the changes of spatial coordinates on $\Sigma_{t+\Delta t}$.\\
+Here, we summarise several useful relations.
+The timelike normal vector $n^\mu$ and its corresponding one-form $n_\mu$ can be expressed as
+\begin{align} \label{eq:2.2.1.normal}
+    n^\mu = \frac{1}{\alpha}\left(1, \beta^i \right), \quad n_\mu = \left(\alpha, \vec{0}, \right).
+\end{align}
+The generic line element in 3+1 decomposition is given by
+\begin{align}
+    ds^2 = - \left( \alpha^2 - \beta^i \beta_i \right) dt^2 + \beta_i dx^i dt + \gamma_{ij} dx^i dx^j
+\end{align}
+The covariant and contravariant components of the metric can be written as
+\begin{align}\label{eq:2.2.1.g}
+    g_{\mu\nu} = 
+    \begin{pmatrix}
+        - \alpha^2 + \beta^i \beta_i & \beta_j \\
+        \beta_i & \gamma_{ij}
+    \end{pmatrix}, \quad
+    g^{\mu\nu} = 
+    \begin{pmatrix}
+        - \frac{1}{\alpha^2} & \beta^j \\
+        \beta^i & \gamma^{ij}
+    \end{pmatrix}.
+\end{align}
+From equation(\ref{eq:2.2.1.g}), we can conclude that
+\begin{align}
+    \sqrt{-g} = \alpha \sqrt{\gamma},
+\end{align}
+where $g \coloneqq \det{\left(g_{\mu\nu}\right)}$ and $\gamma \coloneqq \det{\left(\gamma_{ij}\right)}$.
+
+\subsection{Derivative operator} \label{section2.2.2}
+With the 3+1 decomposition, we can now construct the 3-dimensional covariant derivative $D_\alpha$ associated with $\gamma_{\mu\nu}$ by projecting the 4-dimensional covariant derivative $\nabla_\alpha$ onto $\Sigma_t$, which is given by
+\begin{align}\label{eq:2.2.2.spatialD}
+    D_{\alpha} T^{\mu_1 \mu_2 \dots}{}_{\nu_1 \nu_2 \dots} = \gamma_{\alpha}{}^{\beta}\gamma_{\rho_1}{}^{\mu_1} \gamma_{\rho_2}{}^{\mu_2} \dots \gamma_{\nu_1}{}^{\sigma_1} \gamma_{\nu_2}{}^{\sigma_2} \dots \nabla_{\beta} T^{\rho_1 \rho_2 \dots}{}_{\sigma_1 \sigma_2 \dots},
+\end{align}
+for arbitrary tensor $T^{\mu_1 \mu_2 \dots}{}_{\nu_1 \nu_2 \dots}$ on spatial hypersurface $\Sigma_t$.
+Using equation(\ref{eq:2.2.2.spatialD}), it can be shown that the corvariant derivative of $\gamma_{\mu\nu}$ vanishes
+\begin{align}
+\begin{split}
+    D_{\alpha} \gamma_{\mu\nu} &= \gamma_{\alpha}{}^{\beta} \gamma_{\rho}{}^{\mu} \gamma_{\nu}{}^{\sigma} \nabla_{\beta} \left(g_{\rho\sigma} + n_\rho n_\sigma \right) \\
+    &= \gamma_{\alpha}{}^{\beta} \gamma_{\rho}{}^{\mu} \gamma_{\nu}{}^{\sigma} \left( n_\rho \nabla_\beta n_\sigma + n_\sigma \nabla_\beta n_\rho \right) = 0
+\end{split}
+\end{align}
+The components of 3-dimensional connection coefficients $\Gamma^{\alpha}{}_{\mu\nu}$ in coordinate basis can be expressed as
+\begin{align}
+    \Gamma^{\alpha}{}_{\mu\nu} &= \frac{1}{2} \gamma^{\alpha\beta} \left( \partial_{\nu}\gamma_{\beta\mu} + \partial_{\mu}\gamma_{\beta\nu} - \partial_{\beta}\gamma_{\mu\nu} \right).
+\end{align}
+Here, the upper left index ${}^{(4)}$ marks the 4-dimensional tensors while the unmarked one represents purely spatial 3-dimensional tensors.
+Similarly, the 3-dimensional Riemann tensor $R^{\alpha}{}_{\beta\mu\nu}$ associated with $\gamma_{\mu\nu}$ is defined by requiring that
+\begin{align}
+    2 D_{[\nu} D_{\mu]} W_\beta = W_\alpha R^\alpha{}_{\beta\mu\nu}, \quad R^{\alpha}{}_{\beta\mu\nu} n_\alpha = 0,
+\end{align}
+which can be explicitly expressed in coordinate basis as
+\begin{align}
+    R^{\alpha}{}_{\beta\mu\nu} &= \partial_{\mu} \Gamma^{\alpha}{}_{\beta\nu} - \partial_{\nu} \Gamma^{\alpha}{}_{\beta\mu} + \Gamma^{\alpha}{}_{\mu\rho}\Gamma^{\rho}{}_{\beta\nu} - \Gamma^{\alpha}{}_{\nu\rho}\Gamma^{\rho}{}_{\beta\mu}.
+\end{align}
+The 3-dimensional Ricci tensor $R_{\mu\nu}$ and Ricci scalar $R$ are defined in a similar manner as their 4-dimensional counterparts
+\begin{align}
+     R_{\mu\nu} \coloneqq  R^\alpha{}_{\mu\alpha\nu}, \quad  R \coloneqq  R^{\mu}{}_{\mu}.
+\end{align}
+Since $R^{\alpha}{}_{\beta\mu\nu}$ is purely spatial and can be computed by the spatial derivatives of the spatial metric alone,
+it only contains about information about the curvature intrinsic to the hypersurface $\Sigma_t$,
+but cannot contain all the information of ${}^{(4)} R^{\alpha}{}_{\beta\mu\nu}$ which includes time derivative of the 4-dimensional metric.
+The missing information can be found in a purely spatial symmetric tensor called the extrinsic curvature $K_{\mu\nu}$.
+
+\subsection{Extrinsic curvature} \label{section2.2.3}
+The extrinsic curvature $K_{\mu\nu}$ is related to the time derivative of the spatial metric $\gamma_{\mu\nu}$.
+Therefore, the spatial metric and extrinsic curvature $\left(\gamma_{\mu\nu}, K_{\mu\nu} \right)$ are equivalent to the positions and velocities in classical mechanics,
+which describe the instantaneous state of the gravitational field.
+It can be obtained by projecting of the gradient of the normal vector $\gamma_{\mu}{}^{\lambda}\gamma_{\nu}{}^{\rho} \nabla_{\lambda} n_{\rho}$ into the hypersurface $\Sigma_t$,
+and then taking the negative expression of the symmetric part
+\begin{align}\label{eq:2.2.3.K1}
+\begin{split}
+   K_{\mu\nu} \coloneqq& - \gamma_{\mu}{}^{\lambda}\gamma_{\nu}{}^{\rho} \nabla_{\lambda} n_{\rho} \\
+   =& - \gamma_{\mu}{}^{\lambda} \left( \delta_{\nu}{}^{\rho} + n_{\nu} n^{\rho} \right) \nabla_{\lambda} n_{\rho} \\
+   =& - \gamma_{\mu}{}^{\lambda} \nabla_{\lambda} n_{\nu},
+\end{split}
+\end{align}
+where the identity $n^{\rho}\nabla_{\lambda} n_{\rho}=0$ is used. \\
+We can also define an spatial acceleration $a_\nu$
+\begin{align}
+    a_\nu \coloneqq n^\mu \nabla_\mu n_\nu,
+\end{align}
+satisfying the identities
+\begin{align}
+    a_\nu = D_\nu \ln{\alpha},
+\end{align}
+to rewrite equation(\ref{eq:2.2.3.K1}) as
+\begin{align}
+    K_{\mu\nu} = - \nabla_\mu n_\nu - n_\mu a_\nu
+\end{align}
+Finally, we can write the extrinsci curvature $K_{\mu\nu}$ as the Lie derivative of the spatial metric along the local normal $n^\mu$
+\begin{align}
+    K_{\mu\nu} = - \frac{1}{2} \mathcal{L}_{n} \gamma_{\mu\nu}
+\end{align}\\
+
+\subsection{The Arnowitt, Deser and Misner equations} %Section - 2.2.1
 \label{section2.2.1}
+
+In the standard 3+1 decomposition, the Einstein fields equations can be decomposed into a set of evolution equations and a set of constraint equations, 
+which are referred to as the Arnowitt, Deser and Misner (ADM) equations.
+The evolution equations govern the evolution of $\left(\gamma_{ij}, K_{ij} \right)$
+\begin{flalign*}
+    && \partial_t \gamma_{ij} &= - 2 \alpha K_{ij} + D_i \beta_j + D_j \beta_i, && \text{(spatial metric evolution)}
+\end{flalign*}
 
 %********************************** % Third Section  *************************************
 \section{Conformal Decomposition} %Section - 2.3
