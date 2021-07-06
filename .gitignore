@@ -12,3 +12,5 @@
 *.nls
 *.out
 *.toc
+*.bcf
+*.run.xml

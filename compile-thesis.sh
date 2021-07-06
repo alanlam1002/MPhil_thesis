@@ -25,6 +25,8 @@ if [ $1 = $clean ]; then
 	rm -rf *.out*
 	rm -rf *.nlo
 	rm -rf *.nls
+    rm -rf *.bcf
+    rm -rf *.run.xml
 	rm -rf $filename.pdf
 	rm -rf $filename.ps
 	rm -rf $filename.dvi
@@ -60,6 +62,8 @@ if [ $1 = $clean ]; then
 	rm -rf *.out*
 	rm -rf *.nlo
 	rm -rf *.nls
+    rm -rf *.bcf
+    rm -rf *.run.xml
 	rm -rf $filename.pdf
 	rm -rf $filename.ps
 	rm -rf $filename.dvi
@@ -69,12 +73,14 @@ if [ $1 = $clean ]; then
 elif [ $1 = $compile ]; then
 	echo "Compiling your PhD Thesis...please wait...!"
 	pdflatex -interaction=nonstopmode $filename.tex
-	bibtex $filename.aux 	
-	makeindex $filename.aux
-	makeindex $filename.idx
-	makeindex $filename.nlo -s nomencl.ist -o $filename.nls
+    biber thesis
+	#bibtex $filename.aux 	
+	#makeindex $filename.aux
+	#makeindex $filename.idx
+	#makeindex $filename.nlo -s nomencl.ist -o $filename.nls
 	pdflatex -interaction=nonstopmode $filename.tex
-	makeindex $filename.nlo -s nomencl.ist -o $filename.nls
+    biber thesis
+	#makeindex $filename.nlo -s nomencl.ist -o $filename.nls
 	pdflatex -interaction=nonstopmode $filename.tex
 	echo "Success!"
 	exit

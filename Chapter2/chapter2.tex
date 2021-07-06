@@ -302,16 +302,23 @@ Before we perform the conformal transformation to the extrinsic curvature $K_{ij
 \end{align}
 and its traceless part
 \begin{align}
-    A_{ij} &\coloneqq K_{ij} - \frac{1}{3} \gamma_{ij} K, & \tr_{\gamma} A_{ij} &= \gamma^{ij} A_{ij} = 0.
+    A_{ij} &\coloneqq K_{ij} - \frac{1}{3} \gamma_{ij} K, & \operatorname{tr}_{\gamma} A_{ij} &= \gamma^{ij} A_{ij} = 0.
 \end{align}
 Therefore, we can obtain the tracelss decomposition of the extrinsic curvature
 \begin{align}
     K_{ij} &= A_{ij} + \frac{1}{3} \gamma_{ij} K, & K^{ij} &= A^{ij} + \frac{1}{3} \gamma^{ij} K.
 \end{align}
-The evolution equation of the spatial metric (\ref{eq:ADM_g_evol}) in conformal deposition formulation can hence be written as
+The evolution equations of the spatial metric (\ref{eq:ADM_g_evol}) in conformal deposition formulation can hence be written as
 \begin{flalign}
     \partial_t \psi &= \beta^i \tilde{D}_i \psi - \frac{1}{6}\psi \left(\alpha K - \tilde{D}_i \beta^i \right), &&\text{(conformal factor evolution)} \label{eq:psi_evol} \\
-    \partial_t \tilde{\gamma}_{ij} &= - 2\alpha \psi^{-4} A_{ij} + \tilde{\gamma}_{jk} \tilde{D}_i \beta^k + \tilde{\gamma}_{ik} \tilde{D}_j \beta^k - \frac{1}{3} \tilde{\gamma}_{ij} \tilde{D}_k \beta^k. &&\text{(conformal metric evolution)} \label{eq:con_g_evol_1}
+    \partial_t \tilde{\gamma}_{ij} &= - 2\alpha \psi^{-4} A_{ij} + \tilde{\gamma}_{jk} \tilde{D}_i \beta^k + \tilde{\gamma}_{ik} \tilde{D}_j \beta^k - \frac{1}{3} \tilde{\gamma}_{ij} \tilde{D}_k \beta^k, &&\text{(conformal metric evolution)} \label{eq:con_g_evol_1}
+\end{flalign}
+and the constraint equations become
+\begin{flalign}
+    &\tilde{D}^2 \psi - \frac{1}{8} \psi \tilde{R} + \left( \frac{1}{8} A_{ij} A^{ij} - \frac{1}{12}K^2 + 2 \pi E \right) \psi^5 = 0, 
+    &&\text{(Hamiltonian constraint)} \label{eq:H_const_s} \\
+    &\tilde{D}_i \left(\psi^{10} A^{ij} \right) - \frac{2}{3}\psi^6 \tilde{D}^i K = 8\pi \psi^{10} S^i. 
+    &&\text{(momentum constraint)} \label{eq:S_const_s}
 \end{flalign}
 
 \subsubsection{Conformal transformation of the traceless part}
@@ -322,21 +329,56 @@ We consider the transformation
 for some undetermined exponent $\alpha$.
 Here, we discuss two natural choices of $a$: $a = -4$ and $a = -10$.
 
-\subparagraph{“Time-Evolution” Scaling: $a=-4$}
+\subparagraph{“Time-evolution” scaling: $a=-4$.}
 This choice of scaling was considered by Nakamura in 1994 \cite{nakamura19943d},
-which is suggested naturally by equation(\ref{eq:con_g_evol_1}).
-We define the same scaling factor as the conformal spatial metric (\ref{eq:conformal_metric_inv}) as
+It comes naturally from the evolution equation of conformal metric (\ref{eq:con_g_evol_1}),
+where the $\psi^{-4}A_{ij}$ term suggests the conformal transformation of $A_{ij}$ to have the same scaling factor as the conformal spatial metric (\ref{eq:conformal_metric_inv})
 \begin{align}
     \tilde{A}^{ij} \coloneqq \psi^4 A^{ij},
 \end{align}
 where the indices of $\tilde{A}^{ij}$ and $\tilde{A}_{ij}$ are lowered and raised by the conformal metric $\tilde{\gamma}_{ij}$ and $\tilde{\gamma}^{ij}$ respectively
-(i.e. $\tilde{A}_{ij} = \tilde{\gamma}_{il}\tilde{\gamma}_{jm}\tilde{A}^{lm} = \psi^{-4} A_{ij}$ ).
-The evolution equation of conformal spatial metric therefore becomes
+(i.e. $\tilde{A}_{ij} = \tilde{\gamma}_{il}\tilde{\gamma}_{jm}\tilde{A}^{lm} = \psi^{-4} A_{ij}$).
+The evolution equations of conformal spatial metric therefore become
 \begin{align}
     \partial_t \tilde{\gamma}_{ij} &= - 2\alpha \tilde{A}_{ij} + \tilde{\gamma}_{jk} \tilde{D}_i \beta^k + \tilde{\gamma}_{ik} \tilde{D}_j \beta^k - \frac{1}{3} \tilde{\gamma}_{ij} \tilde{D}_k \beta^k.
 \end{align}
+The Hamiltonian constraint and momentum constraint in this scaling is rewritten as
+\begin{align}
+    &\tilde{D}^2 \psi = \frac{1}{8} \psi \tilde{R} - \left( 2 \pi E - \frac{1}{12}K^2 + \frac{1}{8} \tilde{A}_{ij} \tilde{A}^{ij} \right) \psi^5, 
+    \label{eq:H_const_s4}\\
+    &\tilde{D}_i \left(\psi^6 \tilde{A}^{ij} \right) - \frac{2}{3}\psi^6 \tilde{D}^i K = 8\pi \psi^{10} S^i.\label{eq:S_const_s4}
+\end{align}
 
-
+\subparagraph{“Momentum-constraint” scaling: $a=-10$.}
+Another possible choice of scaling factor $a=-10$ originates from the momentum constraint equation (\ref{eq:S_const_s}),
+which was first suggested by Lichnerowicz in 1944 \cite{lichnerowicz1944integration}.
+we define
+\begin{align}
+    \hat{A}^{ij} \coloneqq \psi^{10} A^{ij},
+\end{align}
+and thus
+\begin{align}
+    \hat{A}_{ij} = \psi^{2} A_{ij}.
+\end{align}
+Here, we use hat symbol to separate the "momentum-constraint" scaling from the tilde symbol in "time-evolution" scaling.
+These two scaling are related by
+\begin{align}
+    \hat{A}^{ij}&= \psi^6\tilde{A}^{ij}, &\hat{A}_{ij} &= \psi^6 \tilde{A}_{ij}, &\hat{A}_{ij} \hat{A}^{ij} &= \psi^{12} \tilde{A}_{ij} \tilde{A}^{ij}
+\end{align}
+Therefore, the constraint equations can be written as
+\begin{align}
+    &\tilde{D}^2 \psi = \frac{1}{8} \psi \tilde{R} - \left( 2\pi E - \frac{1}{12}K^2 \right) \psi^5 - \frac{1}{8} \hat{A}_{ij} \hat{A}^{ij} \psi^{-7}, 
+    \label{eq:H_const_s10}\\
+    &\tilde{D}_i \hat{A}^{ij} - \frac{2}{3}\psi^6 \tilde{D}^i K = 8\pi \psi^{10} S^i.\label{eq:S_const_s10}
+\end{align}
+Equation(\ref{eq:S_const_s10}) is known as \textit{Lichnerowicz equation}.
+Although equation (\ref{eq:S_const_s4}) and equation (\ref{eq:S_const_s10}) are equivalent,
+they have different mathematical properties if they are treated as a partial differential equation for $\psi$.
+According to the maximal principle,
+the local uniqueness of the solutions depends on the sign of the exponent of $\psi$ in the quadratic extrinsic curvature $A^2$ term 
+\cite{cordero2009improved,smarr1979sources,taylor1991partial,evans1997partial,protter2012maximum}.
+Equation (\ref{eq:S_const_s4}) suffers from the mathematical nonuniqueness problems due to the positive exponent $(+5)$,
+while the negative exponent $(-7)$ in equation (\ref{eq:S_const_s10}) guarantees the local uniquess of the solutions.
 
 %********************************** % Forth Section  *************************************
 \section{Gauge Condition}  %Section - 2.4
