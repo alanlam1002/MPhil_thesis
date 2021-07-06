@@ -553,7 +553,10 @@ supported!}
 \ifxetex
   % XeLaTeX
   \usepackage{amsmath}
+  \usepackage{amsthm}
+  \usepackage{amssymb}
   \usepackage{fontspec}
+  \usepackage{mathtools}
   \usepackage[]{unicode-math}
   \setmainfont[
     Extension = .otf,
@@ -587,6 +590,7 @@ supported!}
   \RequirePackage{amsfonts}
   \RequirePackage{amsmath}
   \RequirePackage{amssymb}
+  \RequirePackage{mathtools}
 \fi
 
 % Don't break enumeration (etc.) across pages in an ugly manner
