@@ -38,7 +38,11 @@ Thus, we can construct spatial projection tensor $\gamma^{\mu}{}_{\nu}$ and time
     \gamma^{\mu}{}_{\nu} \coloneqq \delta^{\mu}{}_{\nu} + n^{\mu} n_{\nu}, \quad N^{\mu}{}_{\nu} \coloneqq - n^{\mu} n_{\nu},
 \end{align}
 which decompose any generic four-vector $U^\mu$ into spatial part $\gamma^{\mu}{}_{\nu}U^{\nu}$ and timelike part $N^{\mu}{}_{\nu}U^{\nu}$.
-Therefore, we can decompose the timelike vector field $t^\mu = \left( \partial/\partial t \right)^{\mu} = \alpha n^{\mu} + \beta^{\mu}$ into two components as
+Therefore, we can decompose the timelike vector field
+\begin{align}\label{eq:2.2.1.normal_decompose}
+t^\mu = \alpha n^{\mu} + \beta^{\mu}
+\end{align}
+into two components as
 \begin{align}
     \alpha \coloneqq - t^\mu n_\mu, \quad \beta^{\mu} \coloneqq t^{\nu} \gamma^{\mu}{}_{\nu},
 \end{align}
@@ -133,20 +137,114 @@ to rewrite equation(\ref{eq:2.2.3.K1}) as
 \begin{align}
     K_{\mu\nu} = - \nabla_\mu n_\nu - n_\mu a_\nu
 \end{align}
-Finally, we can write the extrinsci curvature $K_{\mu\nu}$ as the Lie derivative of the spatial metric along the local normal $n^\mu$
+Finally, we can write the extrinsic curvature $K_{\mu\nu}$ as the Lie derivative of the spatial metric along the local normal $n^\mu$
 \begin{align}
-    K_{\mu\nu} = - \frac{1}{2} \mathcal{L}_{n} \gamma_{\mu\nu}
+    K_{\mu\nu} = - \frac{1}{2} \mathcal{L}_{n} \gamma_{\mu\nu}.
+\end{align}
+Using equation(\ref{eq:2.2.1.normal_decompose}), we can express the Lie derivative $\mathcal{L}_n$ as
+\begin{align}\label{eq:normal_Lie}
+    \mathcal{L}_n = \frac{1}{\alpha} \left( \mathcal{L}_t - \mathcal{L}_\beta \right),
+\end{align}
+and thus obtain the evolution equation for the spatial metric
+\begin{align}\label{eq:g_evol}
+    \mathcal{L}_t \gamma_{\mu\nu} = - 2\alpha K_{\mu\nu} + \mathcal{L}_\beta \gamma_{\mu\nu}.
+\end{align}
+
+\subsection{The Gauss, Codazzi and Ricci equations}
+\label{section2.2.4}
+
+To express the Einstein field equations in term of the spatial variables $(\gamma_{\mu\nu}, K_{\mu\nu})$ we defined previous,
+we first have to relate 3-dimensional Riemann tensor $R^\alpha{}_{\beta\mu\nu}$ on $\Sigma_t$ to the 4-dimensional Riemann tensor ${}^{(4)}R^\alpha{}_{\beta\mu\nu}$ on $\mathcal{M}$,
+The relation between $R^\alpha{}_{\beta\mu\nu}$ and the full spatial projection of ${}^{(4)}R^\alpha{}_{\beta\mu\nu}$ is given by the Gauss' equation
+\begin{align}\label{eq:Gauss}
+    R_{\alpha\beta\mu\nu} + K_{\alpha\mu}K_{\beta\nu} - K_{\alpha\nu} K_{\beta\mu} = \gamma_{\alpha}{}^{\rho} \gamma_{\beta}{}^{\sigma} \gamma_{\mu}{}^{\lambda} \gamma_{\nu}{}^{\delta} {}^{(4)}R_{\rho\sigma\lambda\delta},
+\end{align}
+while the projection of ${}^{(4)}R^\alpha{}_{\beta\mu\nu}$ with one index projected in the normal direction is given by the Codazzi equation
+\begin{align}\label{eq:Codazzi}
+    D_{\nu} K_{\mu\alpha} - D_{\mu} K_{\nu\alpha} = \gamma_{\mu}{}^{\rho} \gamma_{\nu}{}^{\sigma} \gamma_{\alpha}{}^{\lambda} n^{\delta} {}^{(4)}R_{\rho\sigma\lambda\delta}.
+\end{align}
+Finally, by projecting two indices of ${}^{(4)}R_{\rho\sigma\lambda\delta}$ in the normal direction,
+we can relate it to the time derivative of $K_{\mu\nu}$
+\begin{align}\label{eq:Ricci}
+    \mathcal{L}_n K_{\mu\nu} = n^{\alpha} n^{\beta} \gamma_{\mu}{}^{\lambda} \gamma_{\nu}{}^{\delta} {}^{(4)}R_{\alpha\deta\beta\lambda} - \frac{1}{\alpha} D_{\mu} D_\nu \alpha - K_{\nu}{}^{\lambda}K_{\mu\lambda},
+\end{align}
+which is called the Ricci equation.
+
+\subsection{Constraint and evolution equations} %Section - 2.2.5
+\label{section2.2.5}
+
+Using the Gauss, Codazzi and Ricci equations,
+the Einstein fields equations can be decomposed into a set of evolution equations and a set of constraint equations of $(\gamma_{\mu\nu}, K_{\mu\nu})$.
+To begin with, we define the following matter quantities
+\begin{align}
+    S_{\mu\nu} \coloneqq& \gamma^{\alpha}{}_{\mu} \gamma^{\beta}{}_{\nu} T_{\alpha\beta}, \\
+    S_\mu \coloneqq& - \gamma^{\alpha}{}_{\mu} n^{\beta} T_{\alpha\beta}, \\
+    S \coloneqq& S^\mu{}_\mu, \\
+    E \coloneqq& n^\alpha n^\beta T_{\alpha\beta},
+\end{align}
+which decompose the stress-energy tensor as
+\begin{align}
+    T_{\mu\nu} = E n_\mu n_\nu + S_\mu n_\nu + S_\nu n_\mu + S_{\mu\nu}.
 \end{align}\\
+By contracting the $\alpha,\mu$ indices in equation(\ref{eq:Gauss}), we can obtain
+\begin{align}\label{eq:Gauss_1st}
+    R_{\mu\nu} = \gamma_{\mu}{}^{\alpha}\gamma_{\nu}{}^{\beta} \left( {}^{(4)} R_{\alpha\beta} + n^\rho n^\sigma {}^{(4)}R_{\alpha\rho\beta\sigma} \right) + K_{\mu\lambda} K_\nu{}^{\lambda} - K_{\mu\nu} K,
+\end{align}
+where $K\coloneqq K^\mu{}_{\mu}$ is the trace of the extrinsic curvature.
+Further contracting the $\mu, \nu$ indices in equation(\ref{eq:Gauss_1st}), the contracted Gauss' equation becomes
+\begin{align}\label{eq:Gaussr_2nd}
+    2 n^\mu n^\nu G_{\mu\nu} = R + K^2 - K_{\mu\nu} K^{\mu\nu},
+\end{align}
+Using the Einstein equation(\ref{eq:Einstein_eq}), we can obtain the Hamiltonian constraint
+\begin{align}
+    R + K^2 - K_{\mu\nu} K^{\mu\nu} = 16\pi E.
+\end{align}
+Similarly, by contracting $\alpha, \nu$ indices in equation(\ref{eq:Codazzi}), the Codazzi equation yields
+\begin{align}
+    D_{\nu} K_{\mu}{}^{\nu} - D_\mu K = - 8\pi \gamma^{\alpha}{}_{\mu} n^{\beta} T_{\alpha\beta},
+\end{align}
+and thus obtain the momentum constrain equation
+\begin{align}
+    D_{\nu} K_{\mu}{}^{\nu} - D_\mu K = 8 \pi S_{\mu}.
+\end{align}\\
+The Ricci equation (\ref{eq:Ricci}) can be rewritten using equation(\ref{eq:Gauss_1st}) to
+\begin{align}
+    \mathcal{L}_n K_{\mu\nu} = R_{\mu\nu} - \gamma_{\mu}{}^{\rho} \gamma_\nu{}^{\sigma} {}^{(4)} R_{\rho\sigma} - 2 K_{\mu\lambda} K_\nu{}^{\lambda} + K K_{\mu\nu} - \frac{1}{\alpha} D_\mu D_\nu \alpha.
+\end{align}
+Using the Einstein equations (\ref{eq:Einstein_eq})
+\begin{align}
+\begin{split}
+    \gamma_{\mu}{}^{\rho} \gamma_\nu{}^{\sigma} {}^{(4)} R_{\rho\sigma} &= 8\pi \gamma_{\mu}{}^{\rho} \gamma_\nu{}^{\sigma} \left( T_{\rho\sigma} - \frac{1}{2}g_{\rho\sigma} T^\mu{}_\mu \right)\\
+    &= 8\pi \left[S_{\mu\nu} - \frac{1}{2} \gamma_{\mu\nu} \left(S-E\right) \right]
+\end{split}
+\end{align}
+and equation(\ref{eq:normal_Lie}), we can finally obtain the evolution equation for $K_{\mu\nu}$ as
+\begin{align}\label{eq:K_evol}
+    \mathcal{L}_t K_{\mu\nu} = - D_\mu D_\nu \alpha + \alpha \left(R_{\mu\nu} - 2K_{\mu\lambda} K_\nu{}^{\lambda} + K K_{\mu\nu} \right) 
+    - 8 \pi \alpha \left[ S_{\mu\nu} - \frac{1}{2}\gamma_{\mu\nu} \left(S-E\right) \right] + \mathcal{L}_\beta K_{\mu\nu}.
+\end{align}
 
-\subsection{The Arnowitt, Deser and Misner equations} %Section - 2.2.1
-\label{section2.2.1}
+\subsection{The Arnowitt, Deser and Misner equations} %Section - 2.2.6
+\label{section2.2.6}
 
-In the standard 3+1 decomposition, the Einstein fields equations can be decomposed into a set of evolution equations and a set of constraint equations, 
-which are referred to as the Arnowitt, Deser and Misner (ADM) equations.
-The evolution equations govern the evolution of $\left(\gamma_{ij}, K_{ij} \right)$
-\begin{flalign*}
-    && \partial_t \gamma_{ij} &= - 2 \alpha K_{ij} + D_i \beta_j + D_j \beta_i, && \text{(spatial metric evolution)}
-\end{flalign*}
+The Lie derivative in the evolution equations (\ref{eq:g_evol}) and (\ref{eq:K_evol}) can be expressed in terms of coordinate basis as
+\begin{align}
+    \mathcal{L}_t K_{\mu\nu} &= \partial_t K_{\mu\nu} \\
+    \mathcal{L}_\beta K_{\mu\nu} &= \beta^\lambda D_\lambda K_{\mu\nu} + K_{\mu\lambda} D_\nu \beta^\lambda + K_{\lambda\nu} D_\mu \beta^\lambda
+\end{align}\\
+As the result, the Einstein field equaitons (\ref{eq:Einstein_eq}) in the standard 3+1 decomposition can be decomposed into a set of constraint equations and evolution equation of $(\gamma_{ij}, K_{ij})$ in terms of coordinate basis,
+which are referred to as the Arnowitt, Deser and Misner (ADM) equations
+\begin{flalign}
+    & R + K^2 - K_{ij}K^{ij} = 16\pi E, && \text{(Hamiltonian constraint)} \\
+    & D_j \left(K^{ij} - \gamma^{ij} K \right) = 8\pi S^i, && \text{(momentum constraint)} \\
+    & \partial_t \gamma_{ij} = - 2 \alpha K_{ij} + D_i \beta_j + D_j \beta_i, && \text{(spatial metric evolution)} \\
+    &
+    \begin{aligned}
+    \partial_t K_{ij} =& - D_i D_j \alpha + \alpha \left(R_{ij} - 2 K_{ik} K_j{}^k + K K_{ij} \right) \\
+    &- 8\pi \alpha \left[S_{ij} - \frac{1}{2}\gamma_{ij} \left(S-E \right) \right] \\
+    &+ \beta^k D_k K_{ij} + K_{ik} D_j \beta^k + K_{kj} D_i \beta^k.
+    \end{aligned} && \text{(extrinsic curvature evolution)}
+\end{flalign}
 
 %********************************** % Third Section  *************************************
 \section{Conformal Decomposition} %Section - 2.3
