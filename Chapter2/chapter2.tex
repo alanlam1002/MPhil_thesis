@@ -27,7 +27,7 @@ In particular, we will focus on the constrained scheme for the Einstein equation
 \label{section2.2}
 \subsection{Foliation of spacetime} \label{section2.2.1}
 
-In the 3+1 decomposition, the spacetime manifold $\mathcal{M}$ is foliated into a set of non-intersecting spacelike hypersurfaces $\Sigma_t$ parameterized by the coordinate time $t$.
+In the 3+1 decomposition, the spacetime manifold $\mathcal{M}$ is foliated into a set of non-intersecting spacelike hypersurfaces $\Sigma_t$ parameterized by the coordinate time $t$ \cite{misner1973gravitation}.
 We denote a future-directed timelike unit four-vector $n^\mu$ normal to the hypersurface $\Sigma_t$ (i.e. $n_{\mu} \propto \nabla_\mu t$).
 The induced spacetime metric $\gamma_{\mu\nu}$ on each hypersurfuce can then be defined as
 \begin{align}\label{eq:2.2.spatial}
@@ -35,7 +35,7 @@ The induced spacetime metric $\gamma_{\mu\nu}$ on each hypersurfuce can then be 
 \end{align}
 Thus, we can construct spatial projection tensor $\gamma^{\mu}{}_{\nu}$ and time projection tensor $N^{\mu}{}_{\nu}$ as
 \begin{align}
-    \gamma^{\mu}{}_{\nu} \coloneqq \delta^{\mu}{}_{\nu} + n^{\mu} n_{\nu}, \quad N^{\mu}{}_{\nu} \coloneqq - n^{\mu} n_{\nu},
+    \gamma^{\mu}{}_{\nu} &\coloneqq \delta^{\mu}{}_{\nu} + n^{\mu} n_{\nu}, & N^{\mu}{}_{\nu} &\coloneqq - n^{\mu} n_{\nu},
 \end{align}
 which decompose any generic four-vector $U^\mu$ into spatial part $\gamma^{\mu}{}_{\nu}U^{\nu}$ and timelike part $N^{\mu}{}_{\nu}U^{\nu}$.
 Therefore, we can decompose the timelike vector field
@@ -44,14 +44,14 @@ t^\mu = \alpha n^{\mu} + \beta^{\mu}
 \end{align}
 into two components as
 \begin{align}
-    \alpha \coloneqq - t^\mu n_\mu, \quad \beta^{\mu} \coloneqq t^{\nu} \gamma^{\mu}{}_{\nu},
+    \alpha &\coloneqq - t^\mu n_\mu, & \beta^{\mu} &\coloneqq t^{\nu} \gamma^{\mu}{}_{\nu},
 \end{align}
 where the lapse function $\alpha$ measures the physical proper time ($\alpha\Delta t$) between two neighboring spatial hypersurface $\Sigma_t$ and $\Sigma_{t+\Delta t}$
 , and the shift vector $\beta^i$ measures the changes of spatial coordinates on $\Sigma_{t+\Delta t}$.\\
 Here, we summarise several useful relations.
 The timelike normal vector $n^\mu$ and its corresponding one-form $n_\mu$ can be expressed as
 \begin{align} \label{eq:2.2.1.normal}
-    n^\mu = \frac{1}{\alpha}\left(1, \beta^i \right), \quad n_\mu = \left(\alpha, \vec{0}, \right).
+    n^\mu &= \frac{1}{\alpha}\left(1, \beta^i \right), & n_\mu &= \left(\alpha, \vec{0}, \right).
 \end{align}
 The generic line element in 3+1 decomposition is given by
 \begin{align}
@@ -59,12 +59,12 @@ The generic line element in 3+1 decomposition is given by
 \end{align}
 The covariant and contravariant components of the metric can be written as
 \begin{align}\label{eq:2.2.1.g}
-    g_{\mu\nu} = 
+    g_{\mu\nu} &= 
     \begin{pmatrix}
         - \alpha^2 + \beta^i \beta_i & \beta_j \\
         \beta_i & \gamma_{ij}
-    \end{pmatrix}, \quad
-    g^{\mu\nu} = 
+    \end{pmatrix}, &
+    g^{\mu\nu} &= 
     \begin{pmatrix}
         - \frac{1}{\alpha^2} & \beta^j \\
         \beta^i & \gamma^{ij}
@@ -90,13 +90,13 @@ Using equation(\ref{eq:2.2.2.spatialD}), it can be shown that the corvariant der
 \end{split}
 \end{align}
 The components of 3-dimensional connection coefficients $\Gamma^{\alpha}{}_{\mu\nu}$ in coordinate basis can be expressed as
-\begin{align}
+\begin{align}\label{eq:3_connection}
     \Gamma^{\alpha}{}_{\mu\nu} &= \frac{1}{2} \gamma^{\alpha\beta} \left( \partial_{\nu}\gamma_{\beta\mu} + \partial_{\mu}\gamma_{\beta\nu} - \partial_{\beta}\gamma_{\mu\nu} \right).
 \end{align}
 Here, the upper left index ${}^{(4)}$ marks the 4-dimensional tensors while the unmarked one represents purely spatial 3-dimensional tensors.
 Similarly, the 3-dimensional Riemann tensor $R^{\alpha}{}_{\beta\mu\nu}$ associated with $\gamma_{\mu\nu}$ is defined by requiring that
 \begin{align}
-    2 D_{[\nu} D_{\mu]} W_\beta = W_\alpha R^\alpha{}_{\beta\mu\nu}, \quad R^{\alpha}{}_{\beta\mu\nu} n_\alpha = 0,
+    2 D_{[\nu} D_{\mu]} W_\beta &= W_\alpha R^\alpha{}_{\beta\mu\nu}, & R^{\alpha}{}_{\beta\mu\nu} n_\alpha &= 0,
 \end{align}
 which can be explicitly expressed in coordinate basis as
 \begin{align}
@@ -104,7 +104,7 @@ which can be explicitly expressed in coordinate basis as
 \end{align}
 The 3-dimensional Ricci tensor $R_{\mu\nu}$ and Ricci scalar $R$ are defined in a similar manner as their 4-dimensional counterparts
 \begin{align}
-     R_{\mu\nu} \coloneqq  R^\alpha{}_{\mu\alpha\nu}, \quad  R \coloneqq  R^{\mu}{}_{\mu}.
+     R_{\mu\nu} &\coloneqq  R^\alpha{}_{\mu\alpha\nu}, & R &\coloneqq  R^{\mu}{}_{\mu}.
 \end{align}
 Since $R^{\alpha}{}_{\beta\mu\nu}$ is purely spatial and can be computed by the spatial derivatives of the spatial metric alone,
 it only contains about information about the curvature intrinsic to the hypersurface $\Sigma_t$,
@@ -233,22 +233,110 @@ The Lie derivative in the evolution equations (\ref{eq:g_evol}) and (\ref{eq:K_e
     \mathcal{L}_\beta K_{\mu\nu} &= \beta^\lambda D_\lambda K_{\mu\nu} + K_{\mu\lambda} D_\nu \beta^\lambda + K_{\lambda\nu} D_\mu \beta^\lambda
 \end{align}\\
 As the result, the Einstein field equaitons (\ref{eq:Einstein_eq}) in the standard 3+1 decomposition can be decomposed into a set of constraint equations and evolution equation of $(\gamma_{ij}, K_{ij})$ in terms of coordinate basis,
-which are referred to as the Arnowitt, Deser and Misner (ADM) equations
+which are referred to as the Arnowitt, Deser and Misner (ADM) equations \cite{amowitt1962dynamics,york1979kinematics}
 \begin{flalign}
-    & R + K^2 - K_{ij}K^{ij} = 16\pi E, && \text{(Hamiltonian constraint)} \\
-    & D_j \left(K^{ij} - \gamma^{ij} K \right) = 8\pi S^i, && \text{(momentum constraint)} \\
-    & \partial_t \gamma_{ij} = - 2 \alpha K_{ij} + D_i \beta_j + D_j \beta_i, && \text{(spatial metric evolution)} \\
+    & R + K^2 - K_{ij}K^{ij} = 16\pi E, && \text{(Hamiltonian constraint)} \label{eq:ADM_H_const}\\
+    & D_j \left(K^{ij} - \gamma^{ij} K \right) = 8\pi S^i, && \text{(momentum constraint)} \label{eq:ADM_S_const}\\
+    & \partial_t \gamma_{ij} = - 2 \alpha K_{ij} + D_i \beta_j + D_j \beta_i, && \text{(spatial metric evolution)} \label{eq:ADM_g_evol}\\
     &
     \begin{aligned}
     \partial_t K_{ij} =& - D_i D_j \alpha + \alpha \left(R_{ij} - 2 K_{ik} K_j{}^k + K K_{ij} \right) \\
     &- 8\pi \alpha \left[S_{ij} - \frac{1}{2}\gamma_{ij} \left(S-E \right) \right] \\
     &+ \beta^k D_k K_{ij} + K_{ik} D_j \beta^k + K_{kj} D_i \beta^k.
-    \end{aligned} && \text{(extrinsic curvature evolution)}
+    \end{aligned} && \text{(extrinsic curvature evolution)} \label{eq:ADM_K_evol}
 \end{flalign}
 
 %********************************** % Third Section  *************************************
 \section{Conformal Decomposition} %Section - 2.3
 \label{section2.3}
+
+The conformal decompostion factors out a scalar component from a spatial metric.
+It was first developped for initial data problems in general relativity \cite{lichnerowicz1944integration,york1971gravitational,york1972role,york1973conformally},
+and then used in reformulating evolution equations in the 3+1 formulation.
+In this section, we will discuss the conformal decomposition of spatial metric and extrinsic curvature in numerical relativity.
+
+
+\subsection{Conformal transformation of the spatial metric}
+\label{section2.3.1}
+We consider the conformal transformation of the spatial metric $\gamma_{ij}$ as
+\begin{align}\label{eq:conformal_metric}
+    \tilde{\gamma}_{ij} = \psi^{-4} \gamma_{ij},
+\end{align}
+where $\tilde{\gamma}_{ij}$ is the \textit{conformal metric} and $\psi$ is a positive scaling factor satisfying
+\begin{align}
+    \psi &\coloneqq \det{\left( \frac{\gamma}{f} \right)}, & \gamma &\coloneqq \det{\left( \gamma_{ij} \right)}, & f &\coloneqq \det{\left( f_{ij} \right)}
+\end{align}
+for a time independent flat metric $f_{ij}$ (i.e. $\det{\left( \tilde{\gamma}_{ij} \right)} = f$ by construction).\\
+Thus, the \textit{inverse conformal metric} is given by
+\begin{align}\label{eq:conformal_metric_inv}
+    \tilde{\gamma}^{ij} \coloneqq \psi^4 \gamma^{ij}.
+\end{align}
+Substituting the conformal transformation (\ref{eq:conformal_metric}) into equation(\ref{eq:3_connection}),
+we can obtain the transformation law for 3-dimensional connection coefficient
+\begin{align}
+    \Gamma^{i}{}_{jk} = \tilde{\Gamma}^{i}{}_{jk} + 2 \left( \delta^i{}_j \tilde{D}_k \ln \psi + \delta^i{}_k \tilde{D}_j \ln \psi
+    - \tilde{\gamma}_{jk} \tilde{\gamma}^{il} \tilde{D}_l \ln \psi \right).
+\end{align}
+From now on, we denote all objects associated with the conformal metric $\tilde{\gamma}^{ij}$ with a tilde symbol.
+Similarly, the transformation for Ricci tensor and scalar curvature are given by
+\begin{align}
+\begin{split}
+    R_{ij} =& \tilde{R}_{ij} - 2 \left( \tilde{D}_i \tilde{D}_j \ln \psi + \tilde{\gamma}_{ij} \tilde{\gamma}^{lm} \tilde{D}_l \tilde{D}_m \ln \psi \right)\\
+    &+ 4 \left( \left(\tilde{D}_i \ln \psi \right) \left( \tilde{D}_j \ln \psi \right) - \tilde{\gamma}_{ij} \tilde{\gamma}^{lm} \tilde{D}_l \left(\tilde{D}_l \ln \psi \right) \left( \tilde{D}_m \ln \psi \right) \right)
+\end{split} \label{eq:conformal_ricci_tensor}\\
+    R =& \psi^{-4} \tilde{R} - 8 \psi^{-5} \tilde{D}^2 \psi, \label{eq:conformal_ricci_scalar}
+\end{align}
+where $\tilde{D}^2 = \tilde{\gamma}^{ij} \tilde{D}_i \tilde{D}_j$ denotes the Laplace operator associated with $\tilde{\gamma}_{ij}$.
+Therefore, using equation(\ref{eq:conformal_ricci_scalar}), the Hamiltonian constraint (\ref{eq:ADM_H_const}) becomes
+\begin{align}
+    8 \tilde{D}^2 \psi - \psi \tilde{R} - \psi^5 K^2 + \psi^2 K_{ij} K^{ij} = - 16 \pi \psi^5 E.
+\end{align}
+
+\subsection{Conformal transformation of the extrinsic curvature}
+\label{section2.3.2}
+
+\subsubsection{Traceless decomposition}
+Before we perform the conformal transformation to the extrinsic curvature $K_{ij}$, it is convenient to split $K_{ij}$ into the trace part 
+\begin{align}
+    K \coloneqq \gamma^{ij} K_{ij},
+\end{align}
+and its traceless part
+\begin{align}
+    A_{ij} &\coloneqq K_{ij} - \frac{1}{3} \gamma_{ij} K, & \tr_{\gamma} A_{ij} &= \gamma^{ij} A_{ij} = 0.
+\end{align}
+Therefore, we can obtain the tracelss decomposition of the extrinsic curvature
+\begin{align}
+    K_{ij} &= A_{ij} + \frac{1}{3} \gamma_{ij} K, & K^{ij} &= A^{ij} + \frac{1}{3} \gamma^{ij} K.
+\end{align}
+The evolution equation of the spatial metric (\ref{eq:ADM_g_evol}) in conformal deposition formulation can hence be written as
+\begin{flalign}
+    \partial_t \psi &= \beta^i \tilde{D}_i \psi - \frac{1}{6}\psi \left(\alpha K - \tilde{D}_i \beta^i \right), &&\text{(conformal factor evolution)} \label{eq:psi_evol} \\
+    \partial_t \tilde{\gamma}_{ij} &= - 2\alpha \psi^{-4} A_{ij} + \tilde{\gamma}_{jk} \tilde{D}_i \beta^k + \tilde{\gamma}_{ik} \tilde{D}_j \beta^k - \frac{1}{3} \tilde{\gamma}_{ij} \tilde{D}_k \beta^k. &&\text{(conformal metric evolution)} \label{eq:con_g_evol_1}
+\end{flalign}
+
+\subsubsection{Conformal transformation of the traceless part}
+We consider the transformation
+\begin{align}
+    A^{ij} \coloneqq \psi^a \tilde{A}^{ij},
+\end{align}
+for some undetermined exponent $\alpha$.
+Here, we discuss two natural choices of $a$: $a = -4$ and $a = -10$.
+
+\subparagraph{“Time-Evolution” Scaling: $a=-4$}
+This choice of scaling was considered by Nakamura in 1994 \cite{nakamura19943d},
+which is suggested naturally by equation(\ref{eq:con_g_evol_1}).
+We define the same scaling factor as the conformal spatial metric (\ref{eq:conformal_metric_inv}) as
+\begin{align}
+    \tilde{A}^{ij} \coloneqq \psi^4 A^{ij},
+\end{align}
+where the indices of $\tilde{A}^{ij}$ and $\tilde{A}_{ij}$ are lowered and raised by the conformal metric $\tilde{\gamma}_{ij}$ and $\tilde{\gamma}^{ij}$ respectively
+(i.e. $\tilde{A}_{ij} = \tilde{\gamma}_{il}\tilde{\gamma}_{jm}\tilde{A}^{lm} = \psi^{-4} A_{ij}$ ).
+The evolution equation of conformal spatial metric therefore becomes
+\begin{align}
+    \partial_t \tilde{\gamma}_{ij} &= - 2\alpha \tilde{A}_{ij} + \tilde{\gamma}_{jk} \tilde{D}_i \beta^k + \tilde{\gamma}_{ik} \tilde{D}_j \beta^k - \frac{1}{3} \tilde{\gamma}_{ij} \tilde{D}_k \beta^k.
+\end{align}
+
+
 
 %********************************** % Forth Section  *************************************
 \section{Gauge Condition}  %Section - 2.4
