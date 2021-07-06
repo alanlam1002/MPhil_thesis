@@ -380,6 +380,33 @@ the local uniqueness of the solutions depends on the sign of the exponent of $\p
 Equation (\ref{eq:S_const_s4}) suffers from the mathematical nonuniqueness problems due to the positive exponent $(+5)$,
 while the negative exponent $(-7)$ in equation (\ref{eq:S_const_s10}) guarantees the local uniquess of the solutions.
 
+\subsection{Conformal transverse-traceless decomposition}
+Using the "momentum-constraint” scaling mentioned previously,
+we can further decompose the symmetric, traceless tensor $\hat{A}^{ij}$ as
+\begin{align}
+    \hat{A}^{ij} = \hat{A}^{ij}_{TT} + \hat{A}^{ij}_{L},
+\end{align}
+where $\hat{A}^{ij}_{TT}$ is the transverse-traceless part which is divergenceless
+\begin{align}
+    \tilde{D}_j \hat{A}^{ij}_{L} = 0,
+\end{align}
+and $\hat{A}^{ij}_{L}$ is the longitudinal part satisfying
+\begin{align}
+    \hat{A}^{ij}_{L} = \tilde{D}^i X^j + \tilde{D}^j X^i - \frac{2}{3}\tilde{\gamma}^{ij} \tilde{D}_k X^k \equiv \left(\tilde{L} W \right)^{ij}.
+\end{align}
+The vector $X^i$ here is the vector potential 
+and $\tilde{L}$ is the \textit{longitudinal operator} or \textit{conformal Killing operator} associated with $\tilde{\gamma}$
+which gives a symmetric, traceless tensor.
+The divergence of $\hat{A}^{ij}$ becomes
+\begin{align}
+    \tilde{D}_j \hat{A}^{ij} = \tilde{D}^2 X^i + \frac{1}{3} \tilde{D}^i \left( \tilde{D}_j X^j \right).
+\end{align}
+Thus, the momentum constraint in the conformal transverse-traceless (CTT) decomposition yields
+\begin{align}
+    \tilde{D}^2 X^i + \frac{1}{3} \tilde{D}^i \left( \tilde{D}_j X^j \right) - \frac{2}{3}\psi^6 \tilde{D}^i K = 8 \pi \psi^{10} S^i,
+\end{align}
+with the Hamiltonian constraint same as equation (\ref{eq:H_const_s10}).
+
 %********************************** % Forth Section  *************************************
 \section{Gauge Condition}  %Section - 2.4
 \label{section2.4}
