@@ -313,7 +313,7 @@ Therefore, we can obtain the tracelss decomposition of the extrinsic curvature
 The evolution equations of the spatial metric (\ref{eq:ADM_g_evol}) in conformal deposition formulation can hence be written as
 \begin{flalign}
     \partial_t \psi &= \beta^i \tilde{D}_i \psi - \frac{1}{6}\psi \left(\alpha K - \tilde{D}_i \beta^i \right), &&\text{(conformal factor evolution)} \label{eq:psi_evol} \\
-    \partial_t \tilde{\gamma}_{ij} &= - 2\alpha \psi^{-4} A_{ij} + \tilde{\gamma}_{jk} \tilde{D}_i \beta^k + \tilde{\gamma}_{ik} \tilde{D}_j \beta^k - \frac{1}{3} \tilde{\gamma}_{ij} \tilde{D}_k \beta^k, &&\text{(conformal metric evolution)} \label{eq:con_g_evol_1}
+    \partial_t \tilde{\gamma}_{ij} &= - 2\alpha \psi^{-4} A_{ij} + \tilde{\gamma}_{jk} \tilde{D}_i \beta^k + \tilde{\gamma}_{ik} \tilde{D}_j \beta^k - \frac{2}{3} \tilde{\gamma}_{ij} \tilde{D}_k \beta^k, &&\text{(conformal metric evolution)} \label{eq:con_g_evol_1}
 \end{flalign}
 and the constraint equations become
 \begin{flalign}
@@ -342,7 +342,7 @@ where the indices of $\tilde{A}^{ij}$ and $\tilde{A}_{ij}$ are lowered and raise
 (i.e. $\tilde{A}_{ij} = \tilde{\gamma}_{il}\tilde{\gamma}_{jm}\tilde{A}^{lm} = \psi^{-4} A_{ij}$).
 The evolution equations of conformal spatial metric therefore become
 \begin{align}
-    \partial_t \tilde{\gamma}_{ij} &= - 2\alpha \tilde{A}_{ij} + \tilde{\gamma}_{jk} \tilde{D}_i \beta^k + \tilde{\gamma}_{ik} \tilde{D}_j \beta^k - \frac{1}{3} \tilde{\gamma}_{ij} \tilde{D}_k \beta^k.
+    \partial_t \tilde{\gamma}_{ij} &= - 2\alpha \tilde{A}_{ij} + \tilde{\gamma}_{jk} \tilde{D}_i \beta^k + \tilde{\gamma}_{ik} \tilde{D}_j \beta^k - \frac{2}{3} \tilde{\gamma}_{ij} \tilde{D}_k \beta^k.
 \end{align}
 The Hamiltonian constraint and momentum constraint in this scaling is rewritten as
 \begin{align}
@@ -400,15 +400,15 @@ The vector $X^i$ here is the vector potential
 and $\tilde{L}$ is the \textit{longitudinal operator} or \textit{conformal Killing operator} associated with $\tilde{\gamma}$
 which gives a symmetric, traceless tensor.
 The divergence of $\hat{A}^{ij}$ becomes
-\begin{align}
+\begin{align}\label{eq:vector_Lap}
     \tilde{D}_j \hat{A}^{ij} = \tilde{D}^2 X^i + \frac{1}{3} \tilde{D}^i \left( \tilde{D}_j X^j \right) + \tilde{R}^i{}_j X^j \equiv \tilde{\Delta}_{L},
 \end{align}
 where $\tilde{\Delta}_{L}$ is the \textit{vector Laplacian}.
 Thus, the momentum constraint in the conformal transverse-traceless (CTT) decomposition yields
 \begin{align}
-    \tilde{D}^2 X^i + \frac{1}{3} \tilde{D}^i \left( \tilde{D}_j X^j \right) + \tilde{R}^i{}_j X^j - \frac{2}{3}\psi^6 \tilde{D}^i K = 8 \pi \psi^{10} S^i,
+    \tilde{\Delta}_L X^i - \frac{2}{3}\psi^6 \tilde{D}^i K = 8 \pi \psi^{10} S^i,
 \end{align}
-with the Hamiltonian constraint same as equation (\ref{eq:H_const_s10}).
+and the corresponding Hamiltonian constraint is the same as equation (\ref{eq:H_const_s10}).
 
 %********************************** % Forth Section  *************************************
 \section{Gauge Condition}  %Section - 2.4
@@ -474,7 +474,7 @@ the normal observers move like irrotational and incompressible fluid elements
 which implies that focusing of the timelike unit normal vector field is prohibited.
 It can also be seen from equation (\ref{eq:ADM_g_evol}),
 which yields the following continuity equation for volume element $\sqrt{\gamma}$ in maximal slicing condition
-\begin{align}
+\begin{align}\label{eq:volume_evol}
     \partial_t \sqrt{\gamma} = \partial_i \left( \sqrt{\gamma} \beta^i \right).
 \end{align}
 This suggests that as long as a regular shift vector is chosen
@@ -533,10 +533,53 @@ which are well adapted to the treatment of gravitational radiation.
 %********************************** % Fifth Section  *************************************
 \section{Constrained scheme for the Einstein equations}  %Section - 2.5
 \label{section2.5}
+Although the ADM equations (\cref{eq:ADM_H_const,eq:ADM_S_const,eq:ADM_g_evol,eq:ADM_K_evol}) formulate the Einstein equations into a well-defined initial-value problem based on spacetime foliation,
+it is known to be unsuitable for numerical simulation due to the unbounded growth of numerical error (same for conformal decomposition formulation).
+Several reformulations were developped to maintain stable evolutions.
+Most of schemes such as BSSN \cite{shibata1995evolution,baumgarte1998numerical}, CCZ4 \cite{bona2003general}, Z4c \cite{bernuzzi2010constraint} schemes are based on free-evolution approach where the hyperbolic-type dynamical equations are evolved without enforcing the constraints.
+The constraint equations are solved only to obtain the initial data and serve as an indicator for numerical errors during the simulation.
+On the other hand, the fully constrained approach minimizes the hyperbolic-type evolution equations by solving the constraint equations at each time step.
+Though the elliptic nature of the constraint equations makes it computationally costy to solve,
+elliptic equations are more stable than hyperbolic equations,
+and the constraint-violating modes appeared in the free-evolution scheme vanish by construction in fully constrained evolution.\\
+With the efficient elliptic solvers developped,
+our relativistic hydrodynamics code \texttt{Gmunu} employs the Isenberg–Wilson–Mathews (also known as conformal flatness condition) approximation to the general relativity
+and the fully constrained formulation.
+In this section, we introduce the formulations and implementations under the constrained scheme.
 
-\subsection{Isenberg–Wilson–Mathews Approximation}  %Section - 2.5.1
+\subsection{Isenberg–Wilson–Mathews approximation}  %Section - 2.5.1
 \label{section2.5.1}
-The 
+The Isenberg–Wilson–Mathews approximation (IWM), also known as conformal flatness condition (CF),
+is a (gravitational-)waveless approximation to general relativity which was independently developped by
+Isenberg in 1978 \cite{isenberg2008waveless} as well as Wilson and Mathews in 1989 \cite{wilson1989relativistic}.
+In IWM, the spatial metric is approxiated to be conformally flat (hence the name conformal flatness condition)
+\begin{align}
+    \gamma_{ij} &= \psi^4 f_{ij}, &\text{or } &\text{equivalently } & \tilde{\gamma}_{ij} &= f_{ij},
+\end{align}
+under maximal slicing condition $K=0=\partial_t K$ (\cref{eq:max_slicing})
+(i.e. $\partial_t \tilde{\gamma}_{ij} = 0$ and $\tilde{D}_i=\mathcal{D}_i$ by construction).
+The equations for the conformal factor and extrinsic curvature can be obtained from equations (\ref{eq:psi_evol}) and (\ref{eq:con_g_evol_1}) respectively
+\begin{align}
+    \partial_t \psi &= \beta^i \mathcal{D}_i \psi + \frac{\psi}{6} \mathcal{D}_i \beta^i \\
+    K_{ij} &= \frac{\psi^4}{2\alpha} \left(f_{jk} \mathcal{D}_i \beta^k + f_{ik} \mathcal{D}_j \beta^k - \frac{2}{3} f_{ij} \mathcal{D}_k \beta^k \right) 
+    \label{eq:K_CFC}.
+\end{align}
+The CFC approximation reduces the ADM equations in a set of coupled non-linear elliptic equations for $\psi$ (from \cref{eq:H_const_s4}), $\alpha$ (from \cref{eq:lapse_con}), and $\beta^i$ (from \cref{eq:S_const_s4})
+\begin{align}
+    & \mathcal{D}^2 \psi = - \left( 2\pi E + \frac{1}{8}K_{ij} K^{ij} \right) \psi^5, \\
+    & \mathcal{D}^2 \left(\alpha \psi \right) = \alpha \psi^5 \left[ \frac{7}{8} K_{ij} K^{ij} + 2 \pi \left(E + 2 S \right) \right], \\
+    & \Delta_L \beta^i = 16 \pi \alpha \psi^4 S^i - 2 \psi^{10} K^{ij} \mathcal{D}_j \left(\alpha \psi^{-6} \right),
+\end{align}
+where $\Delta_L \beta^i \coloneqq \mathcal{D}^2 \beta^i + \frac{1}{3} \mathcal{D}^i \mathcal{D}_j \beta^j$
+is the \textit{vector Laplacian} (\cref{eq:vector_Lap}) associated with the flat metric $f_{ij}$.
+Although the solutions $(\psi, \alpha, \beta^i)$ to the CFC system do not satisfy all the conformal 3+1 equations in general,
+it is exact for spherically symmetric spacetime \cite{cordero2011maximal} and
+correct at the 1-PN order in the post-Newtonian expansion of general relativity.
+The CFC scheme has been successful in numerical simulation for various astrophysical simulation
+\cite{dimmelmeier2002relativistic,oechslin2002conformally,saijo2004collapse,bauswein2012equation,bauswein2013systematics,bauswein2014revealing,muller2015dynamics,dimmelmeier2006non} 
+and obtained good approximation to full general relativity in axisymmetric rotating neutron stars 
+\cite{dimmelmeier2002relativistic,dimmelmeier2006non,cook1996testing}
+and in rotating iron core collapses \cite{ott2007rotating}.
 
 \subsection{The Fully Constrained Formulation}  %Section - 2.5.2
 \label{section2.5.2}
