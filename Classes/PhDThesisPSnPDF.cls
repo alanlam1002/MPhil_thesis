@@ -947,13 +947,13 @@ wish to left align your text}
 {\usebox{\PHD@author}}
 \vspace*{1em}
 
-% Supervisor
-\begin{center}\centering
-\ifPHD@supervisor%
-{\usebox{\PHD@supervisor}}
-%\vspace*{0.5em}
-\fi
-\end{center}
+%% Supervisor
+%\begin{center}\centering
+%\ifPHD@supervisor%
+%{\usebox{\PHD@supervisor}}
+%%\vspace*{0.5em}
+%\fi
+%\end{center}
 
 % Advisor
 \ifPHD@advisor%

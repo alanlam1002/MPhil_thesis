@@ -5,7 +5,8 @@
 % Set {innerside margin / outerside margin / topmargin / bottom margin}  and
 % other page dimensions
 \ifsetCustomMargin
-  \RequirePackage[left=37mm,right=30mm,top=35mm,bottom=30mm]{geometry}
+  %\RequirePackage[left=37mm,right=30mm,top=35mm,bottom=30mm]{geometry}
+  \RequirePackage[left=25mm,right=25mm,top=40mm,bottom=40mm]{geometry}
   \setFancyHdr % To apply fancy header after geometry package is loaded
 \fi
 
@@ -14,7 +15,9 @@
 % Ragged bottom avoids extra whitespaces between paragraphs
 \raggedbottom
 % To remove the excess top spacing for enumeration, list and description
-%\usepackage{enumitem}
+\usepackage{enumitem}
+\newlist{Step}{enumerate}{1}
+\setlist[Step]{label=Step \arabic*:}
 %\setlist[enumerate,itemize,description]{topsep=0em}
 
 % *****************************************************************************

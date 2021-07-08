@@ -1,7 +1,8 @@
 % ******************************* PhD Thesis Template **************************
 % Please have a look at the README.md file for info on how to use the template
 %!TEX encoding = UTF-8 Unicode
-\documentclass[a4paper,12pt,customfont,custombib,print,index]{Classes/PhDThesisPSnPDF}
+\documentclass[a4paper,12pt,customfont,custombib,custommargin,index]{Classes/PhDThesisPSnPDF}
+%\documentclass[a4paper,12pt,customfont,custombib,custommargin,print,index]{Classes/PhDThesisPSnPDF}
 
 % ******************************************************************************
 % ******************************* Class Options ********************************
@@ -135,10 +136,16 @@
 % ******************************** Main Matter *********************************
 \mainmatter
 
+% ******************************* Part I ***************************************
+\part{Methodology: Formulations}\label{part1}
 \include{Chapter1/chapter1}
 \include{Chapter2/chapter2}
+
+% ******************************* Part II **************************************
+\part{Methodology: Numerical methods}\label{part2}
 \include{Chapter3/chapter3}
 \include{Chapter4/chapter4}
+
 %\include{Chapter5/chapter5}
 %\include{Chapter6/chapter6}
 %\include{Chapter7/chapter7}
