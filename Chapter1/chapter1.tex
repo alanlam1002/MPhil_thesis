@@ -538,7 +538,7 @@ where $\tilde{R}^{ij}_{*}$ is the quadratic part of $\tilde{R}^{ij}$
     & + \tilde{\gamma}_{nl} \mathcal{D}_k h^{mn} \left( \tilde{\gamma}^{ik} \mathcal{D}_m h^{jl} + \tilde{\gamma}^{jk} \mathcal{D}_m h^{il} \right)
     + \frac{1}{2} \tilde{\gamma}^{ik} \tilde{\gamma}^{kl} \mathcal{D}_l h^{mn} \mathcal{D}_k \tilde{\gamma}_{mn} \biggr],
 \end{align}
-and $\mathcal{D}^2 = f^{ij}\mathcal{D}_i \mathcal{D}_j$ is the Laplacian operator associated with the flat metric.
+and $\mathcal{D}^2 = \mathcal{D}^i \mathcal{D}_i$ is the Laplacian operator associated with the flat metric with $\mathcal{D}^i \coloneqq f^{ij}\mathcal{D}_j$.
 The curvature scalar $\tilde{R}$ of the conformal metric does not contain any second order derivative of $\tilde{\gamma}_{ij}$ thanks to the gauge condition
 \begin{align}
     \tilde{R} = \frac{1}{4} \tilde{\gamma}^{kl} \mathcal{D}_k h^{ij} \mathcal{D}_l \tilde{\gamma}_{ij} 
@@ -607,7 +607,7 @@ The resultant scheme is called \textit{extended conformal flatness approximation
 and the metric can be solved by following
 \begin{align}
     & \Delta_L X^i = 8\pi f^{ij} \left(S^{*}\right)_j, \label{eq:XCFC_X}\\
-    & \mathcal{D}^2 \psi = - 2\pi E^{*} \psi^{-1} - \frac{1}{8} f_{il}f_{jm} \hat{A}^{lm} \hat{A}^{ij}, \label{eq:XCFC_psi}\\
+    & \mathcal{D}^2 \psi = - 2\pi E^{*} \psi^{-1} - \frac{1}{8} \psi^{-7}f_{il}f_{jm} \hat{A}^{lm} \hat{A}^{ij}, \label{eq:XCFC_psi}\\
     & \mathcal{D}^2 \left(\alpha \psi \right) = \left( \alpha \psi \right) \left[ 2\pi \left( E^{*} + 2 S^{*} \right) \psi^{-2}
     + \frac{7}{8} \psi^{-8} f_{il}f_{jm} \hat{A}^{lm} \hat{A}^{ij} \right], \label{eq:XCFC_alp}\\
     & \Delta_L \beta^i = 16 \pi \alpha \psi^{-6} f^{ij} \left(S^{*}\right)_{j} - 2 \hat{A}^{ij} \mathcal{D}_j \left(\alpha \psi^{-6} \right), \label{eq:XCFC_beta}
@@ -635,7 +635,27 @@ the metric equations can be solved accordingly as follows
     \item Solve equation (\ref{eq:XCFC_beta}) for the shift vector $\beta^i$.
 \end{Step}
 
-
 \subsection{The Fully Constrained Formulation}  %Section - 1.5.2
 \label{section1.5.2}
+The fully constrained formulation (FCF) was first proposed by the Meudon group \cite{bonazzola2004constrained},
+and then later modified by the Valencia's group \cite{cordero2008mathematical,cordero2009improved,cordero2012gravitational}.
+By choosing the maximal slcing condition (section \ref{section1.4.1}) and the generalized Dirac gauge (section \ref{section1.4.2}),
+the conformal 3+1 decomposition can be recasted in a coupled elliptic-hyperbolic system,
+where all the constraint equations are utilized to minimize the number of hyperbolic equations in the system.
 
+\subsubsection{Hyperbolic sector}
+
+\subsubsection{Elliptic sector}
+The elliptic sector in the FCF scheme is given by
+\begin{align}
+    &\tilde{\gamma}^{kl} \mathcal{D}_k \mathcal{D}_l X^i + \frac{1}{3}\tilde{\gamma}^{ik}\mathcal{D}_k \mathcal{D}_l X^l
+    + \Delta^i{}_{kl} \left( LX \right)^{kl} = 8\pi \tilde{\gamma}^{ij} \left( S^* \right)_j - \Delta^i{}_{kl} \hat{A}^{kl}_{TT}, \\
+    & \tilde{\gamma}^{kl} \mathcal{D}_k \mathcal{D}_l \psi = - 2\pi E^* \psi^{-1} 
+    - \frac{1}{8} \psi^{-7} \tilde{\gamma}_{il} \tilde{\gamma}_{jm} \hat{A}^{lm} \hat{A}^{ij} + \frac{1}{8}\psi \tilde{R}, \\
+    & \tilde{\gamma}^{kl} \mathcal{D}_k \mathcal{D}_l \left( \alpha \psi \right) = \left(\alpha\psi\right)
+    \left[ 2\pi\psi^{-2} \left(E^* + 2 S^* \right) + \frac{7}{8}\psi^{-8}\tilde{\gamma}_{il} \tilde{\gamma}_{jm} \hat{A}^{lm} \hat{A}^{ij}
+    + \frac{\tilde{R}}{8}\right], \\
+    &\tilde{\gamma}^{kl} \mathcal{D}_k \mathcal{D}_l \beta^i + \frac{1}{3}\tilde{\gamma}^{ik}\mathcal{D}_k \mathcal{D}_l \beta^l =
+    16 \pi \alpha \psi^{-6} \tilde{\gamma}^{ij} \left( S^* \right)_j + 2 \hat{A}^{ij} \mathcal{D}_j \left(\alpha \psi^{-6} \right)
+    - 2 \alpha \psi^{-6} \Delta^i{}_{kl} \hat{A}^{kl}.
+\end{align}
