@@ -533,7 +533,7 @@ Under such gauge condition, the conformal Ricci tensor $\tilde{R}^{ij}$ is simpl
 \end{align}
 where $\tilde{R}^{ij}_{*}$ is the quadratic part of $\tilde{R}^{ij}$
 \begin{align}
-    \tilde{R}^{ij}_{*} &\coloneq \frac{1}{2} \biggl[ h^{kl} \mathcal{D}_k \mathcal{D}_l h^{ij} - \mathcal{D}_l h^{ik} \mathcal{D}_k h^{jl}
+    \tilde{R}^{ij}_{*} &\coloneqq \frac{1}{2} \biggl[ h^{kl} \mathcal{D}_k \mathcal{D}_l h^{ij} - \mathcal{D}_l h^{ik} \mathcal{D}_k h^{jl}
     - \tilde{\gamma}_{kl} \tilde{\gamma}^{mn} \mathcal{D}_m h^{ik} \mathcal{D}_n h^{jl} \\
     & + \tilde{\gamma}_{nl} \mathcal{D}_k h^{mn} \left( \tilde{\gamma}^{ik} \mathcal{D}_m h^{jl} + \tilde{\gamma}^{jk} \mathcal{D}_m h^{il} \right)
     + \frac{1}{2} \tilde{\gamma}^{ik} \tilde{\gamma}^{kl} \mathcal{D}_l h^{mn} \mathcal{D}_k \tilde{\gamma}_{mn} \biggr],
@@ -644,6 +644,45 @@ the conformal 3+1 decomposition can be recasted in a coupled elliptic-hyperbolic
 where all the constraint equations are utilized to minimize the number of hyperbolic equations in the system.
 
 \subsubsection{Hyperbolic sector}
+The Valencia's group performed first-order reduction \cite{cordero2008mathematical} to the reduced FCF system \cite{bonazzola2004constrained} by introducing axuiliary variable
+\begin{align}
+    w^{ij}{}_k \coloneqq \mathcal{D}_k h^{ij},
+\end{align}
+Thus, the hyperbolic sector in the FCF is recasted as a first-order system in $\left(h^{ij}, \hat{A}^{ij}, w^{ij}{}_k \right)$ as follows
+\begin{flalign}
+    &\partial_t h^{ij} = 2 \alpha \psi^{-6} \hat{A}^{ij} + \beta^k w^{ij}{}_k
+    - \tilde{\gamma}^{ik} \mathcal{D}_k \beta^j - \tilde{\gamma}^{kj} \mathcal{D}_k \beta^i
+    + \frac{2}{3}\tilde{\gamma}^{ij} \mathcal{D}_k \beta^k, \\
+    &\begin{aligned}
+        \partial_t \hat{A}^{ij} =& \mathcal{D}_k \left( \frac{1}{2}\alpha \psi^2 \tilde{\gamma}^{kl} w^{ij}{}_l
+        + \beta^k \hat{A}^{ij} \right) - \hat{A}^{kj} \mathcal{D}_k \beta^i - \hat{A}^{ik} \mathcal{D}_k \beta^j
+        + \frac{2}{3}\hat{A}^{ij} \mathcal{D}_k \beta^k
+        + 2\alpha \psi^{-6} \tilde{\gamma}^{kl} \hat{A}^{ik} \hat{A}^{jl} \\
+        &- 8 \pi \alpha \psi^6 \left( \psi^4 S^{ij} -\frac{1}{3}\tilde{\gamma}^{ij} S \right)
+        + \alpha \psi^2 \left( \tilde{R}^{ij}_* - \frac{1}{3} \tilde{R} \right)
+        + 8\alpha 
+        \left( \tilde{\gamma}^{ik} \tilde{\gamma}^{jl}  -\frac{1}{3} \tilde{\gamma}^{ij} \tilde{\gamma}^{kl} \right)
+        \mathcal{D}_k \psi \mathcal{D}_l \psi \\
+        & + 4 \psi 
+        \left( \tilde{\gamma}^{ik} \tilde{\gamma}^{jl} + \tilde{\gamma}^{il} \tilde{\gamma}^{jk} - \frac{2}{3} \tilde{\gamma}^{kl} \tilde{\gamma}^{ij}\right)
+        \mathcal{D}_k \psi \mathcal{D}_l \alpha
+        - \left( \tilde{\gamma}^{ik} \tilde{\gamma}^{jl} - \frac{1}{3} \tilde{\gamma}^{ij} \tilde{\gamma}^{kl} \right)
+        \mathcal{D}_k \mathcal{D}_l \left(\alpha \psi^2 \right) \\
+        &- \frac{1}{2} \left( \tilde{\gamma}^{ik} w^{lj}{}_k + \tilde{\gamma}^{lk} w^{il}{}_k \right) \mathcal{D}_l \left(\alpha \psi^2 \right),
+    \end{aligned} \\
+    &\partial_t w^{ij}{}_k = \mathcal{D}_k \left(2 \alpha \psi^{-6} \hat{A}^{ij} + \beta^k w^{ij}{}_k
+    - \tilde{\gamma}^{ik} \mathcal{D}_k \beta^j - \tilde{\gamma}^{kj} \mathcal{D}_k \beta^i
+    + \frac{2}{3}\tilde{\gamma}^{ij} \mathcal{D}_k \beta^k\right),
+\end{flalign}
+where $\tilde{R}^{ij}_*$ and $\tilde{R}$ defined in section \ref{section1.4.2}.
+This evolution system is proved to be strongly hyperbolic \cite{cordero2008mathematical} under following conditions
+\begin{align}
+    \alpha &\neq 0, & \alpha^2 - \beta^i \beta_i &> 0,
+\end{align}
+and the characteristic speed is given by
+\begin{align}
+    \lambda^i_{\pm} = -\beta^i \pm \alpha\psi^{-2} \tilde{\gamma}^{ii}.
+\end{align}
 
 \subsubsection{Elliptic sector}
 The elliptic sector in the FCF scheme is given by
@@ -659,3 +698,6 @@ The elliptic sector in the FCF scheme is given by
     16 \pi \alpha \psi^{-6} \tilde{\gamma}^{ij} \left( S^* \right)_j + 2 \hat{A}^{ij} \mathcal{D}_j \left(\alpha \psi^{-6} \right)
     - 2 \alpha \psi^{-6} \Delta^i{}_{kl} \hat{A}^{kl}.
 \end{align}
+Note that the FCF scheme is a natural generalization of XCFC scheme 
+since it reduces to XCFC if the approximation $h^{ij} = \hat{A}^{ij}_{TT} = 0$ is made.
+
