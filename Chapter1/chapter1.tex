@@ -168,7 +168,7 @@ and thus obtain the evolution equation for the spatial metric
 \label{section1.2.4}
 
 To express the Einstein field equations in term of the spatial variables $(\gamma_{\mu\nu}, K_{\mu\nu})$ we defined previous,
-we first have to relate 3-dimensional Riemann tensor $R^\alpha{}_{\beta\mu\nu}$ on $\Sigma_t$ to the 4-dimensional Riemann tensor ${}^{(4)}R^\alpha{}_{\beta\mu\nu}$ on $\mathcal{M}$,
+we first need to relate 3-dimensional Riemann tensor $R^\alpha{}_{\beta\mu\nu}$ on $\Sigma_t$ to the 4-dimensional Riemann tensor ${}^{(4)}R^\alpha{}_{\beta\mu\nu}$ on $\mathcal{M}$,
 The relation between $R^\alpha{}_{\beta\mu\nu}$ and the full spatial projection of ${}^{(4)}R^\alpha{}_{\beta\mu\nu}$ is given by the \textit{Gauss' equation}
 \begin{align}\label{eq:Gauss}
     R_{\alpha\beta\mu\nu} + K_{\alpha\mu}K_{\beta\nu} - K_{\alpha\nu} K_{\beta\mu} = \gamma_{\alpha}{}^{\rho} \gamma_{\beta}{}^{\sigma} \gamma_{\mu}{}^{\lambda} \gamma_{\nu}{}^{\delta} {}^{(4)}R_{\rho\sigma\lambda\delta},
@@ -427,7 +427,7 @@ Thus, the momentum constraint in the conformal transverse-traceless (CTT) decomp
 \end{align}
 and the corresponding Hamiltonian constraint is the same as equation (\ref{eq:H_const_s10}).
 
-%********************************** % Forth Section  *************************************
+%********************************** % Fourth Section  *************************************
 \section{Gauge Condition}  %Section - 1.4
 \label{section1.4}
 In the 3+1 formulation of spacetime, the gauge freedom is preserved.
@@ -599,6 +599,7 @@ and obtained good approximation to full general relativity in axisymmetric rotat
 and in rotating iron core collapses \cite{ott2007rotating}.
 
 \subsubsection{Extended CFC scheme}
+\label{section_XCFC}
 Despite the success of CFC scheme in astrophysical simulation,
 it suffers from the non-uniqueness issue as we discussed in section \ref{section1.3.2.2}.
 A solution to this has been found \cite{cordero2009improved,saijo2004collapse,shibata2006merger},
@@ -649,8 +650,8 @@ Here, we summarize the gauge conditions and algebraic constraint for the scheme
     & \det \tilde{\gamma}_{ij} = f, &&\text{(conformal decomposition)} \label{eq:FCF_conformal_g}\\
     & K^{ij} = \psi^{-10}\hat{A}^{ij}, \quad \hat{A}^{ij} = \hat{A}^{ij}_{TT} + \left(L X\right)^{ij}. &&\text{(conformal decomposition)} \label{eq:FCF_conformal_A}
 \end{flalign}
-Note that althought it would be more general to used the \ittext{Killing operator} $\tilde{L}$ associated with $\tilde{\gamma}_{ij}$ in equation (\ref{eq:FCF_conformal_A}),
-the \ittext{Killing operator} $L$ associated with flat metric $f_{ij}$ is used since it is easier to handle technically.
+Note that althought it would be more general to used the \textit{Killing operator} $\tilde{L}$ associated with $\tilde{\gamma}_{ij}$ in equation (\ref{eq:FCF_conformal_A}),
+the \textit{Killing operator} $L$ associated with flat metric $f_{ij}$ is used since it is easier to handle technically.
 Under such gauge conditions, the ADM equations are decomposed into a coupled hyperbolic-elliptic system.
 
 \subsubsection{Hyperbolic sector}
@@ -662,7 +663,7 @@ Thus, the hyperbolic sector in the FCF is recasted as a first-order system in $\
 \begin{flalign}
     &\partial_t h^{ij} = 2 \alpha \psi^{-6} \hat{A}^{ij} + \beta^k w^{ij}{}_k
     - \tilde{\gamma}^{ik} \mathcal{D}_k \beta^j - \tilde{\gamma}^{kj} \mathcal{D}_k \beta^i
-    + \frac{2}{3}\tilde{\gamma}^{ij} \mathcal{D}_k \beta^k, \\
+    + \frac{2}{3}\tilde{\gamma}^{ij} \mathcal{D}_k \beta^k, \label{eq:FCF_h}\\
     &\begin{aligned}
         \partial_t \hat{A}^{ij} =& \mathcal{D}_k \left( \frac{1}{2}\alpha \psi^2 \tilde{\gamma}^{kl} w^{ij}{}_l
         + \beta^k \hat{A}^{ij} \right) - \hat{A}^{kj} \mathcal{D}_k \beta^i - \hat{A}^{ik} \mathcal{D}_k \beta^j
@@ -679,10 +680,10 @@ Thus, the hyperbolic sector in the FCF is recasted as a first-order system in $\
         - \left( \tilde{\gamma}^{ik} \tilde{\gamma}^{jl} - \frac{1}{3} \tilde{\gamma}^{ij} \tilde{\gamma}^{kl} \right)
         \mathcal{D}_k \mathcal{D}_l \left(\alpha \psi^2 \right) \\
         &- \frac{1}{2} \left( \tilde{\gamma}^{ik} w^{lj}{}_k + \tilde{\gamma}^{lk} w^{il}{}_k \right) \mathcal{D}_l \left(\alpha \psi^2 \right),
-    \end{aligned} \\
+    \end{aligned} \label{eq:FCF_A}\\
     &\partial_t w^{ij}{}_k = \mathcal{D}_k \left(2 \alpha \psi^{-6} \hat{A}^{ij} + \beta^k w^{ij}{}_k
     - \tilde{\gamma}^{ik} \mathcal{D}_k \beta^j - \tilde{\gamma}^{kj} \mathcal{D}_k \beta^i
-    + \frac{2}{3}\tilde{\gamma}^{ij} \mathcal{D}_k \beta^k\right),
+    + \frac{2}{3}\tilde{\gamma}^{ij} \mathcal{D}_k \beta^k\right), \label{eq:FCF_w}
 \end{flalign}
 where $\tilde{R}^{ij}_*$ and $\tilde{R}$ defined in section \ref{section1.4.2}.
 This evolution system is proved to be strongly hyperbolic \cite{cordero2008mathematical} under following conditions
@@ -695,7 +696,7 @@ and the characteristic speed is given by
 \end{align}
 In Meudon-Valencia's approach, only the transverse-traceless (TT) part of the hyperbolic equations are evolved.
 Each tenorial hyperbolic equation is reduced to two scalar equations under TT decomposition \cite{bonazzola2004constrained} and solved using spectral method,
-and implicit-explicit approach is used to update $w^{ij}{}_k$ to maintain numerical stability \cite{cordero2012gravitational}.
+and partially implicit Runge-Kutta methods (PIRK) is used to update $w^{ij}{}_k$ to maintain numerical stability \cite{cordero2012gravitational,cordero2012partially}.
 To fulfill the constraint in equation (\ref{eq:FCF_g_conformal}), the trace part of $h^{ij}$ was calculated by the following iteration procedure:
 \begin{Step}
     \item Calculate $h\coloneqq \det{\tilde{\gamma}^{ij}} - f$.
@@ -708,18 +709,95 @@ To fulfill the constraint in equation (\ref{eq:FCF_g_conformal}), the trace part
 The elliptic sector in the FCF scheme is given by
 \begin{align}
     &\tilde{\gamma}^{kl} \mathcal{D}_k \mathcal{D}_l X^i + \frac{1}{3}\tilde{\gamma}^{ik}\mathcal{D}_k \mathcal{D}_l X^l
-    + \Delta^i{}_{kl} \left( LX \right)^{kl} = 8\pi \tilde{\gamma}^{ij} \left( S^* \right)_j - \Delta^i{}_{kl} \hat{A}^{kl}_{TT}, \\
+    + \Delta^i{}_{kl} \left( LX \right)^{kl} = 8\pi \tilde{\gamma}^{ij} \left( S^* \right)_j - \Delta^i{}_{kl} \hat{A}^{kl}_{TT}, \label{eq:FCF_X}\\
     & \tilde{\gamma}^{kl} \mathcal{D}_k \mathcal{D}_l \psi = - 2\pi E^* \psi^{-1} 
-    - \frac{1}{8} \psi^{-7} \tilde{\gamma}_{il} \tilde{\gamma}_{jm} \hat{A}^{lm} \hat{A}^{ij} + \frac{1}{8}\psi \tilde{R}, \\
+    - \frac{1}{8} \psi^{-7} \tilde{\gamma}_{il} \tilde{\gamma}_{jm} \hat{A}^{lm} \hat{A}^{ij} + \frac{1}{8}\psi \tilde{R}, \label{eq:FCF_psi}\\
     & \tilde{\gamma}^{kl} \mathcal{D}_k \mathcal{D}_l \left( \alpha \psi \right) = \left(\alpha\psi\right)
     \left[ 2\pi\psi^{-2} \left(E^* + 2 S^* \right) + \frac{7}{8}\psi^{-8}\tilde{\gamma}_{il} \tilde{\gamma}_{jm} \hat{A}^{lm} \hat{A}^{ij}
-    + \frac{\tilde{R}}{8}\right], \\
+    + \frac{\tilde{R}}{8}\right], \label{eq:FCF_alp} \\
     &\tilde{\gamma}^{kl} \mathcal{D}_k \mathcal{D}_l \beta^i + \frac{1}{3}\tilde{\gamma}^{ik}\mathcal{D}_k \mathcal{D}_l \beta^l =
     16 \pi \alpha \psi^{-6} \tilde{\gamma}^{ij} \left( S^* \right)_j + 2 \hat{A}^{ij} \mathcal{D}_j \left(\alpha \psi^{-6} \right)
-    - 2 \alpha \psi^{-6} \Delta^i{}_{kl} \hat{A}^{kl}.
+    - 2 \alpha \psi^{-6} \Delta^i{}_{kl} \hat{A}^{kl}, \label{eq:FCF_beta}
 \end{align}
+which can be solved following the same routine as XCFC scheme (section \ref{section_XCFC}).
 Note that the FCF scheme is a natural generalization of XCFC scheme 
 since it reduces to XCFC if the approximation $h^{ij} = \hat{A}^{ij}_{TT} = 0$ is made.
 
 \subsubsection{passive FCF}
+The elliptic sector in FCF scheme is technically more difficult to solve.
+Therefore, the Valencia's group an approximation scheme based on FCF, called passive FCF \cite{cordero2012gravitational},
+which neglected the backreaction of the GWs onto the dynamics of the system.
+Unlike the XCFC which sets the gravitational radiation to zero,
+the gravitational wave can be evolved in passive FCF scheme by keeping the hyperbolic sector in FCF scheme,
+while solving the elliptic sector in XCFC scheme.
 
+\subsection{The fully-constrained scheme in \texttt{Gmunu}}
+In \texttt{Gmunu}, the fully-constrained scheme is solved in a slightly different approach.
+Instead of solving \cref{eq:FCF_h,eq:FCF_A,eq:FCF_w},
+we omit the axuiliary variable $w^{ij}{}_k$ and evolve the following hyperbolic equations for $\left(h^{ij}, A^{ij} \right)$
+\begin{flalign}
+    &\partial_t h^{ij} = 2 \alpha \psi^{-6} \hat{A}^{ij} + \beta^k \mathcal{D}_k h^{ij}
+    - \tilde{\gamma}^{ik} \mathcal{D}_k \beta^j - \tilde{\gamma}^{kj} \mathcal{D}_k \beta^i
+    + \frac{2}{3}\tilde{\gamma}^{ij} \mathcal{D}_k \beta^k, \label{eq:FCF_h_2}\\
+    &\begin{aligned}
+        \partial_t \hat{A}^{ij} =& \frac{1}{2} \alpha \psi^2 \tilde{\gamma}^{kl} \mathcal{D}_k \mathcal{D}_l h^{ij}{}
+        + \beta^k \mathcal{D}_k \hat{A}^{ij} - \hat{A}^{kj} \mathcal{D}_k \beta^i - \hat{A}^{ik} \mathcal{D}_k \beta^j
+        + \frac{5}{3}\hat{A}^{ij} \mathcal{D}_k \beta^k
+        + 2\alpha \psi^{-6} \tilde{\gamma}^{kl} \hat{A}^{ik} \hat{A}^{jl} \\
+        &- 8 \pi \alpha \psi^6 \left( \psi^4 S^{ij} -\frac{1}{3}\tilde{\gamma}^{ij} S \right)
+        + \alpha \psi^2 \left( \tilde{R}^{ij}_* - \frac{1}{3} \tilde{R} \right)
+        + 8\alpha 
+        \left( \tilde{\gamma}^{ik} \tilde{\gamma}^{jl}  -\frac{1}{3} \tilde{\gamma}^{ij} \tilde{\gamma}^{kl} \right)
+        \mathcal{D}_k \psi \mathcal{D}_l \psi \\
+        & + 4 \psi 
+        \left( \tilde{\gamma}^{ik} \tilde{\gamma}^{jl} + \tilde{\gamma}^{il} \tilde{\gamma}^{jk} - \frac{2}{3} \tilde{\gamma}^{kl} \tilde{\gamma}^{ij}\right)
+        \mathcal{D}_k \psi \mathcal{D}_l \alpha
+        - \left( \tilde{\gamma}^{ik} \tilde{\gamma}^{jl} - \frac{1}{3} \tilde{\gamma}^{ij} \tilde{\gamma}^{kl} \right)
+        \mathcal{D}_k \mathcal{D}_l \left(\alpha \psi^2 \right) \\
+        &- \frac{1}{2} \left( \tilde{\gamma}^{ik} \mathcal{D}_k h^{lj}+ \tilde{\gamma}^{lk} \mathcal{D}_k h^{il} - \tilde{\gamma}^{kl} \mathcal{D}_k h^{ij} \right) 
+        \mathcal{D}_l \left(\alpha \psi^2 \right),
+    \end{aligned} \label{eq:FCF_A_2}\\
+\end{flalign}
+directly without performing TT composition.
+Note that although the hyperbolic system is \textit{unconditionally unstable} if second-order explicit \textit{Runge-Kutta} (RK) method used,
+it has shown to be numerically stable using fourth-order explicit RK method \cite{cordero2012partially,shibata2015numerical}.
+In \texttt{Gmunu}, the hyperbolic sector in FCF scheme is evolving simulataneously with the hydrodynamical system using 
+fourth-order \textit{strong stability-preserving Runge-Kutta} (ssprk) methods.\\
+After the time integration is done,
+we need to modify $\left(h^{ij}_{old}, \hat{A}^{ij}_{old}\right)$ so that the gauge conditions can be satisfied.
+The generalized Dirac gauge condition is then enforced by \textit{elliptic divergence cleaning} method as follows
+\begin{Step}
+    \item Solve the \textit{vector Laplacian} equation
+    \begin{align}
+        \Delta_L W^i = \mathcal{D}_j h^{ij}_{(old)}.
+    \end{align}
+    \item Update $h^{ij}$ by
+    \begin{align}
+        h^{ij}_{(new)} = h^{ij}_{(old)} - \left( L W \right)^{ij}.
+    \end{align}
+\end{Step}
+This treatment is inspired by the divergence cleaning of magnetic monopole in magnetohydrodynamics \cite{balsara2004comparison,teunissen2019geometric,balsara1998total}.
+In \textit{Gmunu}, a fourth-order central finite difference scheme is used for $\mathcal{D}_j h^{ij}_{old}$,
+and a second-order central finite difference scheme is used for $\Delta_L W^i$ and $\left( L W \right)^{ij}$.
+To enforce the algebraic constraint (\ref{eq:FCF_conformal_g}),
+we modify the trace part of $h^{ij}$ using the same routine described in section \ref{section1.5.2}.\\
+For $\hat{A}^{ij}$, it can be modified by the following procedures:
+\begin{Step}
+    \item Obtain the traceless part of $\hat{A}^{ij}_{(old)}$ by
+    \begin{align}
+        \hat{A}^{ij}_{(1)} = \hat{A}^{ij}_{(old)} - \frac{1}{3} f^{ij} f_{kl} \hat{A}^{kl}_{(old)}.
+    \end{align}
+    \item Calculate the vector potential $X^i$ using momentum constraint
+    \begin{align} \label{eq:FCF_X_2}
+    &\tilde{\gamma}^{kl} \mathcal{D}_k \mathcal{D}_l X^i + \frac{1}{3}\tilde{\gamma}^{ik}\mathcal{D}_k \mathcal{D}_l X^l
+    + \Delta^i{}_{kl} \left( LX \right)^{kl} = 8\pi \tilde{\gamma}^{ij} \left( S^* \right)_j 
+    - \Delta^i{}_{kl} \hat{A}^{kl}_{(1)} - \mathcal{D}_j \hat{A}^{ij}_{(1)}.
+    \end{align}
+    Note that differing from equation (\ref{eq:FCF_X}), $\hat{A}^{ij}_{(1)}$ is used on the right-hand-side instead of $\hat{A}^{ij}_{TT}$.
+    Thus, the vector potential $X^i$ here is an additional longitudinal part for $\hat{A}^{ij}$ to satisfy the momentum constraint.
+    \item Update $\hat{A}^{ij}$ by
+    \begin{align}
+        \hat{A}^{ij}_{(new)} = \hat{A}^{ij}_{(1)} + \left( L X \right)^{ij}.
+    \end{align}
+\end{Step}
+The remaining unknowns $\left(\psi, \alpha, \beta^i\right)$ can then be solved accordingly by adopting the same procedure in section \ref{section1.5.2}.

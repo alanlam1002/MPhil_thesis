@@ -20,7 +20,7 @@ specifically the 3+1 treatment of perfect fluid in conservative form \cite{marti
 
 \subsection{Perfect fluid}
 \label{section2.1.1}
-In this section, we consider relativistic \ittext{perfect fluid} (i.e. no viscous effects and heat fluxes).
+In this section, we consider relativistic \textit{perfect fluid} (i.e. no viscous effects and heat fluxes).
 The energy-momentum tensor of perfect fluid is given by
 \begin{align}
     T^{\mu\nu} = \rho h u^\mu u^\nu + p g^{\mu\nu},
@@ -30,7 +30,7 @@ $u^\mu$ is the fluid 4-velocity,
 $h = 1 + \epsilon + \frac{p}{\rho}$ is the enthalpy, 
 $p$ is the pressure, 
 and $\epsilon$ is the specific internal energy.\\
-The \ittext{Lorentz factor} $W$ of the fluid with respects to the Eulerian observers is given by 
+The \textit{Lorentz factor} $W$ of the fluid with respects to the Eulerian observers is given by 
 the projection of fluid 4-velocity $u^\mu$ to $n^\mu$
 \begin{align}
     W \coloneqq - n_{\mu} u^\mu = \alpha u^t.
@@ -44,7 +44,7 @@ or in component form
     v^t &= 0, & v^i &=  \frac{u^i}{W} + \frac{\beta^i}{\alpha}, \\
     v_t &= \beta_i v^i, & v_i &= \frac{u_i}{W}.
 \end{align}
-As a result, the \ittext{Lorentz factor} can also be written as
+As a result, the \textit{Lorentz factor} can also be written as
 \begin{align}
     W = \frac{1}{\sqrt{1-v_i v^i}}.
 \end{align}
@@ -146,15 +146,15 @@ where the conserved variables $\mathbf{Q}$, flux terms $\mathbf{F}^i$ and source
     \alpha K_{ij} S^{ij} - S^i \partial_i \alpha
     \end{pmatrix},
 \end{align}
-which is commonly known as the "\ittext{Valencia formulation}" of the relativistic-hydrodynamics equatons. \\
+which is commonly known as the "\textit{Valencia formulation}" of the relativistic-hydrodynamics equatons. \\
 The characteristic speeds of such system is given by
 \begin{align}\label{eq:valencia}
     \lambda_0 &= \alpha v^i - \beta^i \qquad \text{(triple eigenvalue)},\\
     \lambda_{\pm} &= \frac{\alpha}{1-v^2 c_s^2} \left\{ v^i \left(1-c_s^2 \right) 
     \pm c_s^2 \sqrt{\left(1-v^2 \right) \left[\gamma^ii \left(1- v^2 c_s^2 \right) - {v^i}^2\left(1-c_s^2 \right) \right]} \right\},
 \end{align}
-where $\lambda_{\pm}$ measures the propagation speeds of the \ittext{acoustic waves} of the system,
-and $\lambda_0$ corresponds to the propagation speed of \ittext{matter waves}.
+where $\lambda_{\pm}$ measures the propagation speeds of the \textit{acoustic waves} of the system,
+and $\lambda_0$ corresponds to the propagation speed of \textit{matter waves}.
 
 \subsection{Conserved to Primitive variables conversion} 
 \label{section2.1.5}
@@ -206,7 +206,7 @@ The implementation details are included here:
 %********************************** %Second Section  *************************************
 \section{The reference-metric formalism} %Section - 2.2
 \label{section2.2}
-The reference-metric formalism, a generalization of the "\ittext{Valencia}" formulation, was original proposed by Montero \cite{montero2014general} in 2014 for general relativistic hydrodynamics (GRHD)
+The reference-metric formalism, a generalization of the "\textit{Valencia}" formulation, was original proposed by Montero \cite{montero2014general} in 2014 for general relativistic hydrodynamics (GRHD)
 and later extended to ideal magnetohydrodynamics.
 With the conformal decomposition introduced in section \ref{section1.3.1},
 the determinant of the spatial metric can be rewritten as
@@ -216,25 +216,25 @@ the determinant of the spatial metric can be rewritten as
     &= \sqrt{\hat{\gamma}} \psi^6 \sqrt{\tilde{\gamma}/\hat{\gamma}},
     \end{split}
 \end{align}
-where $\hat{\gamma}_{ij}$ is the \ittext{time-independent reference metric}
+where $\hat{\gamma}_{ij}$ is the \textit{time-independent reference metric}
 which can be chosen to fit the mesh grid in curvilinear coordinate.
-Therefore, the "\ittext{Valencia}" formulation in equation (\ref{eq:valencia}) can be generalized as
+Therefore, the "\textit{Valencia}" formulation in equation (\ref{eq:valencia}) can be generalized as
 \begin{align}
     \partial_t \mathbf{q} + \hat{\nabla}_i \mathbf{f}^i = \mathbf{s},
 \end{align}
 where $\hat{\nabla}_i$ is the corvariant derivatives sociated with the time-independent reference metric $\hat{\gamma}_{ij}$,
-$\left(\mathbf{q},\mathbf{f}^i,\mathbf{s}\right)$ are the $\ittext{conformally rescaled}$ conserved variables,
+$\left(\mathbf{q},\mathbf{f}^i,\mathbf{s}\right)$ are the $\textit{conformally rescaled}$ conserved variables,
 fluxes and source terms respectively.\\
-Comparing to the "\ittext{Valencia}" formulation,
+Comparing to the "\textit{Valencia}" formulation,
 the hydrodynamical equations in reference-metric approach are numerically more accurate in curvilinear coordinates in multi-dimensional simulation,
 especially when symmetry is imposed.
 Equation (\ref{eq:reference_metric_1}) can be further written as
 \begin{align}
     \partial_t \mathbf{q} + \frac{1}{\sqrt{\hat{\gamma}}}\partial_j \left(\sqrt{\hat{\gamma}} \mathbf{f}^j \right) = \mathbf{s} + \mathbf{s}_{geom},
 \end{align}
-where $\mathbf{s}_{geom}$ are the \ittext{geometrical} source terms 
+where $\mathbf{s}_{geom}$ are the \textit{geometrical} source terms 
 which contain the 3-Christoffel symbols $\hat{\Gamma}^i{}_{jk}$ associated with the reference metric $\hat{\gamma}_{ij}$. \\
-Note that the momentum conservation in this expression satisfy to \ittext{machine precision} rather than to the level of truncation error 
+Note that the momentum conservation in this expression satisfy to \textit{machine precision} rather than to the level of truncation error 
 due to the fact that the geometrical source terms $\mathbf{s}_{geom}$ are identically vanishing 
 for the components associated with ignorable coordinates in the metric.
 

@@ -11,8 +11,30 @@
     \graphicspath{{Chapter3/Figs/}}
 \fi
 
+In this chapter, we are going to discuss the details of the numerical method used in \tttext{Gmunu}.
+In the fully-constrained scheme, the evolution of relativistic hydrodynamics in dynamical spacetime
+consists of a set of coupled hyperbolic-elliptic system.
+Firstly, we discuss the numerical method adopted for the hyperbolic system in \tttext{Gmunu},
+including the high-resolution shock-capturing (HRSC) method and the finite volume method.
+Then, we discuss the multigrid solver in \tttext{Gmunu},
+which is used to solve the elliptic system.
 
 %********************************** %First Section  **************************************
+\section{High-resolution shock-capturing (HRSC) methods}
+\subsection{Approximate Riemann solver}
+\subsection{Reconstruction scheme}
+\subsection{Finite volume discretization in curvilinear coordinate}
+
+%********************************** %Second Section  *************************************
+\section{Atmosphere treatment}
+\subsection{Positivity preserving limit}
+
+%********************************** %Third Section  *************************************
+\section{Time discretization}
+\subsection{Explicit Runge-Kutta Method}
+\subsection{Courant-Friedrichs_Lewy Conditions}
+
+%********************************** %Fourth Section  *************************************
 \section{Multigrid Method for elliptic equations} %Section - 3.1 
 \label{section3.1}
 
@@ -32,26 +54,3 @@
 \label{section3.1.5}
 
 \subsection{Ghost cells and refinement boundary} %Section - 3.1.6
-\label{section3.1.6}
-
-%********************************** %Second Section  *************************************
-\section{Elliptic system in fully constrained formulation} %Section - 3.2
-\subsection{Elliptic divergence cleaning for $h^{ij}$}
-\subsection{Maximal slicing condition}
-\subsection{Elliptic sector}
-
-%********************************** %Third Section  *************************************
-\section{High-resolution shock-capturing (HRSC) methods}
-\subsection{Approximate Riemann solver}
-\subsection{Reconstruction scheme}
-\subsection{Finite volume discretization in curvilinear coordinate}
-
-%********************************** %Second Section  *************************************
-\section{Time discretization}
-\subsection{Explicit Runge-Kutta Method}
-\subsection{Courant-Friedrichs_Lewy Conditions}
-\subsection{Hyperbolic system in fully constrained formulation}
-
-\subsection{Time Discretization} %Section - 3.2.2
-\label{section3.2.2}
-
