@@ -197,7 +197,7 @@ To begin with, we define the following matter quantities
     E \coloneqq& n^\alpha n^\beta T_{\alpha\beta},
 \end{align}
 which decompose the stress-energy tensor as
-\begin{align}
+\begin{align}\label{eq:T_decompose}
     T_{\mu\nu} = E n_\mu n_\nu + S_\mu n_\nu + S_\nu n_\mu + S_{\mu\nu}.
 \end{align}\\
 By contracting the $\alpha,\mu$ indices in equation(\ref{eq:Gauss}), we can obtain
@@ -635,13 +635,23 @@ the metric equations can be solved accordingly as follows
     \item Solve equation (\ref{eq:XCFC_beta}) for the shift vector $\beta^i$.
 \end{Step}
 
-\subsection{The Fully Constrained Formulation}  %Section - 1.5.2
+\subsection{The Meudon-Valencia Fully Constrained Formulation}  %Section - 1.5.2
 \label{section1.5.2}
 The fully constrained formulation (FCF) was first proposed by the Meudon group \cite{bonazzola2004constrained},
 and then later modified by the Valencia's group \cite{cordero2008mathematical,cordero2009improved,cordero2012gravitational}.
 By choosing the maximal slcing condition (section \ref{section1.4.1}) and the generalized Dirac gauge (section \ref{section1.4.2}),
 the conformal 3+1 decomposition can be recasted in a coupled elliptic-hyperbolic system,
 where all the constraint equations are utilized to minimize the number of hyperbolic equations in the system.
+Here, we summarize the gauge conditions and algebraic constraint for the scheme
+\begin{flalign}
+    &K \coloneqq \gamma_{ij} K^{ij} = 0, &&\text{(maximal slicing condition)} \label{eq:FCF_max_slicing}\\
+    & \mathcal{D}_j h^{ij} = 0, &&\text{(generalized Dirac gauge)} \label{eq:FCF_dirac}\\
+    & \det \tilde{\gamma}_{ij} = f, &&\text{(conformal decomposition)} \label{eq:FCF_conformal_g}\\
+    & K^{ij} = \psi^{-10}\hat{A}^{ij}, \quad \hat{A}^{ij} = \hat{A}^{ij}_{TT} + \left(L X\right)^{ij}. &&\text{(conformal decomposition)} \label{eq:FCF_conformal_A}
+\end{flalign}
+Note that althought it would be more general to used the \ittext{Killing operator} $\tilde{L}$ associated with $\tilde{\gamma}_{ij}$ in equation (\ref{eq:FCF_conformal_A}),
+the \ittext{Killing operator} $L$ associated with flat metric $f_{ij}$ is used since it is easier to handle technically.
+Under such gauge conditions, the ADM equations are decomposed into a coupled hyperbolic-elliptic system.
 
 \subsubsection{Hyperbolic sector}
 The Valencia's group performed first-order reduction \cite{cordero2008mathematical} to the reduced FCF system \cite{bonazzola2004constrained} by introducing axuiliary variable
@@ -683,6 +693,16 @@ and the characteristic speed is given by
 \begin{align}
     \lambda^i_{\pm} = -\beta^i \pm \alpha\psi^{-2} \tilde{\gamma}^{ii}.
 \end{align}
+In Meudon-Valencia's approach, only the transverse-traceless (TT) part of the hyperbolic equations are evolved.
+Each tenorial hyperbolic equation is reduced to two scalar equations under TT decomposition \cite{bonazzola2004constrained} and solved using spectral method,
+and implicit-explicit approach is used to update $w^{ij}{}_k$ to maintain numerical stability \cite{cordero2012gravitational}.
+To fulfill the constraint in equation (\ref{eq:FCF_g_conformal}), the trace part of $h^{ij}$ was calculated by the following iteration procedure:
+\begin{Step}
+    \item Calculate $h\coloneqq \det{\tilde{\gamma}^{ij}} - f$.
+    \item Solve the Poisson $\mathcal{D}^2 \Phi = h$.
+    \item Update $h^{ij}$ by $h^{ij}_{(new)} = h^{ij}_{(old)} + \frac{1}{2} \left( h f^{ij} - \mathcal{D}^i \mathcal{D}^j \Phi \right)$.
+    \item Repeat step 1 to 3 until the $\det{\tilde{\gamma}^{ij}} = f$ is satisfied.
+\end{Step}
 
 \subsubsection{Elliptic sector}
 The elliptic sector in the FCF scheme is given by
@@ -700,4 +720,6 @@ The elliptic sector in the FCF scheme is given by
 \end{align}
 Note that the FCF scheme is a natural generalization of XCFC scheme 
 since it reduces to XCFC if the approximation $h^{ij} = \hat{A}^{ij}_{TT} = 0$ is made.
+
+\subsubsection{passive FCF}
 

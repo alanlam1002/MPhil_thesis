@@ -13,15 +13,263 @@
 
 
 %********************************** %First Section  **************************************
-\section{Hydrodynamics} %Section - 2.1
+\section{Relativistic Hydrodynamics} %Section - 2.1
+In the previous chapter, we explored the formulation of the left hand side of the Einstein equations.
+In this chapter, we focus on the right hand side of the equations,
+specifically the 3+1 treatment of perfect fluid in conservative form \cite{marti1991numerical,rezzolla2013relativistic}.
 
 \subsection{Perfect fluid}
+\label{section2.1.1}
+In this section, we consider relativistic \ittext{perfect fluid} (i.e. no viscous effects and heat fluxes).
+The energy-momentum tensor of perfect fluid is given by
+\begin{align}
+    T^{\mu\nu} = \rho h u^\mu u^\nu + p g^{\mu\nu},
+\end{align}
+where $\rho$ is the rest-mass density, 
+$u^\mu$ is the fluid 4-velocity,
+$h = 1 + \epsilon + \frac{p}{\rho}$ is the enthalpy, 
+$p$ is the pressure, 
+and $\epsilon$ is the specific internal energy.\\
+The \ittext{Lorentz factor} $W$ of the fluid with respects to the Eulerian observers is given by 
+the projection of fluid 4-velocity $u^\mu$ to $n^\mu$
+\begin{align}
+    W \coloneqq - n_{\mu} u^\mu = \alpha u^t.
+\end{align}
+Thus, the spatial 4-velocity of a fluid measured by Eulerian observers is
+\begin{align}
+    v^\mu \coloneqq \frac{\gamma_{\nu}{}^{\mu} u^\nu} {W},
+\end{align}
+or in component form
+\begin{align}
+    v^t &= 0, & v^i &=  \frac{u^i}{W} + \frac{\beta^i}{\alpha}, \\
+    v_t &= \beta_i v^i, & v_i &= \frac{u_i}{W}.
+\end{align}
+As a result, the \ittext{Lorentz factor} can also be written as
+\begin{align}
+    W = \frac{1}{\sqrt{1-v_i v^i}}.
+\end{align}
+The dynamics of fluid are governed by the equations of rest-mass conservation and energy momentum conservation.
+The system is closed by the equation of state (EOS) of the fluid,
+which reflects the thermodynamic properties of the fluid at a macroscopic level.
+Here, we consider two common analytic equation of state as follows:
+\begin{enumerate}
+    \item Ideal-gas
+    \begin{align}
+        p = (\Gamma-1)\rho \epsilon,
+    \end{align}
+    where $\Gamma$ is the polytropic index of the gas.
+    \item Polytropic EOS 
+    \begin{align}
+        p = K\rho^\Gamma,
+    \end{align}
+    where $\Gamma$ again is the polytropic index the gas, and $K$ is a constant of proportionality.
+\end{enumerate}
+
 \subsection{Rest-mass conservation}
+\label{section2.1.2}
+The general-relativistic conservation of rest-mass is given by
+\begin{align}
+    \nabla_\mu J^\mu &= 0, & J^\mu &\coloneqq \rho u^\mu,
+\end{align}
+where $J^\mu$ is the rest-mass current density.
+Under 3+1 decomposition, the rest-mass conservation can be written as
+\begin{align}\label{eq:mass_cons}
+    \partial_t \left(\sqrt{\gamma}D\right) + \partial_i \left[\sqrt{\gamma} D \left(\alpha v^i - \beta^i \right) \right] = 0,
+\end{align}
+where
+\begin{align}
+    D \coloneqq \rho \alpha u^t = \rho W,
+\end{align}
+is the conserved quantity.
+
 \subsection{Energy and momentum conservation}
+\label{section2.1.3}
+Other than the conservation of rest-mass, the energy and momentum conservation of the fluid must also be satisfied
+\begin{align}
+    \nabla_\nu T^{\mu\nu} = 0.
+\end{align}
+Following the 3+1 decomposition of stress-energy tensor introduced in equation (\ref{eq:T_decompose}),
+the fluid quantities in the case of perfect fluid become
+\begin{align}
+    S^{\mu\nu} &= \rho h W^2 v^\mu v^\nu + p \gamma^{\mu\nu}, \\
+    S^\mu &= \rho h W^2 v^\mu, \\
+    E &= \rho h W^2 - p.
+\end{align}
+The conservation of energy and momentum hence leads to
+\begin{align}
+    &\partial_t \left( \sqrt{\gamma} S_j \right) + \partial_i \left[\sqrt{\gamma} \left(\alpha S^i{}_j - \beta^i S_j\right) \right]
+    = \sqrt{\gamma} \left(\frac{1}{2} \alpha S^{ik} \partial_j \gamma_{ik} + S_i \partial_j \beta^i - E \partial_j \alpha\right), \label{eq:mom_cons} \\
+    &\partial_t \left( \sqrt{\gamma} E \right) + \partial_i \left[ \sqrt{\gamma} \left(\alpha S^i - \beta^i E \right) \right]
+    = \sqrt{\gamma} \left(\alpha K_{ij} S^{ij} - S^i \partial_i \alpha \right). \label{eq:E_cons}
+\end{align}
+Equation (\ref{eq:E_cons}) can also be written as
+\begin{align}
+    &\partial_t \left( \sqrt{\gamma} \tau \right) + \partial_i \left[\sqrt{\gamma} \left(\alpha\left(S^i - D v^i \right) - \beta^i \tau \right)\right]
+    = \sqrt{\gamma} \left(\alpha K_{ij} S^{ij} - S^i \partial_i \alpha \right). \label{eq:tau_cons},
+\end{align}
+to obtain better numerical accuracy,
+where the conserved quantity $\tau$ is defined as
+\begin{align}
+    \tau \coloneqq E - D.
+\end{align}
+
 \subsection{Conservative form of hydrodynamics equations}
-\subsection{Conserved to Primitive variables conversion}  %Section - 2.3 
+\label{section2.1.4}
+Here, we summarize \cref{eq:mass_cons,eq:mom_cons,eq:tau_cons} and express in conservative form
+\begin{align}
+    \partial_t \left(\sqrt{\gamma} \mathbf{Q} \right) \partial_i \left(\sqrt{\gamma} \mathbf{F}^i \right) = \sqrt{\gamma} \mathbf{S},
+\end{align}
+where the conserved variables $\mathbf{Q}$, flux terms $\mathbf{F}^i$ and source terms $\mathbf{S}$ are
+\begin{align}
+    & \mathbf{Q} =
+    \begin{pmatrix}
+    D \\
+    S_j \\
+    \tau
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+    \rho W \\ 
+    \rho h W^2 v_j \\ 
+    \rho h W^2 - p - D
+    \end{pmatrix},\\
+    & \mathbf{F}^i =
+    \begin{pmatrix}
+    D\left(\alpha v^i -\beta^i \right) \\
+    S_j \left( \alpha v^i - \beta^i \right) + \alpha \delta^i{}_j p \right) \\
+    \tau left( \alpha v^i - \beta^i \right) + \alpha p v^i \right) 
+    \end{pmatrix},\\
+    & \mathbf{S} =
+    \begin{pmatrix}
+    0 \\
+    \frac{1}{2} \alpha S^{ik} \partial_j \gamma_{ik} + S_i \partial_j \beta^i - E \partial_j \alpha \\
+    \alpha K_{ij} S^{ij} - S^i \partial_i \alpha
+    \end{pmatrix},
+\end{align}
+which is commonly known as the "\ittext{Valencia formulation}" of the relativistic-hydrodynamics equatons. \\
+The characteristic speeds of such system is given by
+\begin{align}\label{eq:valencia}
+    \lambda_0 &= \alpha v^i - \beta^i \qquad \text{(triple eigenvalue)},\\
+    \lambda_{\pm} &= \frac{\alpha}{1-v^2 c_s^2} \left\{ v^i \left(1-c_s^2 \right) 
+    \pm c_s^2 \sqrt{\left(1-v^2 \right) \left[\gamma^ii \left(1- v^2 c_s^2 \right) - {v^i}^2\left(1-c_s^2 \right) \right]} \right\},
+\end{align}
+where $\lambda_{\pm}$ measures the propagation speeds of the \ittext{acoustic waves} of the system,
+and $\lambda_0$ corresponds to the propagation speed of \ittext{matter waves}.
+
+\subsection{Conserved to Primitive variables conversion} 
+\label{section2.1.5}
+It is not trivial to convert the conserved variables $\left(D,S_i,\tau\right)$ introduced in section \ref{section2.1.4}
+to primitive variables $\left(\rho, W, v^i, p\right)$ in relativistic hydrodynamics.
+One must solve non-linear equations numerically.
+In \texttt{Gmunu}, we adopted the routine used in \cite{galeazzi2013implementation}.
+The implementation details are included here:
+\begin{Step}
+    \item Calculate the rescaled variables and some useful relations which are fixed during the iterations
+    \begin{align}
+        S &\coloneqq \sqrt{S_i S^i}, \\
+        r &\coloneqq \frac{S}{D}, & q &\coloneqq \frac{\tau}{D}, & k &\coloneqq \frac{S}{\tau + D}.
+    \end{align}
+    \item Determine the bounds of the root
+    \begin{align}
+        z_- &\coloneqq \frac{k/2}{\sqrt{1-k^2/4}}, & z_+ &\coloneqq \frac{k}{\sqrt{1-k^2}}.
+    \end{align}
+    \item In the inverval $\left[z_-, z_+ \right]$, we solve
+    \begin{align}\label{eq:cons2prim_root}
+        f(z) = z - \frac{r}{\hat{h}(z)},
+    \end{align}
+    where
+    \begin{align}
+        \hat{h}(z) &= \left(1+\hat{\epsilon}(z) \right) \left( 1+ \hat{a}(z) \right),
+    \end{align}
+    \begin{align}
+        \hat{\epsilon}(z) &= \hat{W}(z)q - zr + \frac{z^2}{1+\hat{W}(z)},
+        & \hat{a}(z) &= \frac{\hat{p}(z)}{\hat{\rho}(z)\left( 1 + \hat{\epsilon}(z) \right) },
+    \end{align}
+    \begin{align}
+        \hat{p}(z) &= p\left(\hat{\rho}(z), \hat{\epsilon}(z) \right),
+        & \hat{\rho}(z) &= \frac{D}{\hat{W}(z)},
+        & \hat{W}(z) &= \sqrt{1+z^2}.
+    \end{align}
+    Equation (\ref{eq:cons2prim_root}) is solved using Illinois algorithm in \texttt{Gmunu}.
+    Note that during the iterations, we enforce the density $\rho$ and the specific energy $\epsilon$ fail into the validity region of the EOS,
+    i.e., we evalue the updated $\rho$ and $\epsilon$ with 
+    $\hat{\rho}(z) = \max\left(\min\left(\rho_\max{},\hat{\rho}\right),\rho_\min{}\right)$ and
+    $\hat{\epsilon}(z) = \max\left(\min\left(\epsilon_\max{},\hat{\epsilon}\right),\epsilon_\min{}\right)$.
+    \item With the root $z_0$ of \cref{eq:cons2prim_root},
+    we can then work out the primitive variables $\left(\rho, \epsilon, p\right)$ respectively with the equations used in step 3.
+    For the velocity $v^i$, it can be obtained with $z$ by
+    \begin{align}
+        \hat{v}^i(z) = \frac{S^i/D}{\hat{h}(z)\hat{W}(z)}.
+    \end{align}
+\end{Step}
 
 %********************************** %Second Section  *************************************
-\section{The reference-metric formulism} %Section - 2.2
+\section{The reference-metric formalism} %Section - 2.2
 \label{section2.2}
+The reference-metric formalism, a generalization of the "\ittext{Valencia}" formulation, was original proposed by Montero \cite{montero2014general} in 2014 for general relativistic hydrodynamics (GRHD)
+and later extended to ideal magnetohydrodynamics.
+With the conformal decomposition introduced in section \ref{section1.3.1},
+the determinant of the spatial metric can be rewritten as
+\begin{align}\label{eq:reference_metric_1}
+    \begin{split}
+    \sqrt{\gamma} &= \psi^6 \sqrt{\tilde{\gamma}} \\
+    &= \sqrt{\hat{\gamma}} \psi^6 \sqrt{\tilde{\gamma}/\hat{\gamma}},
+    \end{split}
+\end{align}
+where $\hat{\gamma}_{ij}$ is the \ittext{time-independent reference metric}
+which can be chosen to fit the mesh grid in curvilinear coordinate.
+Therefore, the "\ittext{Valencia}" formulation in equation (\ref{eq:valencia}) can be generalized as
+\begin{align}
+    \partial_t \mathbf{q} + \hat{\nabla}_i \mathbf{f}^i = \mathbf{s},
+\end{align}
+where $\hat{\nabla}_i$ is the corvariant derivatives sociated with the time-independent reference metric $\hat{\gamma}_{ij}$,
+$\left(\mathbf{q},\mathbf{f}^i,\mathbf{s}\right)$ are the $\ittext{conformally rescaled}$ conserved variables,
+fluxes and source terms respectively.\\
+Comparing to the "\ittext{Valencia}" formulation,
+the hydrodynamical equations in reference-metric approach are numerically more accurate in curvilinear coordinates in multi-dimensional simulation,
+especially when symmetry is imposed.
+Equation (\ref{eq:reference_metric_1}) can be further written as
+\begin{align}
+    \partial_t \mathbf{q} + \frac{1}{\sqrt{\hat{\gamma}}}\partial_j \left(\sqrt{\hat{\gamma}} \mathbf{f}^j \right) = \mathbf{s} + \mathbf{s}_{geom},
+\end{align}
+where $\mathbf{s}_{geom}$ are the \ittext{geometrical} source terms 
+which contain the 3-Christoffel symbols $\hat{\Gamma}^i{}_{jk}$ associated with the reference metric $\hat{\gamma}_{ij}$. \\
+Note that the momentum conservation in this expression satisfy to \ittext{machine precision} rather than to the level of truncation error 
+due to the fact that the geometrical source terms $\mathbf{s}_{geom}$ are identically vanishing 
+for the components associated with ignorable coordinates in the metric.
 
+\subsection{General relativistic hydrodynamics (GRHD) equations}
+\label{section2.2.1}
+The equations of relativistic hydrodynamics in reference-metric approach is given by
+\begin{align}
+    \partial_t \left( q_{D} \right) + \frac{1}{\sqrt{\hat{\gamma}}} \partial_j \left[ \sqrt{\hat{\gamma}} \left( f_{D} \right)^j \right]
+    &= 0, \\
+    \partial_t \left( q_{S_i} \right) + \frac{1}{\sqrt{\hat{\gamma}}} \partial_j \left[ \sqrt{\hat{\gamma}} \left( f_{S_i} \right)^j \right]
+    &= s_{S_i} + \hat{\Gamma}^l{}_{ik}\left( f_{S_l} \right)^k, \\
+    \partial_t \left( q_{\tau} \right) + \frac{1}{\sqrt{\hat{\gamma}}} \partial_j \left[ \sqrt{\hat{\gamma}} \left( f_{\tau} \right)^j \right]
+    &= s_{\tau}, \\
+\end{align}
+The conformally rescaled conserved quantities $\mathbf{q}$ are
+\begin{align}
+    q_D & \coloneqq \psi^6 \sqrt{\tilde{\gamma}/\hat{\gamma}} D = \psi^6 \sqrt{\tilde{\gamma}/\hat{\gamma}} \left( \rho W \right), \\
+    q_{S_i} & \coloneqq \psi^6 \sqrt{\tilde{\gamma}/\hat{\gamma}} S_i = \psi^6 \sqrt{\tilde{\gamma}/\hat{\gamma}} \left( \rho h W^2 v_i \right), \\
+    q_\tau & \coloneqq \psi^6 \sqrt{\tilde{\gamma}/\hat{\gamma}} \tau = \psi^6 \sqrt{\tilde{\gamma}/\hat{\gamma}} \left( \rho h W^2 - p - D \right).
+\end{align}
+The flux terms $\mathbf{f}^i$ are
+\begin{align}
+    \left(f_D \right)^i & \coloneqq \psi^6 \sqrt{\tilde{\gamma}/\hat{\gamma}} \left( D \hat{v}^i \right), \\
+    \left(f_{S_j} \right)^i & \coloneqq \psi^6 \sqrt{\tilde{\gamma}/\hat{\gamma}} \left(S_j \hat{v}^i + \delta^i{}_j \alpha p \right), \\
+    \left(f_\tau \right)^i & \coloneqq \psi^6 \sqrt{\tilde{\gamma}/\hat{\gamma}} \left(\tau \hat{v}^i + \alpha p v^i \right),
+\end{align}
+where $\hat{v}^i \coloneqq \alpha v^i -\beta^i$.\\
+Finally, the source terms $\mathbf{s}$ are
+\begin{align}
+    s_D &= 0, \\
+    s_{S_i} &= \alpha \psi^6 \sqrt{\tilde{\gamma}/\hat{\gamma}} 
+    \left[ - T^{00} \alpha\partial_i \alpha + T^0{}_k \hat{\nabla}_i \beta^k
+    + \frac{1}{2} \left( T^{00} \beta^j \beta^k + 2 T^{0j} \beta^k + T^{jk} \right) \hat{\nabla}_i \gamma_{jk} \right], \\
+    s_\tau &= \alpha \psi^6 \sqrt{\tilde{\gamma}/\hat{\gamma}}
+    \left[ T^{00} \left(K_{ij}\beta^i \beta^j - \beta^k \partial_k \alpha \right)
+    + 2 T^{0j} \left( 2 K_{jk} \beta^k - \partial_j \alpha \right) 
+    + T^{ij} K_{ij} \right].
+\end{align}
