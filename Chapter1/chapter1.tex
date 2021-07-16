@@ -762,7 +762,10 @@ directly without performing TT composition.
 Note that although the hyperbolic system is \textit{unconditionally unstable} if second-order explicit \textit{Runge-Kutta} (RK) method used,
 it has shown to be numerically stable using fourth-order explicit RK method \cite{cordero2012partially,shibata2015numerical}.
 In \texttt{Gmunu}, the hyperbolic sector in FCF scheme is evolving simulataneously with the hydrodynamical system using 
-fourth-order \textit{strong stability-preserving Runge-Kutta} (ssprk) methods.\\
+fourth-order \textit{strong stability-preserving Runge-Kutta} (ssprk) methods.
+For spatial derivative, fourth-order upwind finite difference is used for the advection terms \cite{shibata2015numerical}
+(i.e. $\mathcal{D}_k h^{ij}$ in \cref{eq:FCF_h_2} and $\mathcal{D}_k \hat{A}^{ij}$ in \cref{eq:FCF_A_2}),
+and fourth-order central finite difference is used for other derivative terms.\\
 After the time integration is done,
 we need to modify $\left(h^{ij}_{old}, \hat{A}^{ij}_{old}\right)$ so that the gauge conditions can be satisfied.
 The generalized Dirac gauge condition is then enforced by \textit{elliptic divergence cleaning} method as follows

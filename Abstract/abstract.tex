@@ -1,5 +1,31 @@
 % ************************** Thesis Abstract *****************************
 % Use `abstract' as an option in the document class to print only the titlepage and the abstract.
 \begin{abstract}
-This is where you write your abstract ...
+Many astrophysical scenarios involve neutron stars and black holes such as core-collapse supernovae,
+binary neutron star and neutron star-black hole mergers,
+which are the most important events in gravitational wave physics in multimessenger astrophysics.
+To numerically model these systems accurately within a reasonable time and affordable computational resources,
+a multi-scale, multi-dimensional,
+fully parallelized, support different geometries general relativistic
+(magneto-)hydrodynamics code is desired.
+We developed our new open-source, parallelized, block-grid adaptive,
+multi-dimensional general relativistic electro-magneto-hydrodynamics code \texttt{Gmunu}
+(General-relativistic multigrid numerical solver)
+in curvilinear geometries in dynamical spacetimes.\\
+The \texttt{Gmunu} code current adopts the conformally flat condition (CFC) approximation 
+by solving the elliptic metric equations with multigrid approach.
+Although the Gmunu code pass with flying colors in benchmarking tests and demanding magnetohydrodynamics problems,
+the conformally flat condition approximation prohibits the emission of gravitational wave in the simulation.
+Numerical simulations with full general-relativistic treatment are able to 
+simulation gravitational wave signals emitted from various astrophysics events such as compact binary coalescence (CBC) and core-collapse supernova.
+Therefore, it is necessary to extend our code to adopt the fully constrained formulation (FCF),
+which is a full general relativistic formulation naturally generalized from the conformally flat condition approximation.
+In contrast to the fully hyperbolic formulations of general relativity such as BSSN and CCZ4,
+the fully constrained formulation maximizes the number of elliptic equations in each time steps
+by choosing maximal slicing condition and generalized Dirac gauge,
+leaving only two degrees of freedom in the hyperbolic sector which corresponds to the gravitational wave in far field regime.
+With the usage of multigrid solver,
+the elliptic metric equations can be solved multi-dimensionally in cartesian, cylindrical or spherical geometries.\\
+In this thesis, we present the methodology, implementation details and the performance of
+the fully constrained formulation in \texttt{Gmunu}.
 \end{abstract}

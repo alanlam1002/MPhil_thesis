@@ -1,0 +1,48 @@
+%!TEX root = ../thesis.tex
+%*******************************************************************************
+%*********************************** Fifth Chapter *****************************
+%*******************************************************************************
+
+\chapter{Concluding Remarks}  %Title of the Fifth Chapter
+
+\ifpdf
+    \graphicspath{{Chapter5/Figs/PDF/}{Chapter5/Figs/}}
+\else
+    \graphicspath{{Chapter5/Figs/}}
+\fi
+The main theme of this work is to extend the \texttt{Gmunu} code to adopt the
+fully constrained formulation (FCF) scheme,
+a full general relativistic formulation naturally generalized from the conformally flat condition (CFC) approximation
+which is current used in the code.
+So far only two dimensional cylindrical coordinate is implemented for the FCF scheme.
+In this thesis, we present the methodology and implementation of \texttt{Gmunu} in detail.\\
+We have tested \texttt{Gmunu} with several benchmarking tests.
+In the Teukolsky wave test, we have shown the stability and convergence of evolving the hyperbolic equations in FCF.
+We also demonstrated that the elliptic divergence cleaning by multigrid method is able to maintain the gauge condition.
+For the hydrodynamics simulation,
+we have performed simulations of the evolution of both non-rotating and rotating neutron stars.
+We are able to extract the gravitational wave signature directly from the metric components.
+
+%********************************** %First Section  **************************************
+\section*{Future Plan}
+Here, we list some possible improvement of \texttt{Gmunu} planned for the future.
+
+\paragraph{Support different geometry}
+Currently, the FCF scheme is only implemented in 2D cylindrical coordinate
+which limit our study to axisymmetric profiles.
+We will extend the code to support 2D spherical
+as well as 3D spherical/cartesian coordinates in the future
+so that we can broaden our study to non-axisymmetric systems
+such as binary system and supernovae.
+
+\paragraph{Simulate black hole}
+In \texttt{Gmunu}, we have no treatment to handle the black holes singularity nor the apparent horizon.
+It has been shown that \cite{cordero2014excision} the excision scheme can be used to deal with black holes for constrained evolution scheme in spherically symmetric spacetime.
+Therefore, we would like to develop a horizon finder in \texttt{Gmunu} and implement the excision scheme in the future.
+
+\paragraph{Improve the FCF scheme}
+We used finite difference for solving Einstein equations and finite volume for solving the hydrodynamics.
+Although they are equivalent in the case of second order accuracy,
+this becomes a problem if we extend the code to high-order numerical methods in the future.
+It has been suggested that the hyperbolic sector in FCF can be rewritten in conservative form \cite{cordero2008mathematical}.
+Therefore, we would like to rewrite the hyperbolic equations in FCF to suit the finite volume scheme in the future.

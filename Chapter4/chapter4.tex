@@ -16,10 +16,149 @@
 \section{Multigrid solver tests} %Section - 4.1 
 \label{section4.1}
 \subsection{Newtonian gravitational field}
+For simplicity, we consider only the test of Poisson equation.
+In Newtonian gravity, the gravitational potential $\Phi$ can be obtained by
+\begin{align}\label{eq:poisson_eq}
+    \nabla^2 = - 4\pi \rho,
+\end{align}
+where $\rho$ is the energy density of the matter source.
+Here, we consider a spherically symmetric source as
+\begin{align}
+    \rho(r) &= 
+    \begin{cases}
+        \rho_0 \left(1-r^2 \right), \quad & r<1,\\
+        0, \quad & r\geq 1,
+    \end{cases}
+\end{align}
+where $\rho_0$ is a constant chosen to be $1$.
+The analytic solution is given by
+\begin{align}
+    \Phi(r) &=
+    \begin{cases}
+        \pi \rho_0 \left(\frac{r^4}{5} - \frac{2 r^2}{3} + 1 \right), \quad & r<1, \\
+        \frac{8 \pi \rho_0}{15 r}, \quad & r\geq 1.
+    \end{cases}
+\end{align}
+We solve the Poisson equation (\ref{eq:poisson_eq}) 
+in 1D spherical, 2D cylindrical and 3D cartesian coodinates
+with 2nd order and 4th order central finite difference respectively.
+The computational domain and the discretization are set to be
+$0\leq r \leq 10$ and $[N]$ for spherical coordinate,
+$0\leq (r,z) \leq 10$ and $[N,N]$ for cylindrical coordinate, and
+$0\leq (x,y,z) \leq 10$ and $[N,N,N]$ for cylindrical coordinate respectively,
+where $N$ is the number of grids.
+The boundary conditions are set to be
+\begin{align}
+    \left. \frac{d \Phi}{d r} \right|_{r=0} &= 0 && \text{(Neumann boundary condition)}, \\
+    \left. \frac{d r\Phi}{dr} \right|_{r=10} &= 0 && \text{(Robin boundary condition.)}
+\end{align}
+Note that although the boundition condition should be $\Phi \rightarrow 0$ for $r \rightarrow \infty$,
+in practice we can only impose the Robin boundary condition for large $r$ due to the finite computational domain.
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{L1_norm_2.pdf}
+  %\caption{A subfigure}
+  \label{fig:mg_conv_4}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{L1_norm_4.pdf}
+  %\caption{A subfigure}
+  \label{fig:mg_conv_4}
+\end{subfigure}
+\caption{L1-norm of $\Phi$ using 2nd order (left) and 4th order central finite difference scheme (right).}
+\label{fig:mg_conv}
+\end{figure}
+Figure \ref{fig:mg_conv} shows the convergent rate of the L1-norm of $\Phi$
+\begin{align}
+    \left{||} \Phi \right{||}_1 &= \frac{1}{N}\sum^{N}_{i=1} \left| \Phi_i - \Phi^{exact}_i \right|,
+\end{align}
+where arround second-order accuracy and third-order convergence is achieved for 2nd order and 4th order central finite difference scheme in general.
 
 %********************************** %Second Section  *************************************
-\section{General relativistic hydrodynamics in dynamic spacetime} %Section - 4.2
+\section{Teukolsky wave test}
 \label{section4.2}
+We consider the quadrupole $(l,m)=(2,0)$ mode of the vacuum solution.
+For even-parity quadrupole mode, the metric takes form \cite{teukolsky1982linearized} in spherical coordinate $(r, \theta, \phi)$
+\begin{align}
+    \begin{split}
+    ds^2 =& - dt^2 + \left(1 + A f_{rr}\right) dr^2 + \left(2 B f_{r\theta}\right) r dr d\theta
+    + \left(2 B f_{r\phi} \right) r \sin\theta dr d\phi \\
+    & \left(1 + C f^{(1)}_{\theta\theta} + A f^{(2)}_{\theta\theta} \right) r^2 d\theta^2
+    + \left[2 \left(A-2C\right) f_{\theta\phi} \right] r^2 \sin\theta d\theta d\phi \\
+    & + \left(1 + C f^{(1)}_{\phi\phi} + A f^{(2)}_{\phi\phi} \right) r^2 \sin^2\theta d\phi^2,
+    \end{split}
+\end{align}
+where the coefficient $A,B,C$ are constructed from $F(x)$ for $x=t-r$ outgoing wave and $x=t+r$ ingoing wave
+\begin{align}
+    F(x) = F_1 (t-r) + F_2 (t+r),
+\end{align}
+and we define
+\begin{align}
+    F^{(n)} \coloneqq \left. \frac{d^n F_1(x)}{dx^n} \right|_{x=t-r} + (-1)^n \left. \frac{d^n F_2(x)}{dx^n} \right|_{x=t+r}.
+\end{align}
+Thus, the coefficient are given by
+\begin{align}
+    A &= 3 \left( \frac{F^{(2)}}{r^3} + \frac{3 F^{(1)}}{r^4} + \frac{3 F}{r^5} \right), \\
+    B &= - \left( \frac{F^{(3)}}{r^2} + \frac{3F^{(2)}}{r^3} + \frac{3F^{(1)}}{r^4} + \frac{6F}{r^5} \right), \\
+    C &= \frac{1}{4} \left( \frac{F^{(4)}}{r} + \frac{2F^{(3)}}{r^2} + \frac{9F^{(2)}}{r^3} + \frac{21F^{(1)}}{r^4} + \frac{21F}{r^5} \right).
+\end{align}
+For $m=0$ mode, the angular function $f_{ij}$ are given by
+\begin{align}
+    f_{rr} &= 2 - 3 \sin^2 \theta, & f_{r\theta} &= - 3 \sin\theta \cos\theta, & f_{r\phi} &= 0, \\
+    f_{\theta\theta}^{(1)} &= 3 \sin^2\theta, & f_{\theta\theta}^{(2)} &= -1, & f_{\theta\phi} &= 0, \\
+    f_{\phi\phi}^{(1)} &= - f_{\theta\theta}^{(1)}, & f_{\phi\phi}^{(2)} &= 3 \sin^2 \theta - 1.
+\end{align}
+In our test, we consider 
+\begin{align}
+    F_1 (x) = - F_2 (x) = \frac{\mathcal{A}}{2} x e^{-\frac{x^2}{\lambda^2}},
+\end{align}
+and perform the simulation in 2D axisymmetric cylindrical coordinate $(r,z,\phi)$ with $z$ reflection symmetry.
+The computational domain covers the region $0\leq \rho \leq 5$, $0\leq z \leq 5$
+and the discretization of the domain is set to be $[N,N]$ where $N$ is the number of grids.
+The inital profile is given by
+\begin{align}
+    \psi &= \alpha = 1, \\
+    \beta^i &= 0, \\
+    h^{rr} &= \mathcal{A}' \frac{\lambda^4 - \rho^2 z^2}{\lambda^8} e^{-\frac{x^2}{\lambda^2}}, \\
+    h^{r z} &= \mathcal{A}' \frac{\rho z \left(\rho^2 - 2 \lambda^2 \right)}{\lambda^8} e^{-\frac{x^2}{\lambda^2}}, \\
+    h^{r \phi} &= 0, \\
+    h^{zz} &= - \mathcal{A}' \frac{\left(2 \lambda^4 - 4 \lambda^2 \rho^2 + \rho^4 \right)}{\lambda^8} e^{-\frac{x^2}{\lambda^2}}, \\
+    h^{z\phi} &= 0, \\
+    h^{\phi\phi} &= \mathcal{A}' \frac{\left(\lambda^4 - 4 \lambda^2 \rho^2 +\rho^2 z^2 + \rho^4 \right)}{\lambda^8} e^{-\frac{x^2}{\lambda^2}}, \\
+    \hat{A}^{ij} &= 0,
+\end{align}
+where $\mathcal{A}' = \frac{\mathcal{A}}{12}$.
+The analytic solution is written in the Appendix.
+The simulation will be performed under three configurations:
+\begin{enumerate}
+    \item Solve the linearized hyperbolic equations only
+    \begin{align}
+        \partial_t h^{ij} &= 2 \hat{A}^{ij}, \\
+        \partial_t \hat{A}^{ij} &= \frac{1}{2} f^{kl} \mathcal{D}_k \mathcal{D}_l h^{ij}.
+    \end{align}
+    \item Solve the hyperbolic equations with non-linear terms (i.e. includes $\tilde{R}^{ij}_*$ and \tilde{R}) in FCF only.
+    \item Solve the hyperbolic equations togather with the elliptic sector in FCF except $\psi$, $\alpha$ and $\beta$.
+\end{enumerate}
+In the tests, we choose $\mathcal{A}'=10^{-4}$ and $\lambda=1$.
+
+%********************************** %Third Section  *************************************
+\section{General relativistic hydrodynamics in dynamic spacetime} %Section - 4.3
+\label{section4.3}
+Here we study the evolution of a neutron star with dynamical background under FCF scheme.
 \subsection{Non-rotating neutron star}
+In this test, we consider a non-rotating neutron star known as "BU0" \cite{dimmelmeier2006non}
+which is constructed with the polytropic index $\Gamma = 2$ and $K = 100$,
+and central rest-mass density $\rho_c = 1.28 \times 10^{-3}$ (in $c=G=M_\odot=1$ unit).
+This star model is generated by the open-source code \texttt{XNS} 
+\cite{bucciantini2011general,pili2014axisymmetric,pili2015general,pili2017general}.
+We simulate the star in 2D cylindrical coordinate and impose $z$ reflection symmetry.
+The computational domain covers $0 \leq r \leq 60$, $0\leq z \leq 60$ 
+with resolution $n_r \times n_z = 256 \times 256$.
+The ideal-gas equation of state with $\Gamma = 2$ is used for the simulation.
+
 \subsection{Rapidly rotating neutron star}
 

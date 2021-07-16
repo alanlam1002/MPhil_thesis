@@ -977,6 +977,20 @@ wish to left align your text}
 \end{singlespace}
 }
 
+% ********************************* Committee *********************************
+% The committee environment makes sure the dedication gets its
+% own page, centered
+
+\newenvironment{committee}{
+\cleardoublepage
+\setsinglecolumn
+\chapter*{\centering \Huge \textbf{\underline{Thesis Assessment Committee}}}
+\thispagestyle{empty}
+\centering
+}
+
+
+
 % ********************************* Dedication *********************************
 % The dedication environment makes sure the dedication gets its
 % own page, centered
