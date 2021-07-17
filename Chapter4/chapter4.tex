@@ -118,7 +118,7 @@ In our test, we consider
 \end{align}
 and perform the simulation in 2D axisymmetric cylindrical coordinate $(r,z,\phi)$ with $z$ reflection symmetry.
 The computational domain covers the region $0\leq \rho \leq 5$, $0\leq z \leq 5$
-and the discretization of the domain is set to be $[N,N]$ where $N$ is the number of grids.
+and the discretization of the domain is set to be $[256,256]$.
 The inital profile is given by
 \begin{align}
     \psi &= \alpha = 1, \\
@@ -133,32 +133,150 @@ The inital profile is given by
 \end{align}
 where $\mathcal{A}' = \frac{\mathcal{A}}{12}$.
 The analytic solution is written in the Appendix.
-The simulation will be performed under three configurations:
+The simulation will be performed under two configurations:
 \begin{enumerate}
-    \item Solve the linearized hyperbolic equations only
-    \begin{align}
-        \partial_t h^{ij} &= 2 \hat{A}^{ij}, \\
-        \partial_t \hat{A}^{ij} &= \frac{1}{2} f^{kl} \mathcal{D}_k \mathcal{D}_l h^{ij}.
-    \end{align}
-    \item Solve the hyperbolic equations with non-linear terms (i.e. includes $\tilde{R}^{ij}_*$ and \tilde{R}) in FCF only.
-    \item Solve the hyperbolic equations togather with the elliptic sector in FCF except $\psi$, $\alpha$ and $\beta$.
+    %\item Solve the linearized hyperbolic equations only
+    %\begin{align}
+    %    \partial_t h^{ij} &= 2 \hat{A}^{ij}, \\
+    %    \partial_t \hat{A}^{ij} &= \frac{1}{2} f^{kl} \mathcal{D}_k \mathcal{D}_l h^{ij}.
+    %\end{align}
+    \item Solve the hyperbolic equations only (without elliptic divergence cleaning).
+    \label{TW_config_1}
+    \item Solve the hyperbolic equations togather with the elliptic sector in FCF except $\psi$, $\alpha$ and $\beta$ (with elliptic divergence cleaning).
+    \label{TW_config_2}
 \end{enumerate}
 In the tests, we choose $\mathcal{A}'=10^{-4}$ and $\lambda=1$.
+\begin{figure}[h!]
+\centering
+  \includegraphics[width=\linewidth]{herr.pdf}
+\caption{L2-norm of $h^{ij}$ of the Teukolsky wave test by solving hyperbolic equations without elliptic sector (configuration \ref{TW_config_1}).}
+\label{fig:TW_h_err}
+\end{figure}
+In figure \ref{fig:TW_h_err},
+it shows the L2-norm of $h^{ij}$ which is given by
+\begin{align}
+    \delta h^{ij} &= \sqrt{\frac{1}{V}\sum \left| h^{ij} - h^{ij}_{exact} \right|^2}.
+\end{align}
+The simulation result agrees with the analytical solution very well.
+\begin{figure}[h!]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{Dh1.pdf}
+  \caption{L2-norm of $\mathcal{D}_i h^{ir}$}
+  \label{fig:Dh1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{Dh2.pdf}
+  \caption{L2-norm of $\mathcal{D}_i h^{iz}$}
+  \label{fig:Dh2}
+\end{subfigure}
+\caption{L2-norm of the divergence of $h^{ij}$.
+The red line corresponds to the evolution of $h^{ij}$ without divergence cleaning
+while the green line corresponds to the evolution of $h^{ij}$ with divergence cleaning.}
+\label{fig:Dh}
+\end{figure}
+In figure \ref{fig:Dh}, it shows that the elliptic divergence cleaning method is effective on
+reducing the divergence of $h^{ij}$.
+Especially for $t \gtrsim 5$ when the wave is propagated out of the computational domain,
+the divergence of $h^{ij}$ keep increasing if no treatment is applied,
+while it is suppressed with the elliptic cleaning method.
+\begin{figure}[h!]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{result_hij_0000.pdf}
+  %\caption{L2-norm of $\mathcal{D}_i h^{ir}$}
+  \label{fig:hij9_0}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{result_hij_0010.pdf}
+  %\caption{L2-norm of $\mathcal{D}_i h^{ir}$}
+  \label{fig:hij9_1}
+\end{subfigure}%
+
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{result_hij_0020.pdf}
+  %\caption{L2-norm of $\mathcal{D}_i h^{ir}$}
+  \label{fig:hij9_2}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{result_hij_0030.pdf}
+  %\caption{L2-norm of $\mathcal{D}_i h^{ir}$}
+  \label{fig:hij9_3}
+\end{subfigure}%
+
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{result_hij_0040.pdf}
+  %\caption{L2-norm of $\mathcal{D}_i h^{ir}$}
+  \label{fig:hij9_4}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{result_hij_0050.pdf}
+  %\caption{L2-norm of $\mathcal{D}_i h^{ir}$}
+  \label{fig:hij9_5}
+\end{subfigure}%
+
+\caption{Evolution of $h^{\phi\phi}$ component between $t=0$ (upper left) and $t=5$ (lower right) with elliptic divergence cleaning.}
+\label{fig:hij9}
+\end{figure}
+In figure \ref{fig:hij9}, we show the evolution of the $h^{\phi\phi}$ component with elliptic divergence cleaning.
 
 %********************************** %Third Section  *************************************
 \section{General relativistic hydrodynamics in dynamic spacetime} %Section - 4.3
 \label{section4.3}
-Here we study the evolution of a neutron star with dynamical background under FCF scheme.
+Here we study the evolution of a neutron star with dynamical background under FCF scheme and passive FCF scheme.
 \subsection{Non-rotating neutron star}
+\label{section4.3.1}
 In this test, we consider a non-rotating neutron star known as "BU0" \cite{dimmelmeier2006non}
 which is constructed with the polytropic index $\Gamma = 2$ and $K = 100$,
 and central rest-mass density $\rho_c = 1.28 \times 10^{-3}$ (in $c=G=M_\odot=1$ unit).
 This star model is generated by the open-source code \texttt{XNS} 
 \cite{bucciantini2011general,pili2014axisymmetric,pili2015general,pili2017general}.
 We simulate the star in 2D cylindrical coordinate and impose $z$ reflection symmetry.
-The computational domain covers $0 \leq r \leq 60$, $0\leq z \leq 60$ 
+The computational domain covers $0 \leq r \leq 60$, $0\leq z \leq 60$ in code unit
 with resolution $n_r \times n_z = 256 \times 256$.
 The ideal-gas equation of state with $\Gamma = 2$ is used for the simulation.
+We extract the plus polarization of gravitational wave signal $h_{+}$ at $(r_{ext}, z_{ext}) = (40, 0)$ which is given by
+\begin{align}
+    h_{+} \approx \frac{h^{\phi\phi} - h^{zz}}{2} \frac{R_{ext}}{R},
+\end{align}
+where $R=\sqrt{r^2+z^2}$ is the extraction radius.
+
+\begin{figure}[h!]
+\centering
+  \includegraphics[width=\linewidth]{GW_combine_h_BU0.pdf}
+\caption{$h_{+}$ extracted at $(r_{ext}, z_{ext}) = (40, 0)$ from the simulations of oscillating neutron star "BU0".
+The vertical lines represent the known and well-tested eigenmode frequencies \cite{dimmelmeier2006non}}
+\label{fig:GW_h_BU0}
+\end{figure}
+Figure \ref{fig:GW_h_BU0} shows the extracted gravitational wave signal $h_{+}$ from "BU0".
+The extracted pulsation mode agrees with \cite{dimmelmeier2006non} for $F$ and ${}^2f$ mode.
 
 \subsection{Rapidly rotating neutron star}
+\label{section4.3.2}
+In this test, we consider a rapidly-rotating neutron star known as "BU8" \cite{dimmelmeier2006non}.
+The polytropic index, $K$ value and central rest-mass density are the same as "BU0",
+except that it is uniformly rotating at an angular velocity of $\Omega = 2.633 \times 10^{-2}$.
+The simulation setups are same as section \ref{section4.3.1},
+and again we extracted $h_{+}$ at $(r_{ext}, z_{ext}) = (40, 0)$.
+\begin{figure}[h!]
+\centering
+  \includegraphics[width=\linewidth]{GW_combine_h_BU8.pdf}
+\caption{$h_{+}$ extracted at $(r_{ext}, z_{ext}) = (40, 0)$ from the simulations of oscillating neutron star "BU8".
+The vertical lines represent the known and well-tested eigenmode frequencies \cite{dimmelmeier2006non}}
+\label{fig:GW_h_BU8}
+\end{figure}
+Figure \ref{fig:GW_h_BU8} shows the extracted gravitational wave signal $h_{+}$ from "BU8".
+The extracted pulsation mode agrees with \cite{dimmelmeier2006non} for ${}^2f$ mode in the case of using FCF scheme.
+Note that the initial profile "BU8" is constructed under CFC approximation with zero $h^{ij}$,
+which is not the case when full GR is considered.
+This is why a spurious oscillation in $h$ occurs at the beginning of the simulation.
+Nonetheless, $h$ quickly settles down and oscillates around the new equilibrium position.
 

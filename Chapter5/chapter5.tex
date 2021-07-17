@@ -12,9 +12,9 @@
 \fi
 The main theme of this work is to extend the \texttt{Gmunu} code to adopt the
 fully constrained formulation (FCF) scheme,
-a full general relativistic formulation naturally generalized from the conformally flat condition (CFC) approximation
+a full general relativistic formulation naturally generalized from the conformal flatness condition (CFC) approximation
 which is current used in the code.
-So far only two dimensional cylindrical coordinate is implemented for the FCF scheme.
+So far only two-dimensional cylindrical coordinate is implemented for the FCF and passive FCF scheme.
 In this thesis, we present the methodology and implementation of \texttt{Gmunu} in detail.\\
 We have tested \texttt{Gmunu} with several benchmarking tests.
 In the Teukolsky wave test, we have shown the stability and convergence of evolving the hyperbolic equations in FCF.
@@ -41,8 +41,9 @@ It has been shown that the excision scheme can be used to deal with black holes 
 Therefore, we would like to develop a horizon finder in \texttt{Gmunu} and implement the excision scheme in the future.
 
 \paragraph{Improve the FCF scheme}
-We used finite difference for solving Einstein equations and finite volume for solving the hydrodynamics.
-Although they are equivalent in the case of second order accuracy,
+We used finite-difference scheme for solving Einstein equations and conservative finite-volume scheme for solving the hydrodynamics.
+Although the volume average value and point-wise value are differed by the second-order error,
+making them equivalent in second-order method,
 this becomes a problem if we extend the code to high-order numerical methods in the future.
 It has been suggested that the hyperbolic sector in FCF can be rewritten in conservative form \cite{cordero2008mathematical}.
-Therefore, we would like to rewrite the hyperbolic equations in FCF to suit the finite volume scheme in the future.
+Therefore, we would like to rewrite the hyperbolic equations in FCF to suit the finite-volume scheme in the future.

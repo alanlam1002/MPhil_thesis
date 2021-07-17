@@ -12,14 +12,14 @@ We developed our new open-source, parallelized, block-grid adaptive,
 multi-dimensional general relativistic electro-magneto-hydrodynamics code \texttt{Gmunu}
 (General-relativistic multigrid numerical solver)
 in curvilinear geometries in dynamical spacetimes.\\
-\texttt{Gmunu} code current adopts the conformally flat condition approximation 
+\texttt{Gmunu} code current adopts the conformal flatness condition approximation 
 by solving the elliptic metric equations by multigrid approach.
 Although the \texttt{Gmunu} code pass with flying colors in benchmarking tests and demanding magnetohydrodynamics problems,
-the conformally flat condition approximation prohibits the emission of gravitational wave in the simulation.
+the conformal flatness condition approximation prohibits the emission of gravitational wave in the simulation.
 Numerical simulations with full general-relativistic treatment are able to 
 simulation gravitational wave signals emitted from various astrophysics events such as compact binary coalescence and core-collapse supernova.
 Therefore, it is necessary to extend our code to adopt the fully constrained formulation,
-which is a full general relativistic formulation naturally generalized from the conformally flat condition approximation.
+which is a full general relativistic formulation naturally generalized from the conformal flatness condition approximation.
 In contrast to the fully hyperbolic formulations of general relativity such as BSSN and CCZ4,
 the fully constrained formulation maximizes the number of elliptic equations in each time steps
 by choosing maximal slicing condition and generalized Dirac gauge,
