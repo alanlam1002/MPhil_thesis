@@ -11,12 +11,12 @@
     \graphicspath{{Chapter3/Figs/}}
 \fi
 
-In this chapter, we are going to discuss the details of the numerical method used in \tttext{Gmunu}.
+In this chapter, we are going to discuss the details of the numerical method used in \texttt{Gmunu}.
 In the fully-constrained scheme, the evolution of relativistic hydrodynamics in dynamical spacetime
 consists of a set of coupled hyperbolic-elliptic system.
-Firstly, we discuss the numerical method adopted for the hyperbolic system in \tttext{Gmunu},
+Firstly, we discuss the numerical method adopted for the hyperbolic system in \texttt{Gmunu},
 including the high-resolution shock-capturing (HRSC) method and the finite volume method.
-Then, we discuss the multigrid solver in \tttext{Gmunu},
+Then, we discuss the multigrid solver in \texttt{Gmunu},
 which is used to solve the elliptic system.
 
 %********************************** %First Section  **************************************
@@ -228,7 +228,7 @@ A numerical method is called \textit{total variation diminishing (TVD)} if it sa
     \text{TV}\left( \left\langle \mathbf{q} \right\rangle^n \right), \quad \forall \left\langle \mathbf{q} \right\rangle^n,
 \end{align}
 which shows that the oscillations of the solution in TVD method are reduced.\\
-Here, we list out all the possible reconstruction schemes in \tttext{Gmunu} in Table \ref{tab:limiters}.
+Here, we list out all the possible reconstruction schemes in \texttt{Gmunu} in Table \ref{tab:limiters}.
 \begin{table}[h]
 	\centering
 	\caption{\label{tab:limiters}Reconstruction schemes available in \texttt{Gmunu}.}
@@ -254,14 +254,14 @@ at the cell interface $x_{j+1/2}$ involving the left state $\left\langle \mathbf
 and right state $\left\langle \mathbf{q} \right\rangle_{R}$.
 Although the exact solution of the Riemann problem is available in relativistic hydrodynamics,
 it is computational costy in multidimensional case.
-Therefore, an \textit{approximate Riemann solver} is used in \tttext{Gmunu}
+Therefore, an \textit{approximate Riemann solver} is used in \texttt{Gmunu}
 which is computationally less expensive and yet very accurate in general.
 Approximation Riemann solver can be divided into two types
 \begin{enumerate}[label=(\roman*)]
     \item \textit{Complete Riemann solver} which contains all the charateristic fields of the exact solution, and
     \item \textit{Incomplete Riemann solver} which only contains a subset of them.
 \end{enumerate}
-In this section, we discuss some commonly used incomplete Riemann solver in \tttext{Gmunu}.
+In this section, we discuss some commonly used incomplete Riemann solver in \texttt{Gmunu}.
 For a comprehensive introduction, we refer readers to \cite{toro2013riemann}.
 
 \paragraph{The HLL solver}
@@ -312,13 +312,13 @@ where one can take the single speed $\lambda$ to be $\lambda = \max\left(|\lambd
 
 
 %********************************** %Second Section  *************************************
-\section{Atmosphere treatment}
-\subsection{Positivity preserving limit}
-
-%********************************** %Third Section  *************************************
 \section{Time discretization}
 \subsection{Explicit Runge-Kutta Method}
 \subsection{Courant-Friedrichs-Lewy Conditions}
+
+%********************************** %Third Section  *************************************
+\section{Atmosphere treatment}
+\subsection{Positivity preserving limiter}
 
 %********************************** %Fourth Section  *************************************
 \section{Multigrid Method for elliptic equations} %Section - 3.1 
@@ -326,17 +326,202 @@ where one can take the single speed $\lambda$ to be $\lambda = \max\left(|\lambd
 
 \subsection{Overview} %Section - 3.1.1
 \label{section3.1.1}
+The elliptic equations can be solved using \textit{iterative methods} such as
+Jocabi method, Gauss-Seidel (GS) method and successive overrelaxation (SOR) \cite{young2014iterative}.
+These methods are very effective in eliminating high-frequency or
+oscillatory components of the error,
+but less effective in reducing low-frequency or smooth components of the error
+since the changes of error are only made with spatially locally correction \cite{briggs2000multigrid}.
+This problem will become even more severe for higher resolution 
+because the convergence rate behaves like $1-\mathcal{O}(h^2)$.
+Since the smooth modes in a fine grid become oscillatory in a coarser grid,
+one can move to a coarser grid to smooth out the low-frequency mode error and return back to the fine grids.
+This is the key idea of the multigrid method.\\
+In the multigrid method, the key ingredients are
+\begin{enumerate}[label=(\roman*)]
+    \item \textbf{Multigrid cycle scheme} tells the structure of the multigrid solver (see Figure \ref{fig:MG_cycles} for example).
+    \item \textbf{Restriction} maps the values from the fine grid to the coarse grid.
+    \item \textbf{Prolongation} maps the values from the coarse grid to the fine grid.
+    \item \textbf{Smoother} to smooth out the error at different levels.
+    \item \textbf{Direct solver} to solve the equation at the coarsest level.
+\end{enumerate}
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}{0.3\columnwidth}
+		\centering
+        \includegraphics[width=\columnwidth]{MG_Vcycle.jpeg}
+		\caption{V-cycle}
+	\end{subfigure}
+	%\hfill
+	\begin{subfigure}{0.6\columnwidth}
+		\centering
+        \includegraphics[width=\columnwidth]{MG_Wcycle.jpeg}
+        \caption{W-cycle}
+	\end{subfigure}
 
-\subsection{Smoother} %Section - 3.1.2
+	\begin{subfigure}{0.45\columnwidth}
+		\centering
+        \includegraphics[width=\columnwidth]{MG_Fcycle.jpeg}
+        \caption{F-cycle}
+	\end{subfigure}
+	\begin{subfigure}{0.45\columnwidth}
+		\centering
+        \includegraphics[width=\columnwidth]{MG_FMG.jpeg}
+        \caption{Full multigrid (FMG) cycle}
+	\end{subfigure}
+
+	\begin{subfigure}{0.2\columnwidth}
+		\centering
+        \includegraphics[width=\columnwidth]{MG_note.jpeg}
+	\end{subfigure}
+
+	\caption[Four different types of four-level cycles in multigrid methods.]{
+		``S'' denotes smoothing. ``Sol'' denotes direct solver.
+		Descending line $\setminus$ denotes restriction and ascending line / denotes prolongation.
+	}
+	\label{fig:MG_cycles}
+\end{figure}
+
+For more comprehensive discussion of multigrid method,
+we refer the readers to \cite{briggs2000multigrid,trottenberg2000multigrid,young2014iterative,brandt2011multigrid}.
+
+\subsection{Cell-centred discretization and operator} %Section - 3.1.2
 \label{section3.1.2}
+Given a non-linear elliptic equation 
+\begin{align}
+    \mathcal{L}\left(u\right) = f,
+\end{align}
+with elliptic operator $\mathcal{L}$, solution $u$ and source term $f$,
+it can be discretized as
+\begin{align}
+    \mathcal{L}_h \left(u_h \right) = f_h,
+\end{align}
+where $\mathcal{L}_h$ is the discretized operator with resolution $h$,
+$u_h$ and $f_h$ are solution and source term defined at the cell-centres.
 
-\subsection{Restriction and Prolongation} %Section - 3.1.3
+\subsubsection{Laplacian operator}
+The Laplacian operator is one of the elliptic operators that commonly used in \texttt{Gmunu},
+including the constraint \cref{eq:XCFC_psi,eq:XCFC_alp} in XCFC scheme 
+and the algebraic constraint \cref{eq:FCF_g_trace} in the FCF scheme.
+It is discretized with a standard 5/7-point (in 2D/3D) second-order accurate discretization.
+The details of the discretization in different geometry is shown in Appendix.
+
+\subsubsection{Mixed derivatives}
+In the elliptic sector of the FCF scheme (\cref{eq:FCF_X,eq:FCF_psi,eq:FCF_alp,eq:FCF_beta})
+and the vector elliptic equations in the XCFC scheme (\cref{eq:XCFC_X,eq:XCFC_beta}),
+the elliptic operators contain mixed derivative terms $\frac{\partial^2 u}{\partial x \partial y}$.
+We use second-order accuracy discretization as follows
+\begin{align}
+    \left(\frac{\partial^2 u}{\partial x \partial y} \right)_{i,j,k} &=
+    \frac{u_{i+1,j+1,k} - u_{i-1,j+1,k} - u_{i+1,j-1,k} + u_{i-1,j-1,k}}{4 \Delta x \Delta y}
+\end{align}
+
+\subsubsection{Convection-diffusion equation}
+In the momentum constraint (\cref{eq:FCF_X,eq:FCF_X_2}) of the FCF scheme,
+the elliptic operator contains a convective term $\Delta^i{}_{kl}\left( L X \right)^{kl}$
+which has a similar form as the following
+\begin{align}\label{eq:convection_diff}
+    \frac{\partial^2 u}{\partial x^2} + a \frac{\partial u}{\partial x} = 0.
+\end{align}
+While the Laplacian operator in equation (\ref{eq:convection_diff}) is discretized using standard 5/7-point approximation,
+the convection term needs to be discretized using upwind method \cite{trottenberg2000multigrid}.
+In \texttt{Gmunu}, we adopts second-order accuracy lopsided spatial finite differencing as
+\begin{align}
+    \left(\frac{\partial u}{\partial x} \right)_i &= \frac{1}{2 \Delta x}
+    \begin{cases}
+        3 u_i - 4 u_{i-1} + u_{i-2} &\quad a \leq 0,\\
+        -3 u_i + 4 u_{i+1} - u_{i+2} &\quad a \geq 0.
+    \end{cases}
+\end{align}
+
+\subsection{Smoothers and solvers} %Section - 3.1.3
 \label{section3.1.3}
+Another essential element in multigrid method is the smoothers and direct solvers.
+In \texttt{Gmunu}, we implemented the point-wise \textit{Newton Gauss-Seidel} smoothers \cite{press1996numerical}
+\begin{align}
+    u^{new}_{i,j,k} = u^{old}_{i,j,k} - \Bigg(\mathcal{L}\left(u^{old}_{i,j,k}\right) - f_{i,j,k} \Bigg)
+    \left/ \left( \left. \frac{\partial \mathcal{L}}{\partial u_{i,j,k}}\right|_{u=u^{old}_{i,j,k}}\right)\right. ,
+\end{align}
+where the components of the new approximation are used as soon as they are computed.
+Note that if $mathcal{L}$ is linear in $u$,
+the Newton Gauss-Seidel method reduces to the standard Gauss-Seidel method.\\
+There are two order of sweeping through the components $u_{i,j,k}$ implemented in \texttt{Gmunu}.
+\begin{enumerate}
+    \item \textit{Standard Gauss-Seidel} which follows the linear order of the indexes $i,j,k,$ stored in computer's memory.
+    \item \textit{Red-black Gauss-Seidel} which sweeps through all the even indexes first (i.e. $i+j+k$ is even) then the odd indexes.
+\end{enumerate}
 
-\subsection{Multigrid cycle} %Section - 3.1.4
+Although the convergence rate of the smoothers is lowered in 2D/3D spherical and 3D cylindrical coordinate due to the anisotropy \cite{trottenberg2000multigrid},
+currently we still implemented the smoothers for all coordinate.
+For simplicity,
+we adopt the Newton Gauss-Seidel method for the direct solver.
+
+\subsection{Transfer operators: restriction and prolongation} %Section - 3.1.4
 \label{section3.1.4}
+The transfer operators connect data at different level.
+The \textit{restriction} operators map the values from the fine grid to the coarse grid,
+while the \textit{prolongation} operators map the values from the coarse grid to the fine grid.
+For prolongation,
+we use linear interpolation based on the nearest neighbors \cite{teunissen2019geometric,zhang2016boxlib,teunissen2018afivo},
+which can be described by the following:
+\begin{align}
+    u_{x+h/2,y+h/2} &= \frac{1}{4} \left(2 u_{x,y} + u_{x+h, y} + u_{x,y+h} \right) + \mathcal{O}\left(h^2 \right),\\
+    u_{x-h/2,y+h/2} &= \frac{1}{4} \left(2 u_{x,y} + u_{x-h, y} + u_{x,y+h} \right) + \mathcal{O}\left(h^2 \right),
+\end{align}
+or in stencil notation
+\begin{align*}
+	\frac{1}{4} \left]\begin{array}{ccccc}
+		\cdot  & 1 &   & 1 & \cdot	\\
+		1 & 2 &   & 2 & 1	\\
+		  &   & * &   &  	\\
+		1 & 2 &   & 2 & 1	\\
+		\cdot & 1 &   & 1 & \cdot
+	\end{array}\right[^h_{2h},
+\end{align*}
+where the ``$*$'' denotes the location of the coarse grid
+and the notation shows the weighting of the value which are the neighbours of the coarse grid node ``$*$''.
+For restriction, the value of four (2D) or eight (3D) fine grid values is averaged to obtain a coarse grid value.
 
-\subsection{Grid Structure} %Section - 3.1.5
+\subsection{The Full Approximation Scheme} %Section - 3.1.5
 \label{section3.1.5}
+To solve the non-linear elliptic equations,
+we adopt the Full Approximation Scheme (FAS) \cite{brandt1977multi,brabazon2014nonlinear,press1996numerical}.
+Here, we briefly outline the FAS algorithm.
+we define the residual $r$
+\begin{align}
+    r \coloneqq f - \mathcal{L} \left(v \right),
+\end{align}
+where $f$ is the right-hand side of the equation, 
+$\mathcal{L}$ is the elliptic operator
+and $v$ is an approximation solution.
+For the discretized equation with resolution $h$, we have
+\begin{align}
+    r_h = f_h - \mathcal{L}_h \left( v_h \right).
+\end{align}
+The current approximation $v_h$ is then restricted to coarse grid
+$v_{2h} = \mathcal{R} \left( v_h \right)$ where $\mathcal{R}$ is the restriction operator.
+A copy of $v^{old}_{2h} = v_{2h}$ is stored for later usage. 
+The coarse-grid right-hand side is then update as
+\begin{align}
+    f_{2h} = \mathcal{R} \left(r_h \right) + \mathcal{L}_{2h} \left(v_{2h} \right).
+\end{align}
+Smoothing steps are then applied to the coarse grid.
+In the prolongation steps,
+the solution is updated with a correction from the coarse grid as
+\begin{align}
+    v_{h} = v_{h} + \mathcal{P} \left(v_{2h} - v^{old}_{2h} \right),
+\end{align}
+where $mathcal{P}$ is the prolongation operator.
+In practise, this procedure will be repeated until the solution converges
+(i.e. the $L_\infty$ norm of the residual is below chosen threshold value).\\
+Since the current version of \texttt{Gmunu} is built upon the framework of \texttt{AMRVAC 2.0} \cite{xia2018mpi,keppens2021mpi},
+it is natural use the open-source geometric multigrid library \texttt{octree-mg} \cite{teunissen2019geometric} 
+which is MPI-parallelized, support quadtree/octree AMR grids,
+and provide periodic, Dirichlet, and Neumann boundary conditions.
+Nonetheless, the library only supports 2D/3D Cartesian coordinate and 2D cylindrical coordinate.
+We extended it to support multidimensional spherical and cylindrical coordinates as well as the Robin boundary condition.
+In addition, only a single layer of ghost cell without diagonal cell is used in \texttt{octree-mg}.
+In order to calculate the mixed derivatives and solve the convection-diffusion problems,
+we extend the library to support multiple layers of ghost cells with diagonal cells,
+which also allow us to explore higher-order scheme in the future.
 
-\subsection{Ghost cells and refinement boundary} %Section - 3.1.6

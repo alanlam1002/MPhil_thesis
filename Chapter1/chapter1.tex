@@ -700,7 +700,10 @@ and partially implicit Runge-Kutta methods (PIRK) is used to update $w^{ij}{}_k$
 To fulfill the constraint in equation (\ref{eq:FCF_g_conformal}), the trace part of $h^{ij}$ was calculated by the following iteration procedure:
 \begin{Step}
     \item Calculate $h\coloneqq \det{\tilde{\gamma}^{ij}} - f$.
-    \item Solve the Poisson $\mathcal{D}^2 \Phi = h$.
+    \item Solve the Poisson equation
+    \begin{align}\label{eq:FCF_g_trace}
+        \mathcal{D}^2 \Phi = h.
+    \end{align}
     \item Update $h^{ij}$ by $h^{ij}_{(new)} = h^{ij}_{(old)} + \frac{1}{2} \left( h f^{ij} - \mathcal{D}^i \mathcal{D}^j \Phi \right)$.
     \item Repeat step 1 to 3 until the $\det{\tilde{\gamma}^{ij}} = f$ is satisfied.
 \end{Step}
