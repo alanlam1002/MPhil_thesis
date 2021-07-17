@@ -807,4 +807,35 @@ For $\hat{A}^{ij}$, it can be modified by the following procedures:
         \hat{A}^{ij}_{(new)} = \hat{A}^{ij}_{(1)} + \left( L X \right)^{ij}.
     \end{align}
 \end{Step}
-The remaining unknowns $\left(\psi, \alpha, \beta^i\right)$ can then be solved accordingly by adopting the same procedure in section \ref{section1.5.2}.
+The remaining unknowns $\left(\psi, \alpha, \beta^i\right)$ can then be solved accordingly by adopting the same procedure in section \ref{section1.5.2}.\\
+Note that we follow the Meudon-Valencia approach and solve the metric variables in orthonormal basis.
+
+\subsubsection{Boundary condition}
+In \texttt{Gmunu}, we impose the following boundary conditions for the metric variables at the outermost boundary $(r=r_{max})$
+\begin{align}
+    \left.\frac{\partial \psi}{\partial r}\right|_{r=r_{max}} &= \frac{1-\psi}{r},
+    &\left.\frac{\partial \alpha}{\partial r}\right|_{r=r_{max}} &= \frac{1-\alpha}{r}, \\
+    \left.\frac{\partial \beta^i}{\partial r}\right|_{r=r_{max}} &= -\frac{\beta^i}{r},
+    &\left.\frac{\partial X^i}{\partial r}\right|_{r=r_{max}} &= -\frac{X^i}{r}, 
+    &\left.\frac{\partial W^i}{\partial r}\right|_{r=r_{max}} &= -\frac{W^i}{r}.
+\end{align}
+We assume that asymtotically $h^{ij}$ satisfies the linearized quadrupole wave equation \cite{teukolsky1982linearized}
+\begin{align}
+    &\frac{\partial h^{rr}}{\partial t} + \frac{\partial h^{rr}}{\partial r} + \frac{3 h^{rr}}{r} = 0, \\
+    &\frac{\partial h^{r\theta}}{\partial t} + \frac{\partial h^{r\theta}}{\partial r} + \frac{2 h^{r\theta}}{r} = 0, \\
+    &\frac{\partial h^{r\phi}}{\partial t} + \frac{\partial h^{r\phi}}{\partial r} + \frac{2 h^{r\phi}}{r} = 0, \\
+    &\frac{\partial h^{\theta\theta}}{\partial t} + \frac{\partial h^{\theta\theta}}{\partial r} + \frac{h^{\theta\theta}}{r} = 0, \\
+    &\frac{\partial h^{\theta\phi}}{\partial t} + \frac{\partial h^{\theta\phi}}{\partial r} + \frac{h^{\theta\phi}}{r} = 0, \\
+    &\frac{\partial h^{\phi\phi}}{\partial t} + \frac{\partial h^{\phi\phi}}{\partial r} + \frac{h^{\phi\phi}}{r} = 0,
+\end{align}
+and similarly for $\hat{A}^{ij}$.
+This boundary condition can be rewritten as \cite{shibata1995evolution}
+\begin{align}
+    Q(t,r) &= \left(1 - \frac{\Delta r}{r} \right)^n Q(t-\Delta t, r - \Delta r),
+\end{align}
+for $Q(t,r)$ in the Sommerfield form
+\begin{align}
+    &\frac{\partial Q}{\partial t} + \frac{\partial Q}{\partial r} + \frac{n Q}{r} = 0,
+\end{align}
+where $\Delta t$ is the time step, $\Delta r = \alpha \psi^-2 \Delta t$
+and $Q(t-\Delta t, r - \Delta r)$ is obtained by the second-order interpolation from the nearby mesh points.
