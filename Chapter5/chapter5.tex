@@ -18,8 +18,8 @@ So far only two dimensional cylindrical coordinate is implemented for the FCF sc
 In this thesis, we present the methodology and implementation of \texttt{Gmunu} in detail.\\
 We have tested \texttt{Gmunu} with several benchmarking tests.
 In the Teukolsky wave test, we have shown the stability and convergence of evolving the hyperbolic equations in FCF.
-We also demonstrated that the elliptic divergence cleaning by multigrid method is able to maintain the gauge condition.
-For the hydrodynamics simulation,
+We also demonstrated that the elliptic divergence cleaning using multigrid method is able to maintain the gauge condition.
+For the hydrodynamics,
 we have performed simulations of the evolution of both non-rotating and rotating neutron stars.
 We are able to extract the gravitational wave signature directly from the metric components.
 
@@ -27,17 +27,17 @@ We are able to extract the gravitational wave signature directly from the metric
 \section*{Future Plan}
 Here, we list some possible improvement of \texttt{Gmunu} planned for the future.
 
-\paragraph{Support different geometry}
+\paragraph{Support different geometries}
 Currently, the FCF scheme is only implemented in 2D cylindrical coordinate
 which limit our study to axisymmetric profiles.
 We will extend the code to support 2D spherical
-as well as 3D spherical/cartesian coordinates in the future
+as well as 3D spherical/Cartesian coordinates in the future
 so that we can broaden our study to non-axisymmetric systems
-such as binary system and supernovae.
+such as binary systems and supernovae.
 
-\paragraph{Simulate black hole}
+\paragraph{Simulate black holes}
 In \texttt{Gmunu}, we have no treatment to handle the black holes singularity nor the apparent horizon.
-It has been shown that \cite{cordero2014excision} the excision scheme can be used to deal with black holes for constrained evolution scheme in spherically symmetric spacetime.
+It has been shown that the excision scheme can be used to deal with black holes for constrained evolution scheme in spherically symmetric spacetime \cite{cordero2014excision}.
 Therefore, we would like to develop a horizon finder in \texttt{Gmunu} and implement the excision scheme in the future.
 
 \paragraph{Improve the FCF scheme}
