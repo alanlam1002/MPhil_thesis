@@ -21,9 +21,295 @@ which is used to solve the elliptic system.
 
 %********************************** %First Section  **************************************
 \section{High-resolution shock-capturing (HRSC) methods}
-\subsection{Approximate Riemann solver}
+The high-resolution shock-capturing (HRSC) methods is a class of methods commonly used to
+reproduce accurately the discontinuous features in the solution
+with no spurious oscillation \cite{harten1997high}.
+Note that the HRSC methods can be distinguished in \textit{finite-difference (conservative)} method
+which evolves the \textit{pointwise values} of the solution,
+and \textit{finit-volume (conservative)} method which evolves the \textit{cell average} of the solution.
+Although the accuracy of finite-difference method can be extended to higher order easily,
+it is extremely diffcult to extend the method to general non-uniform grids \cite{merriman2003understanding}.
+On the other hand,
+the finite-volume methods are natural to conservative scheme as well as non-structured grid,
+but the multidimensional reconstruction algorithm is complicated and computational expensive especially for higher-order method.\\
+In this section,
+we will first discuss the finite-volume conservative methods,
+and then focus on the \textit{Godunov methods} which guarantee the upwind property of conservative non-linear equations \cite{van1999introduction}.
+
+\subsection{Finite-volume conservative methods}
+Given the conservative equation in orthogonal coordinate system $(x^1, x^2, x^3)$ in form
+\begin{align}\label{eq:finite_vol_cons}
+    \partial_t \mathbf{q} + \frac{1}{\sqrt{\hat{\gamma}}}\hat{\nabla}_i \left( \sqrt{\hat{\gamma}} \mathbf{f}^i \right)
+    &= \mathbf{s} + \mathbf{s}_{geom},
+\end{align}
+where $\mathbf{q}$ are the conserved variables,
+$\mathbf{f}^i$ are the flux terms, $\mathbf{s}$ are the source terms
+and $\mathbf{s}_{geom}$ are the geometrical source term which is related to the 3-Christoffel symbol
+$\hat{\Gamma}^i{}_{jk}$ of the reference metric $\hat{\gamma}_{ij}$.
+We can then discretize equation (\ref{eq:finite_vol_cons}) on a computational domain divided into $N_1 \times N_2 \times N_3$ cells.
+Each cells can be represented by a tuple of integers $(i,j,k)$ where $1 \leq i \leq N_1$, $1 \leq j \leq N_2$ and $1 \leq k \leq N_3$.
+The cell bounds are given by
+\begin{align}
+    (x^1_{i-1/2}, &x^1_{i+1/2}), & (x^2_{j-1/2}, &x^2_{j+1/2}), & (x^3_{k-1/2}, &x^3_{k+1/2}).
+\end{align}
+Thus, the mesh cell spacings are 
+\begin{align}
+    \Delta x^1_i &= x^1_{i+1/2} - x^1_{i-1/2}, & \Delta x^2_j &= x^2_{j+1/2}- x^2_{j-1/2}, & \Delta x^3_k &= x^3_{k+1/2} - x^3_{k-1/2},
+\end{align}
+and the cell centres are
+\begin{align}
+    x^1_i &= \frac{1}{2} \left(x^1_{i+1/2} + x^1_{i-1/2}\right), & x^2_j &= \frac{1}{2} \left( x^2_{j+1/2}- x^2_{j-1/2} \right), 
+    & x^3_k &= \frac{1}{2} \left( x^3_{k+1/2} - x^3_{k-1/2} \right).
+\end{align}
+By integrating equation \ref{eq:finite_vol_cons} over cell volume and applying divergence theorem on the flux terms,
+it becomes
+\begin{align}
+    \begin{split}
+    \frac{d}{dt} \left\langle \mathbf{q} \right\rangle_{i,j,k} = - \frac{1}{\Delta V_{i,j,k}} \bigg\{ &\left[
+    \left. \left( \left\langle \mathbf{f} \right\rangle^1 \Delta A^1 \right) \right|_{i+1/2,j,k} -
+    \left. \left( \left\langle \mathbf{f} \right\rangle^1 \Delta A^1 \right) \right|_{i-1/2,j,k} \right] \\
+    + &\left[
+    \left. \left( \left\langle \mathbf{f} \right\rangle^2 \Delta A^2 \right) \right|_{i,j+1/2,k} -
+    \left. \left( \left\langle \mathbf{f} \right\rangle^2 \Delta A^2 \right) \right|_{i,j-1/2,k} \right] \\
+    + &\left[
+    \left. \left( \left\langle \mathbf{f} \right\rangle^3 \Delta A^3 \right) \right|_{i,j,k+1/2} -
+    \left. \left( \left\langle \mathbf{f} \right\rangle^3 \Delta A^3 \right) \right|_{i,j,k-1/2} \right] \bigg\} \\
+    + &\left\langle \mathbf{s} \right\rangle_{i,j,k}
+    + \left\langle \mathbf{s}_{geom} \right\rangle_{i,j,k}
+    \end{split}
+\end{align}
+where the cell volume and the volume-average are defined as
+\begin{align}
+    \Delta V_{i,j,k} &\coloneqq \int_{cell} \sqrt{\hat{\gamma}} dx^1 dx^2 dx^3, &
+    \left\langle \bullet \right\rangle &\coloneqq \frac{1}{\Delta V_{i,j,k}} \int_{cell} \bullet \sqrt{\hat{\gamma}} dx^1 dx^2 dx^3
+\end{align},
+while the cell surface and the surface-average are defined as
+\begin{align}
+    \Delta A^i &\coloneqq \int_{surface} \sqrt{\hat{\gamma}} dx^{j,j\neq i}, &
+    \left\langle \bullet \right\rangle &\coloneqq \frac{1}{\Delta A^i} \int_{surface} \bullet \sqrt{\hat{\gamma}} dx^{j,j\neq i}.
+\end{align}
+Since the reference metric $\hat{\gamma}_{ij}$ is time-independent,
+the cell volume, cell surface and the volume-averaged 3-Christoffel symbols
+$\left\langle \hat{\Gamma}^i{}_{jk} \right\rangle$ in the geometrical source term
+are determined once the coordinate is chosen.
+We have included these quantities in Appendix.
+
+\subsection{Godunov methods}
+\label{section3.1.2}
+For simplicity, we consider one-dimensional hyperbolic conservation laws
+\begin{align}\label{eq:conservation_law}
+    \partial_t \mathbf{q}\left(x,t\right) + \partial_x \mathbf{f} \left[\mathbf{q}\left(x,t\right)\right] &= 0,
+\end{align}
+We apply the discretization on spatial domain into computing cell $I_j$ with size $\Delta x$
+\begin{align}
+    I_j &= \left[ x_{j-1/2},x_{j+1/2} \right], & \Delta x &= x_{j+1/2}-x_{j-1/2},
+\end{align}
+and time slices $\left[t^n, t^{n+1}\right]$.
+Thus, equation (\ref{eq:conservation_law}) can be recasted into a \textit{conservative} scheme as
+\begin{align}
+    \left\langle\mathbf{q}\right\rangle^{n+1}_j &= \left\langle\mathbf{q}\right\rangle^n_j 
+    + \frac{\Delta t}{\Delta x} \left( \left\langle\mathbf{f}\right\rangle_{j-1/2} - \left\langle\mathbf{f}\right\rangle_{j+1/2} \right),
+\end{align}
+where
+\begin{align}
+    \left\langle\mathbf{q}\right\rangle^{n}_j &\coloneqq \frac{1}{\Delta x} \int^{x_{j+1/2}}_{x_{j-1/2}} \mathbf{q} \left(x, t^n\right) dx
+\end{align}
+is the \textit{cell-average} and
+\begin{align}
+    \left\langle\mathbf{f}\right\rangle_{j\pm 1/2} &\coloneqq \frac{1}{\Delta t} \int^{t^{n+1}}_{t^n} \mathbf{f} \left[\mathbf{q}\left(x_{j\pm 1/2},t\right)\right] dt
+\end{align}
+is the \textit{numerical fluxes}.\\
+In Godunov's original approach \cite{konstantinovich1959difference},
+he considered a piecewise-constant distribution of data
+\begin{align}
+    \mathbf{q}(x, t^n) &=
+    \begin{cases}
+        \left\langle\mathbf{q}\right\rangle^{n}_j  &\text{if } x \leq x_{j+1/2}, \\
+        \left\langle\mathbf{q}\right\rangle^{n}_{j+1}  &\text{if } x >x_{j+1/2},
+    \end{cases}
+\end{align}
+and built a local Riemann problem 
+$\mathcal{RP}\left(\left\langle \mathbf{q}\right\rangle_{L}, \left\langle \mathbf{q} \right\rangle_{R} \right)$
+with left state $\left\langle \mathbf{q}\right\rangle_{L} = \left\langle\mathbf{q}\right\rangle^{n}_j$ and
+right state $\left\langle \mathbf{q} \right\rangle_{R} = \left\langle\mathbf{q}\right\rangle^{n}_{j+1}$.
+Therefore, the numerical fluxes
+\begin{align}
+    \left\langle\mathbf{f}\right\rangle_{j+ 1/2} &= 
+    \frac{1}{\Delta t} \int^{t^{n+1}}_{t^n} \mathbf{f} \left[\mathbf{q}\left(x_{j+ 1/2},t\right)\right] dt
+    = \mathcal{F}\left( \left\langle\mathbf{q}\right\rangle^{n}_j, \left\langle\mathbf{q}\right\rangle^{n}_{j+1} \right)
+\end{align}
+only depends on the two constant states $\left\langle\mathbf{q}\right\rangle^{n}_j$ and $\left\langle\mathbf{q}\right\rangle^{n}_{j+1}$.\\
+Note that the Godunov method is a \textit{monotone method}.
+Consider an explicit method of the type
+\begin{align}
+    \left\langle \mathbf{q}\right\rangle^{n+1}_j &=
+    \mathcal{H} \left(\left\langle \mathbf{q}\right\rangle^n_j, \left\langle \mathbf{q}\right\rangle^n_{j\pm 1},
+    \left\langle \mathbf{q}\right\rangle^n_{j\pm 2}, \dots,
+    \left\langle \mathbf{q}\right\rangle^{n-m}_j,\left\langle \mathbf{q}\right\rangle^{n-m}_{j\pm 1},
+    \left\langle \mathbf{q}\right\rangle^{n-m}_{j\pm 2}, \dots \right).
+\end{align}
+The method is \textit{monotone} if
+\begin{align}
+    \frac{\partial \mathcal{H}}{\partial \left\langle \mathbf{q}\right\rangle^n_j } &\geq 0
+    \quad \forall \left\langle \mathbf{q}\right\rangle^n_j.
+\end{align}
+From this definition, we can further prove that given the data $\{ \left\langle \mathbf{q}\right\rangle^n_j \}$,
+the solution $\{ \left\langle \mathbf{q}\right\rangle^{n+1}_j \}$ obtained by a monotone method is
+\begin{align}
+    \max_{j} \{ \left\langle \mathbf{q}\right\rangle^{n+1}_j \} &\leq \max_{j} \{\left\langle \mathbf{q}\right\rangle^n_j \}, &
+    \min_{j} \{ \left\langle \mathbf{q}\right\rangle^{n+1}_j \} &\geq \min_{j} \{\left\langle \mathbf{q}\right\rangle^n_j \},
+\end{align}
+that is, no spurious new extrema introduced in the solution as time evolves.
+
 \subsection{Reconstruction scheme}
-\subsection{Finite volume discretization in curvilinear coordinate}
+The Godunov method introduced in the previous section is only first-order accurate in space and time
+because of the piecewise-constant distribution of data.
+In practice, the spatial accuracy can be higher than first-order 
+if the left state $\left\langle \mathbf{q} \right\rangle_{L}$ 
+and right state $\left\langle \mathbf{q} \right\rangle_{R}$ of the Riemann problem
+at the cell interface $x_{j+1/2}$
+are \textit{reconstructed} using a higher-order polynomial representation of $\mathbf{q}$
+rather than $\left\langle \mathbf{q} \right\rangle^n_j$ and $\left\langle \mathbf{q} \right\rangle^n_{j+1}$.\\
+One of the reconstruction techniques are the \textit{slope-limiter} methods 
+which improve the piecewise-constant representation by providing a piecewise-linear reconstruction
+of $\mathbf{q}^n(x)$ at each cell
+\begin{align}
+    \mathbf{q}^n_j (x) &= \left\langle \mathbf{q} \right\rangle^n_j + \mathbf{\sigma}^n_j \left(x-x_j \right) &
+    \text{for } & x_{j-1/2} \leq x \leq x_{j+1/2},
+\end{align}
+where $\mathbf{\sigma}^n_j$ is the slope of the linear reconstruction.
+Here, we list out several common slope-limiters
+\paragraph{Minmod slope-limiter}
+The \textit{minmod slope-limiter} \cite{ziegler2011semi,kolgan1972application,van1979towards}
+is given by
+\begin{align}
+    \mathbf{\sigma}^n_j &\coloneqq \text{minmod}\left(
+    \frac{\left\langle \mathbf{q} \right\rangle^n_j-\left\langle \mathbf{q} \right\rangle^n_{j-1}}{\Delta x},
+    \frac{\left\langle \mathbf{q} \right\rangle^n_{j+1}-\left\langle \mathbf{q} \right\rangle^n_{j}}{\Delta x} \right),
+\end{align}
+where
+\begin{align}
+    \text{minmod}\left(\alpha, \beta \right) &\coloneqq
+    \begin{cases}
+        \alpha & \text{if } |\alpha|<|\beta| \text{ and } \alpha\beta>0, \\
+        \beta & \text{if } |\alpha|>|\beta| \text{ and } \alpha\beta>0, \\
+        0 & \text{if } \alpha\beta \leq 0,
+    \end{cases}\\
+    &\coloneqq \frac{1}{2}\left[ \text{sgn}{\alpha} + \text{sgn}{\beta} \right] \min \left(|\alpha|,|\beta| \right).
+\end{align}
+
+\paragraph{Monotonized central-difference (MC) limiter}
+The MC limiter \cite{van1974towards} is given by
+\begin{align}
+    \mathbf{\sigma}^n_j &\coloneqq \text{minmod}\left(
+    \frac{\left\langle \mathbf{q} \right\rangle^n_{j+1}-\left\langle \mathbf{q} \right\rangle^n_{j-1}}{2 \Delta x},
+    \frac{\left\langle \mathbf{q} \right\rangle^n_j-\left\langle \mathbf{q} \right\rangle^n_{j-1}}{\Delta x},
+    \frac{\left\langle \mathbf{q} \right\rangle^n_{j+1}-\left\langle \mathbf{q} \right\rangle^n_{j}}{\Delta x} \right),
+\end{align}
+where
+\begin{align}
+    \text{minmod}\left(\alpha, \beta, \gamma \right) &\coloneqq
+    \begin{cases}
+        \min\left(\alpha, \beta, \gamma\right) & \text{if } \alpha,\beta,\gamma > 0, \\
+        \max\left(\alpha, \beta, \gamma\right) & \text{if } \alpha,\beta,\gamma < 0, \\
+        0 & \text{otherwise}.
+    \end{cases}
+\end{align}\\
+Note that the methods mentioned above are \textit{total variation diminishing (TVD)}.
+The total variation of a solution at time $t^n$ is defined as
+\begin{align}
+    \text{TV}\left( \left\langle \mathbf{q} \right\rangle^n \right) &\coloneqq 
+    \sum_i \left| \left\langle \mathbf{q} \right\rangle^n_{j+1} - \left\langle \mathbf{q} \right\rangle^n_j \right|,
+\end{align}
+which measures the oscillations appeared in the solution.
+A numerical method is called \textit{total variation diminishing (TVD)} if it satisfies
+\begin{align}
+    \text{TV}\left( \left\langle \mathbf{q} \right\rangle^{n+1} \right) \leq
+    \text{TV}\left( \left\langle \mathbf{q} \right\rangle^n \right), \quad \forall \left\langle \mathbf{q} \right\rangle^n,
+\end{align}
+which shows that the oscillations of the solution in TVD method are reduced.\\
+Here, we list out all the possible reconstruction schemes in \tttext{Gmunu} in Table \ref{tab:limiters}.
+\begin{table}[h]
+	\centering
+	\caption{\label{tab:limiters}Reconstruction schemes available in \texttt{Gmunu}.}
+	\begin{tabular}{ l | l | l | l | l }
+		\multicolumn{1}{c|}{ Order of accuracy } & \multicolumn{1}{c|}{ 2nd } & \multicolumn{1}{c|}{ 3rd } & \multicolumn{1}{c|}{ 5th } & \multicolumn{1}{c}{ 7th }\\ \hline
+		  & Minmod \cite{ziegler2011semi,kolgan1972application,van1979towards} 
+          & PPM \cite{colella1984piecewise} & MP5 \cite{suresh1997accurate} & WENO7\\
+		  & MC \cite{van1974towards} & Koren & WENO5 & MP-WENO7 \\
+		  & Superbee \cite{roe1986characteristic} & Cada3 & WENO5-Z & EXENO7 \\
+		  & Vanleer \cite{van1977towards} & WENO3 & WENO5-Z+ &  \\
+		  & Albada & WENO3-YC-3 & WENO-NM-5 &  \\
+		  & MC-beta &  & WENO-NM-Z &  \\
+		  & Cada &  & WENO-NM-Z+ &  \\
+		  & Venk &  &  &  \\
+	\end{tabular}
+\end{table}
+
+\subsection{Approximate Riemann solver}
+As discussed in section \ref{section3.1.2},
+the Godunov method requires the solution of local \textit{Riemann problem }
+$RP\left(\left\langle \mathbf{q} \right\rangle_{L}, \left\langle \mathbf{q} \right\rangle_{R} \right)$
+at the cell interface $x_{j+1/2}$ involving the left state $\left\langle \mathbf{q} \right\rangle_{L}$
+and right state $\left\langle \mathbf{q} \right\rangle_{R}$.
+Although the exact solution of the Riemann problem is available in relativistic hydrodynamics,
+it is computational costy in multidimensional case.
+Therefore, an \textit{approximate Riemann solver} is used in \tttext{Gmunu}
+which is computationally less expensive and yet very accurate in general.
+Approximation Riemann solver can be divided into two types
+\begin{enumerate}[label=(\roman*)]
+    \item \textit{Complete Riemann solver} which contains all the charateristic fields of the exact solution, and
+    \item \textit{Incomplete Riemann solver} which only contains a subset of them.
+\end{enumerate}
+In this section, we discuss some commonly used incomplete Riemann solver in \tttext{Gmunu}.
+For a comprehensive introduction, we refer readers to \cite{toro2013riemann}.
+
+\paragraph{The HLL solver}
+This Riemann solver was proposed by Harten, Lax and van Leer \cite{harten1983upstream}, hence the name \textit{HLL Riemann solver}.
+The solution is approximated by
+\begin{align}
+    \mathbf{q}(x,t) &= 
+    \begin{cases}
+        \mathbf{q}_L & \text{if } x/t < \lambda_L, \\
+        \mathbf{q}_{HLL} & \text{if } \lambda_L \leq x/t \leq \lambda_R, \\
+        \mathbf{q}_R & \text{if } x/t > \lambda_R,
+    \end{cases}
+\end{align}
+where $\lambda_L \leq 0$ and $\lambda_R \geq 0$ are the minimum and maximum of the characteristic speeds respectively
+\begin{align}
+    \lambda_L &\coloneqq \min\left(0, \lambda_- \left(\mathbf{q}_L\right), \lambda_- \left(\mathbf{q}_R\right) \right), \\
+    \lambda_L &\coloneqq \max\left(0, \lambda_+ \left(\mathbf{q}_L\right), \lambda_+ \left(\mathbf{q}_R\right) \right),
+\end{align}
+and $\lambda_{\pm}$ are given by the eigenvalues of the hydrodynamics equations.
+The single constant state $\mathbf{q}_{HLL}$ is given by
+\begin{align}
+    \mathbf{q}_{HLL} &= \frac{\lambda_R \mathbf{q}_R - \lambda_L \mathbf{q}_L + \mathbf{f}_L - \mathbf{f}_R}{\lambda_R-\lambda_L}.
+\end{align}
+Thus, the numerical fluxes can be calculated as
+\begin{align}
+    \mathbf{f} &=
+    \begin{cases}
+        \mathbf{f}_L & \text{if } x/t < \lambda_L, \\
+        \mathbf{f}_{HLL} & \text{if } \lambda_L \leq x/t \leq \lambda_R, \\
+        \mathbf{f}_R & \text{if } x/t > \lambda_R,
+    \end{cases}
+\end{align}
+where the HLL fluxes are
+\begin{align}\label{eq:HLL_flux}
+    \mathbf{f}_{HLL} &=
+    \frac{\lambda_R \mathbf{f}_L - \lambda_L \mathbf{f}_R + \lambda_L \lambda_R \left(\mathbf{q}_R - \mathbf{q}_L\right)}{\lambda_R-\lambda_L}
+\end{align}
+
+\paragraph{The Rusanov solver}
+The \textit{Rusanov approximate Riemann solver} \cite{rusanov1962calculation},
+also known as the \textit{total variation diminishing Lax-Friedrichs (TVDLF) flux} \cite{shu1989efficient},
+is a special case of the HLL Riemann solver where the condition $\lambda_R = -\lambda_L = \lambda$ is imposed.
+As a result, the Rusanov flux can be reduced from equation (\ref{eq:HLL_flux}) as
+\begin{align}
+    \mathbf{f}_{Rusanov} &= \frac{1}{2}\left(\mathbf{f}_L + \mathbf{f}_R \right) - \frac{1}{2}\lambda \left(\mathbf{q}_R - \mathbf{q}_L \right),
+\end{align}
+where one can take the single speed $\lambda$ to be $\lambda = \max\left(|\lambda_L|,|\lambda_R| \right)$.
+
 
 %********************************** %Second Section  *************************************
 \section{Atmosphere treatment}
