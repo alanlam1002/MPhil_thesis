@@ -223,7 +223,7 @@ The total variation of a solution at time $t^n$ is defined as
 \end{align}
 which measures the oscillations appeared in the solution.
 A numerical method is called \textit{total variation diminishing (TVD)} if it satisfies
-\begin{align}
+\begin{align}\label{eq:TVD}
     \text{TV}\left( \left\langle \mathbf{q} \right\rangle^{n+1} \right) \leq
     \text{TV}\left( \left\langle \mathbf{q} \right\rangle^n \right), \quad \forall \left\langle \mathbf{q} \right\rangle^n,
 \end{align}
@@ -313,8 +313,61 @@ where one can take the single speed $\lambda$ to be $\lambda = \max\left(|\lambd
 
 %********************************** %Second Section  *************************************
 \section{Time discretization}
-\subsection{Explicit Runge-Kutta Method}
-\subsection{Courant-Friedrichs-Lewy Conditions}
+\subsection{Explicit Runge-Kutta method}
+To perform the time integration,
+one can expand time derivative using Taylor expansion
+\begin{align}
+    \partial_t \mathbf{q} &= \frac{1}{2 \Delta t} \left(\mathcal{q}^{n+1} - \mathcal{q}^{n-1} \right).
+\end{align}
+However, it is not a practical time integration scheme because
+\begin{enumerate}[label=(\roman*)]
+    \item Large amount of data for the previous time steps is need to be stored in higher-order scheme.
+    \item Stability is not guaranteed.
+\end{enumerate}
+In constract, in the Runge-Kutta (RK) methods,
+we do not need to store large amount of data, 
+and it enables stable time integration for higher-order-accurate scheme.
+Consider a system of equations in form
+\begin{align}
+    \frac{d \mathbf{q}}{dt} &= \mathbf{F} \left(\mathbf{q},t \right),
+\end{align}
+where $\mathbf{F}$ denotes the right-hand side of the equation.
+The general $m$-stage explicit Runge-Kutta method of the Shu-Osher form \cite{shu1988efficient} is 
+\begin{align}
+    \mathbf{q}^{(0)} &= \mathbf{q}^n \\
+    \mathbf{q}^{(i)} &= \sum^{i-1}_{k=0} \left[ \alpha_{ik} \mathbf{q}^{(k)} 
+    + \Delta t \beta_{ik} \mathbf{F}\left( \mathbf{q}^{(k)}, t^n + \gamma_k \Delta t \right) \irght],
+    \quad i=1,2,\dots,m \\
+    \mathbf{q}^{n+1} &= \mathbf{q}^{(m)},
+\end{align}
+where the coefficient $\alpha_{ik}, \beta_{ik}$ and $\gamma_k$ are chosen such that the order conditions are satisfied.
+
+\subsubsection{Strong stability-preserving (explicit) Runge-Kutta methods}
+The strong stability-preserving Runge-Kutta (SSPRK) methods \cite{shu1988total,shu1988efficient}
+is special class of RK methods which maintains total variation diminishing property (\ref{eq:TVD})
+in higher-order time integration scheme.
+Due to its non-oscillatory property,
+the SSPRK methods are desirable in problems with discontinuities and strong shocks \cite{hesthaven2007nodal}.\\
+As mentioned in section \ref{section1.5.3},
+the hyperbolic system in the FCF scheme becomes unconditionally unstable
+if first-order or second-order explicit RK method is used.
+As a result, we use fourth-order SSPRK scheme to evolve the FCF hyperbolic sector 
+and the hydrodynamics equation in \texttt{Gmunu}.
+
+\subsection{Courant-Friedrichs-Lewy conditions}
+One necessary condition for stability is the \textit{Courant-Friedrichs-Lewy} (CFL) conditions \cite{courant1928partiellen}.
+From a physical point of view,
+the CFL condition ensures that the propagation speed of any physical perturbation
+is always smaller than the numerical speed $\lamda_N$
+\begin{align}
+    |\lambda| \leq \lambda_N \coloneqq \frac{\Delta x}{\Delta t}.
+\end{align}
+Therefore, the time steps for the time integration can be obtained by
+\begin{align}
+    \Delta t = c_{CFL} \min_k \left(\frac{\Delta x}{|\lambda_k| \right),
+\end{align}
+where $c_{CFL}\leq 1$ is a dimensionless constant
+and $\lambda_k$ is the charateristic speed of the evolution system.
 
 %********************************** %Third Section  *************************************
 \section{Atmosphere treatment}
