@@ -364,14 +364,45 @@ is always smaller than the numerical speed $\lamda_N$
 \end{align}
 Therefore, the time steps for the time integration can be obtained by
 \begin{align}
-    \Delta t = c_{CFL} \min_k \left(\frac{\Delta x}{|\lambda_k| \right),
+    \Delta t = c_{CFL} \min_k \left(\frac{\Delta x}{|\lambda_k|} \right),
 \end{align}
 where $c_{CFL}\leq 1$ is a dimensionless constant
 and $\lambda_k$ is the charateristic speed of the evolution system.
 
 %********************************** %Third Section  *************************************
 \section{Atmosphere treatment}
+One of the challenge in astrophysical simulation is handle the interface between fluid and vacuum
+where the density $\rho$, pressurece $p$ and velocities $v^i$ vanish.
+In this section, we outline the positivity preserving limiter \cite{hu2013positivity} used in $\texttt{Gmunu}$
+for atmosphere handling.
+
 \subsection{Positivity preserving limiter}
+We consider a discretized first-order Euler timestep
+\begin{align}
+    &\frac{u^{n+1}_i - u^n_i}{\Delta t} = \frac{1}{\delta V_i} 
+    \left( f_{i-1/2} \Delta A_{i-1/2} - f_{i+1/2} \Delta A_{i+1/2} \right),\\
+    &\Rightarrow u^{n+1}_i = \frac{1}{2}\left( u^{+}_i - u^-_i \right),
+\end{align}
+where
+\begin{align}
+    u^-_i &\coloneqq \left( u^n_i - 2\frac{\Delta t}{\Delta V_i} f_{i+1/2} \Delta A_{i+1/2} \right), \\
+    u^+_i &\coloneqq \left( u^n_i + 2\frac{\Delta t}{\Delta V_i} f_{i-1/2} \Delta A_{i-1/2} \right),
+\end{align}
+To ensure the positivity of $u^+_i$ and $u^-_i$, we modify the flux as \cite{hu2013positivity}
+\begin{align}
+    f_{i+1/2} &= \theta f_{i+1/2}^{HO} + (1-\theta) f_{i+1/2}^{LO},
+\end{align}
+where $f_{i+1/2}^{HO}$ is the original high-order flux scheme
+and $f_{i+1/2}^{LO}$ is the first order Lax-Friedrichs flux.
+The parameter $\theta \in \left[0,1\right]$ is the maximum value such that
+$u^+_i$ and $u^-_i$ are positive.
+Since the Lax-Friedrichs scheme is positivity preserving,
+we can always choose $\theta$ to preserve the positvity.
+Note that once the positivity in one first-order Euler timestep is preserved,
+the positivity is guaranteed for any strong-stability preserving Runge-Kutta (SSPRK) time integrator.\\
+In \texttt{Gmunu}, we implemented the positivity preserving limiter in conserved density $D$
+and energy density $\tau$ to preserve the positivity of density $\rho$ and pressure $p$.
+For the multidimensional case, we apply the limiter with component-by-component approach.
 
 %********************************** %Fourth Section  *************************************
 \section{Multigrid Method for elliptic equations} %Section - 3.1 
