@@ -1035,6 +1035,17 @@ wish to left align your text}
 \thispagestyle{empty}
 }
 
+% ********************************* Conventions and Units *********************************
+\newenvironment{conventions}
+{
+\cleardoublepage
+\setsinglecolumn
+\chapter*{\Huge \textbf{Conventions and Units}}
+\thispagestyle{empty}
+}
+
+
+
 
 
 % ******************************* Nomenclature *********************************

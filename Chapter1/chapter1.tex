@@ -16,15 +16,15 @@
 \section{Introduction to general relativity} %Section - 1.1
 \label{section1.1}
 
-\subsection{Einstein field equation} %Section - 1.1.1
+\subsection{Einstein field equations} %Section - 1.1.1
 \label{section1.1.1}
 
-The Einstein field equation is given by
+The Einstein field equations is given by
 \begin{align} \label{eq:Einstein_eq}
     G_{\mu\nu} = 8 \pi T_{\mu\nu},
 \end{align}
 where $T_{\mu\nu}$ is the enery-momentum tensor and $G_{\mu\nu}$ is the Einstein tensor.
-The Einstein tensor is defined as
+The Einstein tensor $G_{\mu\nu}$ is defined as
 \begin{align}
     G_{\mu\nu} \coloneqq R_{\mu\nu} - \frac{1}{2} g_{\mu\nu} R,
 \end{align}
@@ -43,7 +43,7 @@ Due to the complexity and nonlinearity of Einstein field equations, it is extrem
 Therefore, the accurate discription of the such systems can only be derived through numerical simulation.
 For this, we need to reformulate the Einstein equations as an initial-value problem or Cauchy problem.
 In this chapter, we will introduction the Arnowitt-Deser-Misner (ADM) formulation, which is the foundation of the 3+1 numerical relativity.
-In particular, we will focus on the constrained scheme for the Einstein equations.
+In particular, we will focus on the constrained evolution scheme for the Einstein equations.
 For more comprehensive discussion of numerical relativity,
 we refer readers to \cite{shibata2015numerical,baumgarte2010numerical,gourgoulhon20123+}.
 
@@ -175,7 +175,7 @@ and thus obtain the evolution equation for the spatial metric
 \subsection{The Gauss, Codazzi and Ricci equations}
 \label{section1.2.4}
 
-To express the Einstein field equations in term of the spatial variables $(\gamma_{\mu\nu}, K_{\mu\nu})$ we defined previous,
+To express the Einstein field equations in term of the spatial variables $(\gamma_{\mu\nu}, K_{\mu\nu})$ we defined previously,
 we first need to relate 3-dimensional Riemann tensor $R^\alpha{}_{\beta\mu\nu}$ on $\Sigma_t$ to the 4-dimensional Riemann tensor ${}^{(4)}R^\alpha{}_{\beta\mu\nu}$ on $\mathcal{M}$,
 The relation between $R^\alpha{}_{\beta\mu\nu}$ and the full spatial projection of ${}^{(4)}R^\alpha{}_{\beta\mu\nu}$ is given by the \textit{Gauss' equation}
 \begin{align}\label{eq:Gauss}
@@ -342,7 +342,7 @@ and the constraint equations become
 \begin{flalign}
     &\tilde{D}^2 \psi - \frac{1}{8} \psi \tilde{R} + \left( \frac{1}{8} A_{ij} A^{ij} - \frac{1}{12}K^2 + 2 \pi E \right) \psi^5 = 0, 
     &&\text{(Hamiltonian constraint)} \label{eq:H_const_s} \\
-    &\tilde{D}_i \left(\psi^{10} A^{ij} \right) - \frac{2}{3}\psi^6 \tilde{D}^i K = 8\pi \psi^{10} S^i. 
+    &\tilde{D}_j \left(\psi^{10} A^{ij} \right) - \frac{2}{3}\psi^6 \tilde{D}^i K = 8\pi \psi^{10} S^i. 
     &&\text{(momentum constraint)} \label{eq:S_const_s}
 \end{flalign}
 
@@ -567,14 +567,14 @@ On the other hand, the fully constrained approach minimizes the hyperbolic-type 
 Though the elliptic nature of the constraint equations makes it computationally costy to solve,
 elliptic equations are more stable than hyperbolic equations,
 and the constraint-violating modes appeared in the free-evolution scheme vanish by construction in fully constrained evolution.\\
-With the efficient elliptic solvers developped,
+With the efficient elliptic multigrid solvers developped,
 our relativistic hydrodynamics code \texttt{Gmunu} employs the Isenberg–Wilson–Mathews (also known as conformal flatness condition) approximation to the general relativity
 and the fully constrained formulation.
 In this section, we introduce the formulations and implementations under the constrained scheme.
 
 \subsection{Isenberg–Wilson–Mathews approximation}  %Section - 1.5.1
 \label{section1.5.1}
-The Isenberg–Wilson–Mathews approximation (IWM), also known as conformal flatness condition (CF),
+The Isenberg–Wilson–Mathews approximation (IWM), also known as conformal flatness condition (CFC),
 is a (gravitational-)waveless approximation to general relativity which was independently developped by
 Isenberg in 1978 \cite{isenberg2008waveless} as well as Wilson and Mathews in 1989 \cite{wilson1989relativistic}.
 In IWM, the spatial metric is approxiated to be conformally flat (hence the name conformal flatness condition)
