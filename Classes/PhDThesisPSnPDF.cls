@@ -815,6 +815,15 @@ wish to left align your text}
 % These macros are used to declare arguments needed for the
 % construction of the title page and other preamble.
 
+\newcommand{\@titlechinese}{}
+\newcommand{\titlechinese}[1]{\renewcommand{\@titlechinese}{#1}}
+
+\newcommand{\@authorchinese}{}
+\newcommand{\authorchinese}[1]{\renewcommand{\@authorchinese}{#1}}
+
+\newcommand{\@subtitlechinese}{}
+\newcommand{\subtitlechinese}[1]{\renewcommand{\@subtitlechinese}{#1}}
+
 % Subtitle (optional)
 \newcommand{\@subtitle}{}
 \newcommand{\subtitle}[1]{\renewcommand{\@subtitle}{#1}}
@@ -961,15 +970,12 @@ wish to left align your text}
 \vspace*{0.5em}
 \fi
 
-% Department and University
-{\usebox{\PHD@dept}}
-\vspace{.2\PHD@titlepagespacing}
-
 % Submission Text
 {\usebox{\PHD@submission}}
 
 % College and degree date
 \vfill
+{\usebox{\PHD@dept}}
 {\usebox{\PHD@collegedate}}
     
 \end{center}
@@ -1143,7 +1149,28 @@ wish to left align your text}
 % Normal abstract in the thesis
   \cleardoublepage
   \setsinglecolumn
-  \chapter*{\centering \Large Abstract}
+  \chapter*{\centering \Large \textbf{Abstract}}
+  \thispagestyle{empty}
+\fi
+}
+
+\newenvironment{abstract_chinese} {
+\ifPHD@abstract
+% Separate abstract as per Student Registry guidelines
+  \thispagestyle{empty}
+  \setsinglecolumn
+  \begin{center}
+    { \Large {\bfseries {\@title}} \par}
+    {{\large \vspace*{1em} \@author} \par}
+  \end{center}
+\else
+% Normal abstract in the thesis
+  \cleardoublepage
+  \setsinglecolumn
+  \chapter*{\centering 
+  \begin{CJK*}{UTF8}{bsmi} 
+  {\CJKfamily{bkai} \Large \textbf{摘要}}
+  \end{CJK*}}
   \thispagestyle{empty}
 \fi
 }
@@ -1167,6 +1194,20 @@ wish to left align your text}
       \\
       \centering \Large {\@subtitle}
     } % subtitle is defined
+    \\
+    \centering \Huge \bfseries{
+    \begin{CJK*}{UTF8}{bsmi}
+    {\CJKfamily{bkai} \@titlechinese}
+    \end{CJK*}}
+    \ifthenelse{\equal{\@subtitle}{}}{
+      % subtitle is not defined
+    }{
+      \\
+      \centering \Large {
+      \begin{CJK*}{UTF8}{bsmi}
+      {\CJKfamily{bkai} \@subtitlechinese}
+      \end{CJK*}}
+    } % subtitle is defined
   \end{minipage}
 \end{lrbox}
 
@@ -1189,7 +1230,10 @@ wish to left align your text}
 \newsavebox{\PHD@author}
 \begin{lrbox}{\PHD@author}
   \begin{minipage}[c]{\textwidth}
-    \centering \Large \bfseries{\@author}
+    \centering \Large \bfseries{\@author \\
+    \begin{CJK*}{UTF8}{bsmi}
+    {\CJKfamily{bkai} \@authorchinese}
+    \end{CJK*}}
       \vspace{0.5em}   
   \end{minipage}
 \end{lrbox}
@@ -1245,7 +1289,7 @@ wish to left align your text}
   \begin{minipage}[c]{\textwidth}
     \begin{center}
       \large \submissiontext \par
-      \large \textit {\@degreetitle} \par
+      \large {\@degreetitle} \par
     \end{center}
   \end{minipage}
 \end{lrbox}
