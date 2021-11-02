@@ -251,12 +251,14 @@ where $R=\sqrt{r^2+z^2}$ is the extraction radius.\\
 \begin{figure}[h!]
 \centering
   \includegraphics[width=\linewidth]{GW_combine_h_BU0.pdf}
-\caption{$h_{+}$ extracted at $(r_{ext}, z_{ext}) = (40, 0)$ from the simulations of oscillating neutron star "BU0".
+\caption{(upper panel) $h_{+}$ extracted at $(r_{ext}, z_{ext}) = (40, 0)$ from the simulations of oscillating neutron star "BU0".
+(lower panel) The power spectral density of $h_{+}$.
 The vertical lines represent the known and well-tested eigenmode frequencies \cite{dimmelmeier2006non}}
 \label{fig:GW_h_BU0}
 \end{figure}
 Figure \ref{fig:GW_h_BU0} shows the extracted gravitational wave signal $h_{+}$ from "BU0".
-The extracted pulsation mode agrees with \cite{dimmelmeier2006non} for $F$ and ${}^2f$ mode.
+Note that since the BU0 is a shperically symmetric star and it is simulated without any initial perturbation,
+only $F$ mode can be extracted which its value agrees with \cite{dimmelmeier2006non}.
 
 \subsection{Rapidly rotating neutron star}
 \label{section4.3.2}
@@ -268,14 +270,16 @@ and again we extracted $h_{+}$ at $(r_{ext}, z_{ext}) = (40, 0)$.\\
 \begin{figure}[h!]
 \centering
   \includegraphics[width=\linewidth]{GW_combine_h_BU8.pdf}
-\caption{$h_{+}$ extracted at $(r_{ext}, z_{ext}) = (40, 0)$ from the simulations of oscillating neutron star "BU8".
+\caption{(upper panel) $h_{+}$ extracted at $(r_{ext}, z_{ext}) = (40, 0)$ from the simulations of oscillating neutron star "BU8".
+(lower panel) The power spectral density of $h_{+}$ calculated from $t=2.5ms$ due to the spurios oscillation at the beginning.
 The vertical lines represent the known and well-tested eigenmode frequencies \cite{dimmelmeier2006non}}
 \label{fig:GW_h_BU8}
 \end{figure}
 Figure \ref{fig:GW_h_BU8} shows the extracted gravitational wave signal $h_{+}$ from "BU8".
-The extracted pulsation mode agrees with \cite{dimmelmeier2006non} for ${}^2f$ mode in the case of using FCF scheme.
+The extracted pulsation mode agrees with \cite{dimmelmeier2006non} for $F$ and ${}^2f$ mode.
 Note that the initial profile "BU8" is constructed under CFC approximation with zero $h^{ij}$,
 which is not the case when full GR is considered.
 This is why a spurious oscillation in $h$ occurs at the beginning of the simulation.
 Nonetheless, $h$ quickly settles down and oscillates around the new equilibrium position.
+We also observed that the ${}^2f$ mode of $h_+$ in FCF scheme has a higher amplitude compared to passive FCF scheme.
 

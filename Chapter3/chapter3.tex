@@ -317,7 +317,7 @@ where one can take the single speed $\lambda$ to be $\lambda = \max\left(|\lambd
 To perform the time integration,
 one can expand time derivative using Taylor expansion
 \begin{align}
-    \partial_t \mathbf{q} &= \frac{1}{2 \Delta t} \left(\mathcal{q}^{n+1} - \mathcal{q}^{n-1} \right).
+    \partial_t \mathbf{q} &= \frac{1}{2 \Delta t} \left(\mathbf{q}^{n+1} - \mathbf{q}^{n-1} \right).
 \end{align}
 However, it is not a practical time integration scheme because
 \begin{enumerate}[label=(\roman*)]
@@ -373,7 +373,7 @@ and $\lambda_k$ is the charateristic speed of the evolution system.
 \section{Atmosphere treatment}
 One of the challenge in astrophysical simulation is handle the interface between fluid and vacuum
 where the density $\rho$, pressurece $p$ and velocities $v^i$ vanish.
-In this section, we outline the positivity preserving limiter \cite{hu2013positivity} used in $\texttt{Gmunu}$
+In this section, we outline the positivity preserving limiter \cite{hu2013positivity,cheong2020gmunu_amr} used in $\texttt{Gmunu}$
 for atmosphere handling.
 
 \subsection{Positivity preserving limiter}
@@ -569,7 +569,7 @@ For restriction, the value of four (2D) or eight (3D) fine grid values is averag
 \subsection{The Full Approximation Scheme} %Section - 3.1.5
 \label{section3.1.5}
 To solve the non-linear elliptic equations,
-we adopt the Full Approximation Scheme (FAS) \cite{brandt1977multi,brabazon2014nonlinear,press1996numerical}.
+we adopt the Full Approximation Scheme (FAS) \cite{brandt1977multi,brabazon2014nonlinear,press1996numerical,cheong2020gmunu,teunissen2019geometric}.
 Here, we briefly outline the FAS algorithm.
 we define the residual $r$
 \begin{align}
