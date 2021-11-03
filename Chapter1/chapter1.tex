@@ -42,7 +42,7 @@ and $g_{\mu\nu}$ is the metric tensor.
 Due to the complexity and nonlinearity of Einstein field equations, it is extremely difficult to obtain analytical solution even for the simplest dynamical evolution systems.
 Therefore, the accurate discription of the such systems can only be derived through numerical simulation.
 For this, we need to reformulate the Einstein equations as an initial-value problem or Cauchy problem.
-In this chapter, we will introduction the Arnowitt-Deser-Misner (ADM) formulation, which is the foundation of the 3+1 numerical relativity.
+In this chapter, we will introduction the Arnowitt-Deser-Misner (ADM) formulation, which is one of the milestone of 3+1 numerical relativity.
 In particular, we will focus on the constrained evolution scheme for the Einstein equations.
 For more comprehensive discussion of numerical relativity,
 we refer readers to \cite{shibata2015numerical,baumgarte2010numerical,gourgoulhon20123+}.
@@ -88,8 +88,8 @@ The covariant and contravariant components of the metric can be written as
     \end{pmatrix}, &
     g^{\mu\nu} &= 
     \begin{pmatrix}
-        - \frac{1}{\alpha^2} & \beta^j \\
-        \beta^i & \gamma^{ij}
+        - \frac{1}{\alpha^2} & \frac{\beta^j}{\alpha^2} \\
+        \frac{\beta^i}{\alpha^2} & \gamma^{ij} - \frac{\beta^i \beta^j}{\alpha^2}
     \end{pmatrix}.
 \end{align}
 From equation(\ref{eq:1.2.1.g}), we can conclude that
@@ -118,7 +118,7 @@ The components of 3-dimensional connection coefficients $\Gamma^{\alpha}{}_{\mu\
 Here, the upper left index ${}^{(4)}$ marks the 4-dimensional tensors while the unmarked one represents purely spatial 3-dimensional tensors.
 Similarly, the 3-dimensional Riemann tensor $R^{\alpha}{}_{\beta\mu\nu}$ associated with $\gamma_{\mu\nu}$ is defined by requiring that
 \begin{align}
-    2 D_{[\nu} D_{\mu]} W_\beta &= W_\alpha R^\alpha{}_{\beta\mu\nu}, & R^{\alpha}{}_{\beta\mu\nu} n_\alpha &= 0,
+    D_{\nu} D_{\mu} W_\beta - D_{\mu} D_{\nu} W_\beta &= W_\alpha R^\alpha{}_{\beta\mu\nu}, & R^{\alpha}{}_{\beta\mu\nu} n_\alpha &= 0,
 \end{align}
 which can be explicitly expressed in coordinate basis as
 \begin{align}
@@ -333,7 +333,7 @@ Therefore, we can obtain the tracelss decomposition of the extrinsic curvature
 \begin{align}
     K_{ij} &= A_{ij} + \frac{1}{3} \gamma_{ij} K, & K^{ij} &= A^{ij} + \frac{1}{3} \gamma^{ij} K.
 \end{align}
-The evolution equations of the spatial metric (\ref{eq:ADM_g_evol}) in conformal deposition formulation can hence be written as
+The evolution equations of the spatial metric (\ref{eq:ADM_g_evol}) in conformal decomposition formulation can hence be written as
 \begin{flalign}
     \partial_t \psi &= \beta^i \tilde{D}_i \psi - \frac{1}{6}\psi \left(\alpha K - \tilde{D}_i \beta^i \right), &&\text{(conformal factor evolution)} \label{eq:psi_evol} \\
     \partial_t \tilde{\gamma}_{ij} &= - 2\alpha \psi^{-4} A_{ij} + \tilde{\gamma}_{jk} \tilde{D}_i \beta^k + \tilde{\gamma}_{ik} \tilde{D}_j \beta^k - \frac{2}{3} \tilde{\gamma}_{ij} \tilde{D}_k \beta^k, &&\text{(conformal metric evolution)} \label{eq:con_g_evol_1}
@@ -372,7 +372,7 @@ The Hamiltonian constraint and momentum constraint in this scaling is rewritten 
 \begin{align}
     &\tilde{D}^2 \psi = \frac{1}{8} \psi \tilde{R} - \left( 2 \pi E - \frac{1}{12}K^2 + \frac{1}{8} \tilde{A}_{ij} \tilde{A}^{ij} \right) \psi^5, 
     \label{eq:H_const_s4}\\
-    &\tilde{D}_i \left(\psi^6 \tilde{A}^{ij} \right) - \frac{2}{3}\psi^6 \tilde{D}^i K = 8\pi \psi^{10} S^i.\label{eq:S_const_s4}
+    &\tilde{D}_j \left(\psi^6 \tilde{A}^{ij} \right) - \frac{2}{3}\psi^6 \tilde{D}^i K = 8\pi \psi^{10} S^i.\label{eq:S_const_s4}
 \end{align}
 
 \subparagraph{“Momentum-constraint” scaling: $a=-10$.}
@@ -403,8 +403,8 @@ they have different mathematical properties if they are treated as a partial dif
 According to the maximal principle,
 the local uniqueness of the solutions depends on the sign of the exponent of $\psi$ in the quadratic extrinsic curvature $A^2$ term 
 \cite{cordero2009improved,smarr1979sources,taylor1991partial,evans1997partial,protter2012maximum}.
-Equation (\ref{eq:S_const_s4}) suffers from the mathematical nonuniqueness problems due to the positive exponent $(+5)$,
-while the negative exponent $(-7)$ in equation (\ref{eq:S_const_s10}) guarantees the local uniquess of the solutions.
+Equation (\ref{eq:H_const_s4}) suffers from the mathematical nonuniqueness problems due to the positive exponent $(+5)$,
+while the negative exponent $(-7)$ in equation (\ref{eq:H_const_s10}) guarantees the local uniquess of the solutions.
 
 \subsection{Conformal transverse-traceless decomposition}
 \label{section1.3.3}
@@ -559,7 +559,7 @@ which are well adapted to the treatment of gravitational radiation.
 \section{Constrained scheme for the Einstein equations}  %Section - 1.5
 \label{section1.5}
 Although the ADM equations (\cref{eq:ADM_H_const,eq:ADM_S_const,eq:ADM_g_evol,eq:ADM_K_evol}) formulate the Einstein equations into a well-defined initial-value problem based on spacetime foliation,
-it is known to be unsuitable for numerical simulation due to the unbounded growth of numerical error (same for conformal decomposition formulation).
+it is known to be unsuitable for numerical simulation of singular spacetime due to the unbounded growth of numerical error (same for conformal decomposition formulation).
 Several reformulations were developped to maintain stable evolutions.
 Most of schemes such as BSSN \cite{shibata1995evolution,baumgarte1998numerical}, CCZ4 \cite{bona2003general}, Z4c \cite{bernuzzi2010constraint} schemes are based on free-evolution approach where the hyperbolic-type dynamical equations are evolved without enforcing the constraints.
 The constraint equations are solved only to obtain the initial data and serve as an indicator for numerical errors during the simulation.
@@ -593,7 +593,7 @@ The CFC approximation reduces the ADM equations in a set of coupled non-linear e
 \begin{align}
     & \mathcal{D}^2 \psi = - \left( 2\pi E + \frac{1}{8}K_{ij} K^{ij} \right) \psi^5, \\
     & \mathcal{D}^2 \left(\alpha \psi \right) = \alpha \psi^5 \left[ \frac{7}{8} K_{ij} K^{ij} + 2 \pi \left(E + 2 S \right) \right], \\
-    & \Delta_L \beta^i = 16 \pi \alpha \psi^4 S^i - 2 \psi^{10} K^{ij} \mathcal{D}_j \left(\alpha \psi^{-6} \right),
+    & \Delta_L \beta^i = 16 \pi \alpha \psi^4 S^i + 2 \psi^{10} K^{ij} \mathcal{D}_j \left(\alpha \psi^{-6} \right),
 \end{align}
 where $\Delta_L \beta^i \coloneqq \mathcal{D}^2 \beta^i + \frac{1}{3} \mathcal{D}^i \mathcal{D}_j \beta^j$
 is the \textit{vector Laplacian} (\cref{eq:vector_Lap}) associated with the flat metric $f_{ij}$.
@@ -603,7 +603,7 @@ correct at the 1-PN order in the post-Newtonian expansion of general relativity.
 The CFC scheme has been successful in numerical simulation for various astrophysical simulation
 \cite{dimmelmeier2002relativistic,oechslin2002conformally,saijo2004collapse,bauswein2012equation,bauswein2013systematics,bauswein2014revealing,muller2015dynamics,dimmelmeier2006non} 
 and obtained good approximation to full general relativity in axisymmetric rotating neutron stars 
-\cite{dimmelmeier2002relativistic,dimmelmeier2006non,cook1996testing}
+\cite{shibata2004gravitational,dimmelmeier2002relativistic,dimmelmeier2006non,cook1996testing}
 and in rotating iron core collapses \cite{ott2007rotating}.
 
 \subsubsection{Extended CFC scheme}
@@ -619,7 +619,7 @@ and the metric can be solved by following
     & \mathcal{D}^2 \psi = - 2\pi E^{*} \psi^{-1} - \frac{1}{8} \psi^{-7}f_{il}f_{jm} \hat{A}^{lm} \hat{A}^{ij}, \label{eq:XCFC_psi}\\
     & \mathcal{D}^2 \left(\alpha \psi \right) = \left( \alpha \psi \right) \left[ 2\pi \left( E^{*} + 2 S^{*} \right) \psi^{-2}
     + \frac{7}{8} \psi^{-8} f_{il}f_{jm} \hat{A}^{lm} \hat{A}^{ij} \right], \label{eq:XCFC_alp}\\
-    & \Delta_L \beta^i = 16 \pi \alpha \psi^{-6} f^{ij} \left(S^{*}\right)_{j} - 2 \hat{A}^{ij} \mathcal{D}_j \left(\alpha \psi^{-6} \right), \label{eq:XCFC_beta}
+    & \Delta_L \beta^i = 16 \pi \alpha \psi^{-6} f^{ij} \left(S^{*}\right)_{j} + 2 \hat{A}^{ij} \mathcal{D}_j \left(\alpha \psi^{-6} \right), \label{eq:XCFC_beta}
 \end{align}
 where the hydrodynamical conserved quantities are defined as
 \begin{align}
@@ -667,6 +667,10 @@ The Valencia's group performed first-order reduction \cite{cordero2008mathematic
 \begin{align}
     w^{ij}{}_k \coloneqq \mathcal{D}_k h^{ij},
 \end{align}
+with the gauge condition
+\begin{align}\label{eq:FCF_conformal_w}
+    w^{ij}{}_i = 0.
+\end{align}
 Thus, the hyperbolic sector in the FCF is recasted as a first-order system in $\left(h^{ij}, \hat{A}^{ij}, w^{ij}{}_k \right)$ as follows
 \begin{flalign}
     &\partial_t h^{ij} = 2 \alpha \psi^{-6} \hat{A}^{ij} + \beta^k w^{ij}{}_k
@@ -703,9 +707,9 @@ and the characteristic speed is given by
     \lambda^i_{\pm} = -\beta^i \pm \alpha\psi^{-2} \tilde{\gamma}^{ii}.
 \end{align}
 In Meudon-Valencia's approach, only the transverse-traceless (TT) part of the hyperbolic equations are evolved.
-Each tenorial hyperbolic equation is reduced to two scalar equations under TT decomposition \cite{bonazzola2004constrained} and solved using spectral method,
+Each tensorial hyperbolic equation is reduced to two scalar equations under TT decomposition \cite{bonazzola2004constrained} and solved using spectral method,
 and partially implicit Runge-Kutta methods (PIRK) is used to update $w^{ij}{}_k$ to maintain numerical stability \cite{cordero2012gravitational,cordero2012partially}.
-To fulfill the constraint in equation (\ref{eq:FCF_g_conformal}), the trace part of $h^{ij}$ was calculated by the following iteration procedure:
+To fulfill the constraint in equation (\ref{eq:FCF_conformal_g}), the trace part of $h^{ij}$ was calculated by the following iteration procedure:
 \begin{Step}
     \item Calculate $h\coloneqq \det{\tilde{\gamma}^{ij}} - f$.
     \item Solve the Poisson equation
@@ -746,7 +750,7 @@ while solving the elliptic sector in XCFC scheme.
 \label{section1.5.3}
 In \texttt{Gmunu}, the fully-constrained scheme is solved in a slightly different approach.
 Instead of solving \cref{eq:FCF_h,eq:FCF_A,eq:FCF_w},
-we omit the axuiliary variable $w^{ij}{}_k$ and evolve the following hyperbolic equations for $\left(h^{ij}, A^{ij} \right)$
+we omit the axuiliary variable $w^{ij}{}_k$ in order to avoid solving the gauge condition of $w^{ij}{}_k$ \ref{eq:FCF_conformal_w} and evolve the following hyperbolic equations for $\left(h^{ij}, A^{ij} \right)$
 \begin{flalign}
     &\partial_t h^{ij} = 2 \alpha \psi^{-6} \hat{A}^{ij} + \beta^k \mathcal{D}_k h^{ij}
     - \tilde{\gamma}^{ik} \mathcal{D}_k \beta^j - \tilde{\gamma}^{kj} \mathcal{D}_k \beta^i
@@ -768,7 +772,7 @@ we omit the axuiliary variable $w^{ij}{}_k$ and evolve the following hyperbolic 
         \mathcal{D}_k \mathcal{D}_l \left(\alpha \psi^2 \right) \\
         &- \frac{1}{2} \left( \tilde{\gamma}^{ik} \mathcal{D}_k h^{lj}+ \tilde{\gamma}^{lk} \mathcal{D}_k h^{il} - \tilde{\gamma}^{kl} \mathcal{D}_k h^{ij} \right) 
         \mathcal{D}_l \left(\alpha \psi^2 \right),
-    \end{aligned} \label{eq:FCF_A_2}\\
+    \end{aligned} \label{eq:FCF_A_2}
 \end{flalign}
 directly without performing TT composition.
 Note that although the hyperbolic system is \textit{unconditionally unstable} if second-order explicit \textit{Runge-Kutta} (RK) method used,

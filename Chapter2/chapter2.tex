@@ -16,7 +16,7 @@
 \section{Relativistic Hydrodynamics} %Section - 2.1
 In the previous chapter, we explored the formulation of the left hand side of the Einstein equations.
 In this chapter, we focus on the right hand side of the equations,
-specifically the 3+1 treatment of perfect fluid in conservative form \cite{marti1991numerical,rezzolla2013relativistic}.
+specifically the 3+1 treatment of perfect fluid in conservative form \cite{banyuls1997numerical,rezzolla2013relativistic}.
 
 \subsection{Perfect fluid}
 \label{section2.1.1}
@@ -107,7 +107,7 @@ Equation (\ref{eq:E_cons}) can also be written as
     &\partial_t \left( \sqrt{\gamma} \tau \right) + \partial_i \left[\sqrt{\gamma} \left(\alpha\left(S^i - D v^i \right) - \beta^i \tau \right)\right]
     = \sqrt{\gamma} \left(\alpha K_{ij} S^{ij} - S^i \partial_i \alpha \right). \label{eq:tau_cons},
 \end{align}
-to obtain better numerical accuracy,
+to recover the energy density in Newtonian limit.
 where the conserved quantity $\tau$ is defined as
 \begin{align}
     \tau \coloneqq E - D.
@@ -117,7 +117,7 @@ where the conserved quantity $\tau$ is defined as
 \label{section2.1.4}
 Here, we summarize \cref{eq:mass_cons,eq:mom_cons,eq:tau_cons} and express in conservative form
 \begin{align}
-    \partial_t \left(\sqrt{\gamma} \mathbf{Q} \right) \partial_i \left(\sqrt{\gamma} \mathbf{F}^i \right) = \sqrt{\gamma} \mathbf{S},
+    \partial_t \left(\sqrt{\gamma} \mathbf{Q} \right) + \partial_i \left(\sqrt{\gamma} \mathbf{F}^i \right) = \sqrt{\gamma} \mathbf{S},
 \end{align}
 where the conserved variables $\mathbf{Q}$, flux terms $\mathbf{F}^i$ and source terms $\mathbf{S}$ are
 \begin{align}

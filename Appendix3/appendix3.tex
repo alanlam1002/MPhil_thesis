@@ -1,0 +1,71 @@
+%!TEX root = ../thesis.tex
+% ******************************* Thesis Appendix C ********************************
+
+\chapter{Analytic Solution of Teukolsky Wave}
+\label{A3}
+
+We list here the analytic solution of Teukolsky wave in 2D cylindrical coordinate with the initial condition writen in equations \ref{eq:Teukolsky_wave_IC}
+\begin{align}
+\begin{split}
+        h^{rr}(r,z,t) &=
+-\frac{1}{8 \lambda ^8 R^9}\bigg[3 \mathcal{A}^\prime e^{-\frac{(R+t)^2}{\lambda ^2}} (80 \lambda ^2 r^2 R^2 t z^2 \\
+& (-R^4 (e^{\frac{4 R t}{\lambda ^2}}-1)-3 R^2 t^2 (e^{\frac{4 R t}{\lambda ^2}}-1)+3 R^3 t \\
+& (e^{\frac{4 R t}{\lambda ^2}}+1)+R t^3 (e^{\frac{4 R t}{\lambda ^2}}+1))+16 r^2 R^4 z^2 (-10 R^2 t^3 \\
+& (e^{\frac{4 R t}{\lambda ^2}}-1)+t^2 ((10 R^3-t^3) e^{\frac{4 R t}{\lambda ^2}}+10 R^3 \\
+& +t^3)+R^4 ((R-5 t) e^{\frac{4 R t}{\lambda ^2}}+R+5 t)+5 R t^4 (e^{\frac{4 R t}{\lambda ^2}}+1)) \\
+& +3 \lambda ^8 t (4 r^4-27 r^2 z^2+4 z^4) (e^{\frac{4 R t}{\lambda ^2}}-1)-4 \lambda ^4 R^2 (-t^3 \\
+& (4 r^4-37 r^2 z^2+4 z^4) (e^{\frac{4 R t}{\lambda ^2}}-1)+3 R t^2 (4 r^4-17 r^2 z^2+4 z^4) \\
+& (e^{\frac{4 R t}{\lambda ^2}}+1)-6 t (2 r^6+r^4 z^2+r^2 z^4+2 z^6) (e^{\frac{4 R t}{\lambda ^2}}-1) \\
+& +4 R^7 (e^{\frac{4 R t}{\lambda ^2}}+1))-6 \lambda ^6 t (-4 r^6 (e^{\frac{4 R t}{\lambda ^2}}-1) \\
+& +r^4 (4 R t (e^{\frac{4 R t}{\lambda ^2}}+1)+13 z^2 (e^{\frac{4 R t}{\lambda ^2}}-1)) \\
+& +r^2 z^2 (13 z^2 (e^{\frac{4 R t}{\lambda ^2}}-1)-27 R t (e^{\frac{4 R t}{\lambda ^2}}+1)) \\
+& -4 z^6 (e^{\frac{4 R t}{\lambda ^2}}-1)+4 R t z^4 (e^{\frac{4 R t}{\lambda ^2}}+1)))\bigg],
+\end{split}
+\end{align}
+\begin{align}
+\begin{split}
+        h^{rz}(r,z,t) &=
+\frac{1}{8 \lambda ^8 R^9}\bigg[3 r \mathcal{A}^\prime z e^{-\frac{(R+t)^2}{\lambda ^2}} (16 r^2 R^4 (-10 R^2 t^3 (e^{\frac{4 R t}{\lambda ^2}}-1) \\
+&+t^2 ((10 R^3-t^3) e^{\frac{4 R t}{\lambda ^2}}+10 R^3+t^3)+R^4 ((R-5 t) e^{\frac{4 R t}{\lambda ^2}}+R+5 t)+5 R t^4 (e^{\frac{4 R t}{\lambda ^2}}+1)) \\
+&+15 \lambda ^8 t (4 z^2-3 r^2) (e^{\frac{4 R t}{\lambda ^2}}-1)+12 \lambda ^4 R^2 t (t^2 (8 z^2-7 r^2) (e^{\frac{4 R t}{\lambda ^2}}-1) \\
+&+R t (9 r^2-16 z^2) (e^{\frac{4 R t}{\lambda ^2}}+1)-2 (r^4-3 r^2 z^2-4 z^4) (e^{\frac{4 R t}{\lambda ^2}}-1)) \\
+&-16 \lambda ^2 R^2 (-R^4 t (3 r^2+8 z^2) (e^{\frac{4 R t}{\lambda ^2}}-1)+R t^4 (2 z^2-3 r^2) (e^{\frac{4 R t}{\lambda ^2}}+1) \\
+&+t^3 (7 r^4-r^2 z^2-8 z^4) (e^{\frac{4 R t}{\lambda ^2}}-1)-3 R t^2 (r^4-3 r^2 z^2-4 z^4) (e^{\frac{4 R t}{\lambda ^2}}+1) \\
+&+2 R^7 (e^{\frac{4 R t}{\lambda ^2}}+1))-6 \lambda ^6 t (9 r^4 (e^{\frac{4 R t}{\lambda ^2}}-1)-15 r^2 R t (e^{\frac{4 R t}{\lambda ^2}}+1) \\
+&+z^2 (20 R t (e^{\frac{4 R t}{\lambda ^2}}+1)-7 r^2 (e^{\frac{4 R t}{\lambda ^2}}-1))-16 z^4 (e^{\frac{4 R t}{\lambda ^2}}-1)))\bigg],
+\end{split}
+\end{align}
+\begin{align}
+        h^{r\phi}(r,z,t) &= 0,
+\end{align}
+\begin{align}
+\begin{split}
+        h^{zz}(r,z,t) &=
+-\frac{1}{8 \lambda ^8 R^9}\bigg[3 \mathcal{A}^\prime e^{-\frac{(R+t)^2}{\lambda ^2}} (16 r^4 R^4 (-10 R^2 t^3 (e^{\frac{4 R t}{\lambda ^2}}-1) \\
+&+t^2 ((10 R^3-t^3) e^{\frac{4 R t}{\lambda ^2}}+10 R^3+t^3)+R^4 ((R-5 t) e^{\frac{4 R t}{\lambda ^2}}+R+5 t)+5 R t^4 (e^{\frac{4 R t}{\lambda ^2}}+1)) \\
+&-16 \lambda ^2 r^2 R^2 (-R^4 t (11 r^2+16 z^2) (e^{\frac{4 R t}{\lambda ^2}}-1)-R t^4 (r^2-4 z^2) (e^{\frac{4 R t}{\lambda ^2}}+1) \\
+&-t^3 (r^4+17 r^2 z^2+16 z^4) (e^{\frac{4 R t}{\lambda ^2}}-1)+3 R t^2 (3 r^4+11 r^2 z^2+8 z^4) (e^{\frac{4 R t}{\lambda ^2}}+1) \\
+&+4 R^7 (e^{\frac{4 R t}{\lambda ^2}}+1))-3 \lambda ^8 t (3 r^4-24 r^2 z^2+8 z^4) (e^{\frac{4 R t}{\lambda ^2}}-1) \\
+&+4 \lambda ^4 R^2 (-t^3 (5 r^4-32 r^2 z^2+8 z^4) (e^{\frac{4 R t}{\lambda ^2}}-1)+3 R t^2 (r^4-16 r^2 z^2+8 z^4) (e^{\frac{4 R t}{\lambda ^2}}+1) \\
+&-6 t (r^6+r^4 z^2+4 r^2 z^4+4 z^6) (e^{\frac{4 R t}{\lambda ^2}}-1)+8 R^7 (e^{\frac{4 R t}{\lambda ^2}}+1))+6 \lambda ^6 t (-(r^6 (e^{\frac{4 R t}{\lambda ^2}}-1)) \\
+&+3 r^4 R t (e^{\frac{4 R t}{\lambda ^2}}+1)+8 z^4 (r^2 (e^{\frac{4 R t}{\lambda ^2}}-1)+R t (e^{\frac{4 R t}{\lambda ^2}}+1)) \\
+&+3 r^2 z^2 (5 r^2 (e^{\frac{4 R t}{\lambda ^2}}-1)-8 R t (e^{\frac{4 R t}{\lambda ^2}}+1))-8 z^6 (e^{\frac{4 R t}{\lambda ^2}}-1)))\bigg],
+\end{split}
+\end{align}
+\begin{align}
+        h^{z\phi}(r,z,t) &= 0,
+\end{align}
+\begin{align}
+\begin{split}
+        h^{\phi\phi}(r,z,t) &= 
+\frac{1}{8 \lambda ^8 R^7}\bigg[3 \mathcal{A}^\prime e^{-\frac{(R+t)^2}{\lambda ^2}} (-16 \lambda ^2 r^2 R^2 (-11 R^4 t (e^{\frac{4 R t}{\lambda ^2}}-1) \\
+&-R^2 t^3 (e^{\frac{4 R t}{\lambda ^2}}-1)+9 R^3 t^2 (e^{\frac{4 R t}{\lambda ^2}}+1)+4 R^5 (e^{\frac{4 R t}{\lambda ^2}}+1) \\
+&-R t^4 (e^{\frac{4 R t}{\lambda ^2}}+1))+16 r^2 R^4 (-10 R^2 t^3 (e^{\frac{4 R t}{\lambda ^2}}-1)+t^2 ((10 R^3-t^3) e^{\frac{4 R t}{\lambda ^2}} \\
+&+10 R^3+t^3)+R^4 ((R-5 t) e^{\frac{4 R t}{\lambda ^2}}+R+5 t)+5 R t^4 (e^{\frac{4 R t}{\lambda ^2}}+1))+3 \lambda ^8 t (r^2-4 z^2) \\
+&(e^{\frac{4 R t}{\lambda ^2}}-1)+4 \lambda ^4 R^2 (-3 R t^2 (3 r^2-4 z^2) (e^{\frac{4 R t}{\lambda ^2}}+1)-t (-6 r^4+r^2 (t^2+6 z^2)+4 z^2 (t^2+3 z^2)) \\
+&(e^{\frac{4 R t}{\lambda ^2}}-1)+4 R R^4 (e^{\frac{4 R t}{\lambda ^2}}+1))+6 \lambda ^6 t (3 r^4 (e^{\frac{4 R t}{\lambda ^2}}-1) \\
+&-r^2 (R t (e^{\frac{4 R t}{\lambda ^2}}+1)+z^2 (e^{\frac{4 R t}{\lambda ^2}}-1))-4 z^4 (e^{\frac{4 R t}{\lambda ^2}}-1) \\
+&+4 R t z^2 (e^{\frac{4 R t}{\lambda ^2}}+1)))\bigg],
+\end{split}
+\end{align}
+where $R = \sqrt{r^2 + z^2}$.

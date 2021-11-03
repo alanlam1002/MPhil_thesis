@@ -19,7 +19,7 @@
 For simplicity, we consider only the test of Poisson equation.
 In Newtonian gravity, the gravitational potential $\Phi$ can be obtained by
 \begin{align}\label{eq:poisson_eq}
-    \nabla^2 = - 4\pi \rho,
+    \nabla^2 \Phi= - 4\pi \rho,
 \end{align}
 where $\rho$ is the energy density of the matter source.
 Here, we consider a spherically symmetric source as
@@ -45,7 +45,7 @@ with 2nd order and 4th order central finite difference respectively.
 The computational domain and the discretization are set to be
 $0\leq r \leq 10$ and $[N]$ for spherical coordinate,
 $0\leq (r,z) \leq 10$ and $[N,N]$ for cylindrical coordinate, and
-$0\leq (x,y,z) \leq 10$ and $[N,N,N]$ for cylindrical coordinate respectively,
+$0\leq (x,y,z) \leq 10$ and $[N,N,N]$ for Cartesian coordinate respectively,
 where $N$ is the number of grids.
 The boundary conditions are set to be
 \begin{align}
@@ -120,7 +120,7 @@ and perform the simulation in 2D axisymmetric cylindrical coordinate $(r,z,\phi)
 The computational domain covers the region $0\leq \rho \leq 5$, $0\leq z \leq 5$
 and the discretization of the domain is set to be $[256,256]$.
 The inital profile is given by
-\begin{align}
+\begin{align}\label{eq:Teukolsky_wave_IC}
     \psi &= \alpha = 1, \\
     \beta^i &= 0, \\
     h^{rr} &= \mathcal{A}' \frac{\lambda^4 - \rho^2 z^2}{\lambda^8} e^{-\frac{x^2}{\lambda^2}}, \\
@@ -132,7 +132,7 @@ The inital profile is given by
     \hat{A}^{ij} &= 0,
 \end{align}
 where $\mathcal{A}' = \frac{\mathcal{A}}{12}$.
-The analytic solution is written in the Appendix.
+The analytic solution is written in the Appendix \ref{A3}.
 The simulation will be performed under two configurations:
 \begin{enumerate}
     %\item Solve the linearized hyperbolic equations only
