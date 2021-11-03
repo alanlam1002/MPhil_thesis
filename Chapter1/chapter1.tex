@@ -40,7 +40,7 @@ and $g_{\mu\nu}$ is the metric tensor.
 \label{section1.2}
 
 Due to the complexity and nonlinearity of Einstein field equations, it is extremely difficult to obtain analytical solution even for the simplest dynamical evolution systems.
-Therefore, the accurate discription of the such systems can only be derived through numerical simulation.
+Therefore, the accurate description of the such systems can only be derived through numerical simulation.
 For this, we need to reformulate the Einstein equations as an initial-value problem or Cauchy problem.
 In this chapter, we will introduction the Arnowitt-Deser-Misner (ADM) formulation, which is one of the milestone of 3+1 numerical relativity.
 In particular, we will focus on the constrained evolution scheme for the Einstein equations.
@@ -70,7 +70,7 @@ into two components as
 \end{align}
 where the lapse function $\alpha$ measures the physical proper time ($\alpha\Delta t$) between two neighboring spatial hypersurface $\Sigma_t$ and $\Sigma_{t+\Delta t}$
 , and the shift vector $\beta^i$ measures the changes of spatial coordinates on $\Sigma_{t+\Delta t}$.\\
-Here, we summarise several useful relations.
+Here, we summarize several useful relations.
 The timelike normal vector $n^\mu$ and its corresponding one-form $n_\mu$ can be expressed as
 \begin{align} \label{eq:1.2.1.normal}
     n^\mu &= \frac{1}{\alpha}\left(1, \beta^i \right), & n_\mu &= \left(\alpha, \vec{0}, \right).
@@ -403,8 +403,8 @@ they have different mathematical properties if they are treated as a partial dif
 According to the maximal principle,
 the local uniqueness of the solutions depends on the sign of the exponent of $\psi$ in the quadratic extrinsic curvature $A^2$ term 
 \cite{cordero2009improved,smarr1979sources,taylor1991partial,evans1997partial,protter2012maximum}.
-Equation (\ref{eq:H_const_s4}) suffers from the mathematical nonuniqueness problems due to the positive exponent $(+5)$,
-while the negative exponent $(-7)$ in equation (\ref{eq:H_const_s10}) guarantees the local uniquess of the solutions.
+Equation (\ref{eq:H_const_s4}) suffers from the mathematical non-uniqueness problems due to the positive exponent $(+5)$,
+while the negative exponent $(-7)$ in equation (\ref{eq:H_const_s10}) guarantees the local uniqueness of the solutions.
 
 \subsection{Conformal transverse-traceless decomposition}
 \label{section1.3.3}
@@ -474,7 +474,7 @@ but also has some nice physical properties:
 it is a natural extension of Newtonian gravity and has singularity avoidance property.
 
 \subsubsection{Natural generalization to Newtonian limit}
-Consider the Newtonain limit of a weak and static gravitational field
+Consider the Newtonian limit of a weak and static gravitational field
 \begin{align}
     \alpha &\approx 1 + \Phi, & \gamma_{ij} &\approx \left(1 + 2\Phi \right) f_{ij}, & K_{ij} &=0, & \text{for } \Phi &\ll 1,
 \end{align}
@@ -484,7 +484,7 @@ and non-relativistic matter
     S &\ll E, & E &\approx \rho_0,
 \end{align}
 where $\rho_0$ is the proper rest mass energy density.
-Equation (\ref{eq:lapse_2}) reduces to Poisson equation for the newtonian gravitational potential
+Equation (\ref{eq:lapse_2}) reduces to Poisson equation for the Newtonian gravitational potential
 \begin{align}
     \nabla^2 \Phi = 4\pi \rho_0.
 \end{align}
@@ -560,14 +560,14 @@ which are well adapted to the treatment of gravitational radiation.
 \label{section1.5}
 Although the ADM equations (\cref{eq:ADM_H_const,eq:ADM_S_const,eq:ADM_g_evol,eq:ADM_K_evol}) formulate the Einstein equations into a well-defined initial-value problem based on spacetime foliation,
 it is known to be unsuitable for numerical simulation of singular spacetime due to the unbounded growth of numerical error (same for conformal decomposition formulation).
-Several reformulations were developped to maintain stable evolutions.
+Several reformulations were developed to maintain stable evolutions.
 Most of schemes such as BSSN \cite{shibata1995evolution,baumgarte1998numerical}, CCZ4 \cite{bona2003general}, Z4c \cite{bernuzzi2010constraint} schemes are based on free-evolution approach where the hyperbolic-type dynamical equations are evolved without enforcing the constraints.
 The constraint equations are solved only to obtain the initial data and serve as an indicator for numerical errors during the simulation.
 On the other hand, the fully constrained approach minimizes the hyperbolic-type evolution equations by solving the constraint equations at each time step.
-Though the elliptic nature of the constraint equations makes it computationally costy to solve,
+Though the elliptic nature of the constraint equations makes it computationally costly to solve,
 elliptic equations are more stable than hyperbolic equations,
 and the constraint-violating modes appeared in the free-evolution scheme vanish by construction in fully constrained evolution.\\
-With the efficient elliptic multigrid solvers developped,
+With the efficient elliptic multigrid solvers developed,
 our relativistic hydrodynamics code \texttt{Gmunu} employs the Isenberg–Wilson–Mathews (also known as conformal flatness condition) approximation to the general relativity
 and the fully constrained formulation.
 In this section, we introduce the formulations and implementations under the constrained scheme.
@@ -575,9 +575,9 @@ In this section, we introduce the formulations and implementations under the con
 \subsection{Isenberg–Wilson–Mathews approximation}  %Section - 1.5.1
 \label{section1.5.1}
 The Isenberg–Wilson–Mathews approximation (IWM), also known as conformal flatness condition (CFC),
-is a (gravitational-)waveless approximation to general relativity which was independently developped by
+is a (gravitational-)waveless approximation to general relativity which was independently developed by
 Isenberg in 1978 \cite{isenberg2008waveless} as well as Wilson and Mathews in 1989 \cite{wilson1989relativistic}.
-In IWM, the spatial metric is approxiated to be conformally flat (hence the name conformal flatness condition)
+In IWM, the spatial metric is approximated to be conformally flat (hence the name conformal flatness condition)
 \begin{align}
     \gamma_{ij} &= \psi^4 f_{ij}, &\text{or } &\text{equivalently } & \tilde{\gamma}_{ij} &= f_{ij},
 \end{align}
@@ -648,8 +648,8 @@ the metric equations can be solved accordingly as follows
 \label{section1.5.2}
 The fully constrained formulation (FCF) was first proposed by the Meudon group \cite{bonazzola2004constrained},
 and then later modified by the Valencia's group \cite{cordero2008mathematical,cordero2009improved,cordero2012gravitational}.
-By choosing the maximal slcing condition (section \ref{section1.4.1}) and the generalized Dirac gauge (section \ref{section1.4.2}),
-the conformal 3+1 decomposition can be recasted in a coupled elliptic-hyperbolic system,
+By choosing the maximal slicing condition (section \ref{section1.4.1}) and the generalized Dirac gauge (section \ref{section1.4.2}),
+the conformal 3+1 decomposition can be recast in a coupled elliptic-hyperbolic system,
 where all the constraint equations are utilized to minimize the number of hyperbolic equations in the system.
 Here, we summarize the gauge conditions and algebraic constraint for the scheme
 \begin{flalign}
@@ -658,12 +658,12 @@ Here, we summarize the gauge conditions and algebraic constraint for the scheme
     & \det \tilde{\gamma}_{ij} = f, &&\text{(conformal decomposition)} \label{eq:FCF_conformal_g}\\
     & K^{ij} = \psi^{-10}\hat{A}^{ij}, \quad \hat{A}^{ij} = \hat{A}^{ij}_{TT} + \left(L X\right)^{ij}. &&\text{(conformal decomposition)} \label{eq:FCF_conformal_A}
 \end{flalign}
-Note that althought it would be more general to used the \textit{Killing operator} $\tilde{L}$ associated with $\tilde{\gamma}_{ij}$ in equation (\ref{eq:FCF_conformal_A}),
+Note that although it would be more general to used the \textit{Killing operator} $\tilde{L}$ associated with $\tilde{\gamma}_{ij}$ in equation (\ref{eq:FCF_conformal_A}),
 the \textit{Killing operator} $L$ associated with flat metric $f_{ij}$ is used since it is easier to handle technically.
 Under such gauge conditions, the ADM equations are decomposed into a coupled hyperbolic-elliptic system.
 
 \subsubsection{Hyperbolic sector}
-The Valencia's group performed first-order reduction \cite{cordero2008mathematical} to the reduced FCF system \cite{bonazzola2004constrained} by introducing axuiliary variable
+The Valencia's group performed first-order reduction \cite{cordero2008mathematical} to the reduced FCF system \cite{bonazzola2004constrained} by introducing auxiliary variable
 \begin{align}
     w^{ij}{}_k \coloneqq \mathcal{D}_k h^{ij},
 \end{align}
@@ -671,7 +671,7 @@ with the gauge condition
 \begin{align}\label{eq:FCF_conformal_w}
     w^{ij}{}_i = 0.
 \end{align}
-Thus, the hyperbolic sector in the FCF is recasted as a first-order system in $\left(h^{ij}, \hat{A}^{ij}, w^{ij}{}_k \right)$ as follows
+Thus, the hyperbolic sector in the FCF is recast as a first-order system in $\left(h^{ij}, \hat{A}^{ij}, w^{ij}{}_k \right)$ as follows
 \begin{flalign}
     &\partial_t h^{ij} = 2 \alpha \psi^{-6} \hat{A}^{ij} + \beta^k w^{ij}{}_k
     - \tilde{\gamma}^{ik} \mathcal{D}_k \beta^j - \tilde{\gamma}^{kj} \mathcal{D}_k \beta^i
@@ -707,7 +707,7 @@ and the characteristic speed is given by
     \lambda^i_{\pm} = -\beta^i \pm \alpha\psi^{-2} \tilde{\gamma}^{ii}.
 \end{align}
 In Meudon-Valencia's approach, only the transverse-traceless (TT) part of the hyperbolic equations are evolved.
-Each tensorial hyperbolic equation is reduced to two scalar equations under TT decomposition \cite{bonazzola2004constrained} and solved using spectral method,
+Each tensor hyperbolic equation is reduced to two scalar equations under TT decomposition \cite{bonazzola2004constrained} and solved using spectral method,
 and partially implicit Runge-Kutta methods (PIRK) is used to update $w^{ij}{}_k$ to maintain numerical stability \cite{cordero2012gravitational,cordero2012partially}.
 To fulfill the constraint in equation (\ref{eq:FCF_conformal_g}), the trace part of $h^{ij}$ was calculated by the following iteration procedure:
 \begin{Step}
@@ -750,7 +750,7 @@ while solving the elliptic sector in XCFC scheme.
 \label{section1.5.3}
 In \texttt{Gmunu}, the fully-constrained scheme is solved in a slightly different approach.
 Instead of solving \cref{eq:FCF_h,eq:FCF_A,eq:FCF_w},
-we omit the axuiliary variable $w^{ij}{}_k$ in order to avoid solving the gauge condition of $w^{ij}{}_k$ \ref{eq:FCF_conformal_w} and evolve the following hyperbolic equations for $\left(h^{ij}, A^{ij} \right)$
+we omit the auxiliary variable $w^{ij}{}_k$ in order to avoid solving the gauge condition of $w^{ij}{}_k$ \ref{eq:FCF_conformal_w} and evolve the following hyperbolic equations for $\left(h^{ij}, A^{ij} \right)$
 \begin{flalign}
     &\partial_t h^{ij} = 2 \alpha \psi^{-6} \hat{A}^{ij} + \beta^k \mathcal{D}_k h^{ij}
     - \tilde{\gamma}^{ik} \mathcal{D}_k \beta^j - \tilde{\gamma}^{kj} \mathcal{D}_k \beta^i
@@ -777,7 +777,7 @@ we omit the axuiliary variable $w^{ij}{}_k$ in order to avoid solving the gauge 
 directly without performing TT composition.
 Note that although the hyperbolic system is \textit{unconditionally unstable} if second-order explicit \textit{Runge-Kutta} (RK) method used,
 it has shown to be numerically stable using fourth-order explicit RK method \cite{cordero2012partially,shibata2015numerical}.
-In \texttt{Gmunu}, the hyperbolic sector in FCF scheme is evolving simulataneously with the hydrodynamical system using 
+In \texttt{Gmunu}, the hyperbolic sector in FCF scheme is evolving simultaneously with the hydrodynamical system using 
 fourth-order \textit{strong stability-preserving Runge-Kutta} (ssprk) methods.
 For spatial derivative, fourth-order upwind finite difference is used for the advection terms \cite{shibata2015numerical}
 (i.e. $\mathcal{D}_k h^{ij}$ in \cref{eq:FCF_h_2} and $\mathcal{D}_k \hat{A}^{ij}$ in \cref{eq:FCF_A_2}),
@@ -831,7 +831,7 @@ In \texttt{Gmunu}, we impose the following boundary conditions for the metric va
     &\left.\frac{\partial X^i}{\partial r}\right|_{r=r_{max}} &= -\frac{X^i}{r}, 
     &\left.\frac{\partial W^i}{\partial r}\right|_{r=r_{max}} &= -\frac{W^i}{r}.
 \end{align}
-We assume that asymtotically $h^{ij}$ satisfies the linearized quadrupole wave equation \cite{teukolsky1982linearized}
+We assume that asymptotically $h^{ij}$ satisfies the linearized quadruple wave equation \cite{teukolsky1982linearized}
 \begin{align}
     &\frac{\partial h^{rr}}{\partial t} + \frac{\partial h^{rr}}{\partial r} + \frac{3 h^{rr}}{r} = 0, \\
     &\frac{\partial h^{r\theta}}{\partial t} + \frac{\partial h^{r\theta}}{\partial r} + \frac{2 h^{r\theta}}{r} = 0, \\

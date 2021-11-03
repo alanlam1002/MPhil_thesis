@@ -173,7 +173,7 @@ The implementation details are included here:
     \begin{align}
         z_- &\coloneqq \frac{k/2}{\sqrt{1-k^2/4}}, & z_+ &\coloneqq \frac{k}{\sqrt{1-k^2}}.
     \end{align}
-    \item In the inverval $\left[z_-, z_+ \right]$, we solve
+    \item In the interval $\left[z_-, z_+ \right]$, we solve
     \begin{align}\label{eq:cons2prim_root}
         f(z) = z - \frac{r}{\hat{h}(z)},
     \end{align}
@@ -192,7 +192,7 @@ The implementation details are included here:
     \end{align}
     Equation (\ref{eq:cons2prim_root}) is solved using Illinois algorithm in \texttt{Gmunu}.
     Note that during the iterations, we enforce the density $\rho$ and the specific energy $\epsilon$ fail into the validity region of the EOS,
-    i.e., we evalue the updated $\rho$ and $\epsilon$ with 
+    i.e., we evaluate the updated $\rho$ and $\epsilon$ with 
     $\hat{\rho}(z) = \max\left(\min\left(\rho_\max{},\hat{\rho}\right),\rho_\min{}\right)$ and
     $\hat{\epsilon}(z) = \max\left(\min\left(\epsilon_\max{},\hat{\epsilon}\right),\epsilon_\min{}\right)$.
     \item With the root $z_0$ of \cref{eq:cons2prim_root},
@@ -222,7 +222,7 @@ Therefore, the "\textit{Valencia}" formulation in equation (\ref{eq:valencia}) c
 \begin{align}
     \partial_t \mathbf{q} + \hat{\nabla}_i \mathbf{f}^i = \mathbf{s},
 \end{align}
-where $\hat{\nabla}_i$ is the corvariant derivatives sociated with the time-independent reference metric $\hat{\gamma}_{ij}$,
+where $\hat{\nabla}_i$ is the corvariant derivatives associated with the time-independent reference metric $\hat{\gamma}_{ij}$,
 $\left(\mathbf{q},\mathbf{f}^i,\mathbf{s}\right)$ are the $\textit{conformally rescaled}$ conserved variables,
 fluxes and source terms respectively.\\
 Comparing to the "\textit{Valencia}" formulation,
@@ -236,7 +236,7 @@ where $\mathbf{s}_{geom}$ are the \textit{geometrical} source terms
 which contain the 3-Christoffel symbols $\hat{\Gamma}^i{}_{jk}$ associated with the reference metric $\hat{\gamma}_{ij}$. \\
 Note that the momentum conservation in this expression satisfy to \textit{machine precision} rather than to the level of truncation error 
 due to the fact that the geometrical source terms $\mathbf{s}_{geom}$ are identically vanishing 
-for the components associated with ignorable coordinates in the metric.
+for the components associated with negligible coordinates in the metric.
 
 \subsection{General relativistic hydrodynamics (GRHD) equations}
 \label{section2.2.1}

@@ -40,7 +40,7 @@ The analytic solution is given by
     \end{cases}
 \end{align}
 We solve the Poisson equation (\ref{eq:poisson_eq}) 
-in 1D spherical, 2D cylindrical and 3D Cartesian coodinates
+in 1D spherical, 2D cylindrical and 3D Cartesian coordinates
 with 2nd order and 4th order central finite difference respectively.
 The computational domain and the discretization are set to be
 $0\leq r \leq 10$ and $[N]$ for spherical coordinate,
@@ -52,7 +52,7 @@ The boundary conditions are set to be
     \left. \frac{d \Phi}{d r} \right|_{r=0} &= 0 && \text{(Neumann boundary condition)}, \\
     \left. \frac{d r\Phi}{dr} \right|_{r=10} &= 0 && \text{(Robin boundary condition.)}
 \end{align}
-Note that although the boundition condition should be $\Phi \rightarrow 0$ for $r \rightarrow \infty$,
+Note that although the boundary condition should be $\Phi \rightarrow 0$ for $r \rightarrow \infty$,
 in practice we can only impose the Robin boundary condition for large $r$ due to the finite computational domain.
 
 \begin{figure}
@@ -76,13 +76,13 @@ Figure \ref{fig:mg_conv} shows the convergent rate of the L1-norm of $\Phi$
 \begin{align}
     \left{||} \Phi \right{||}_1 &= \frac{1}{N}\sum^{N}_{i=1} \left| \Phi_i - \Phi^{exact}_i \right|,
 \end{align}
-where arround second-order accuracy and third-order convergence is achieved for 2nd order and 4th order central finite difference scheme in general.
+where around second-order accuracy and third-order convergence is achieved for 2nd order and 4th order central finite difference scheme in general.
 
 %********************************** %Second Section  *************************************
 \section{Teukolsky wave test}
 \label{section4.2}
-We consider the quadrupole $(l,m)=(2,0)$ mode of the vacuum solution.
-For even-parity quadrupole mode, the metric takes form \cite{teukolsky1982linearized} in spherical coordinate $(r, \theta, \phi)$
+We consider the quadruple $(l,m)=(2,0)$ mode of the vacuum solution.
+For even-parity quadruple mode, the metric takes form \cite{teukolsky1982linearized} in spherical coordinate $(r, \theta, \phi)$
 \begin{align}
     \begin{split}
     ds^2 =& - dt^2 + \left(1 + A f_{rr}\right) dr^2 + \left(2 B f_{r\theta}\right) r dr d\theta
@@ -119,7 +119,7 @@ In our test, we consider
 and perform the simulation in 2D axisymmetric cylindrical coordinate $(r,z,\phi)$ with $z$ reflection symmetry.
 The computational domain covers the region $0\leq \rho \leq 5$, $0\leq z \leq 5$
 and the discretization of the domain is set to be $[256,256]$.
-The inital profile is given by
+The initial profile is given by
 \begin{align}\label{eq:Teukolsky_wave_IC}
     \psi &= \alpha = 1, \\
     \beta^i &= 0, \\
@@ -142,7 +142,7 @@ The simulation will be performed under two configurations:
     %\end{align}
     \item Solve the hyperbolic equations only (without elliptic divergence cleaning).
     \label{TW_config_1}
-    \item Solve the hyperbolic equations togather with the elliptic sector in FCF except $\psi$, $\alpha$ and $\beta$ (with elliptic divergence cleaning).
+    \item Solve the hyperbolic equations together with the elliptic sector in FCF except $\psi$, $\alpha$ and $\beta$ (with elliptic divergence cleaning).
     \label{TW_config_2}
 \end{enumerate}
 In the tests, we choose $\mathcal{A}'=10^{-4}$ and $\lambda=1$.
@@ -257,7 +257,7 @@ The vertical lines represent the known and well-tested eigenmode frequencies \ci
 \label{fig:GW_h_BU0}
 \end{figure}
 Figure \ref{fig:GW_h_BU0} shows the extracted gravitational wave signal $h_{+}$ from "BU0".
-Note that since the BU0 is a shperically symmetric star and it is simulated without any initial perturbation,
+Note that since the BU0 is a spherically symmetric star and it is simulated without any initial perturbation,
 only $F$ mode can be extracted which its value agrees with \cite{dimmelmeier2006non}.
 
 \subsection{Rapidly rotating neutron star}
@@ -271,7 +271,7 @@ and again we extracted $h_{+}$ at $(r_{ext}, z_{ext}) = (40, 0)$.\\
 \centering
   \includegraphics[width=\linewidth]{GW_combine_h_BU8.pdf}
 \caption{(upper panel) $h_{+}$ extracted at $(r_{ext}, z_{ext}) = (40, 0)$ from the simulations of oscillating neutron star "BU8".
-(lower panel) The power spectral density of $h_{+}$ calculated from $t=2.5ms$ due to the spurios oscillation at the beginning.
+(lower panel) The power spectral density of $h_{+}$ calculated from $t=2.5ms$ due to the spurious oscillation at the beginning.
 The vertical lines represent the known and well-tested eigenmode frequencies \cite{dimmelmeier2006non}}
 \label{fig:GW_h_BU8}
 \end{figure}

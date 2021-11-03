@@ -5,11 +5,11 @@
 
 \section{The elliptic equations in constrained scheme}
 We use orthonormal-basis for the vector fields and tensor fields in the elliptic equations in section \ref{section_XCFC} and \ref{section1.5.3}.
-The expression and discretization of the equations in cylindrical and spherical coordinate is non-trival under orthonormal-basis.
+The expression and discretization of the equations in cylindrical and spherical coordinate is non-trivial under orthonormal-basis.
 We list the relations in various geometry in the following.
 
 \subsection{Cylindrical coordinate}
-The scalar laplacian in cylindrical coordinate is given by
+The scalar Laplacian in cylindrical coordinate is given by
 \begin{align}
     \mathcal{D}^2 u &= \frac{1}{r}\frac{\partial }{\partial r} \left( r \frac{\partial u}{\partial r}\right)
             + \frac{1}{r^2} \frac{\partial^2 u}{\partial \phi^2} 
@@ -29,7 +29,7 @@ For a generic vector $\mathbf{X} = \left(X^r, X^\phi, X^z \right)$, its divergen
     \mathcal{D}_i X^i &= \frac{1}{r}\frac{\partial \left(r X^r\right)}{\partial r} + \frac{1}{r}\frac{\partial X^\phi}{\partial \phi}
             + \frac{\partial X^z}{\partial z},
 \end{align}
-and the vector laplacian is
+and the vector Laplacian is
 \begin{align}
     \left(\Delta_L \mathbf{X}\right)^r &= \mathcal{D}^2 X^r - \frac{2}{r^2}\frac{\partial X^\phi}{\partial \phi}
             + \frac{1}{3}\frac{\partial}{\partial r}\left( \mathcal{D}_i X^i \right), \\
@@ -45,7 +45,7 @@ The generalized Dirac gauge conditions in cylindrical coordinate is given by
 \end{align}
 
 \subsection{Spherical coordinate}
-The scalar laplacian in spherical coordinate is given by
+The scalar Laplacian in spherical coordinate is given by
 \begin{align}
     \mathcal{D}^2 u &= \frac{1}{r^2} \frac{\partial}{\partial r} \left( r^2 \frac{\partial u}{\partial r} \right)
         + \frac{1}{r^2 \sin{\theta}} \frac{\partial}{\partial \theta} \left( \sin{\theta} \frac{\partial u}{\partial \theta} \right) 
@@ -67,7 +67,7 @@ For a generic vector $\mathbf{X} = \left(X^r, X^\theta, X^\phi \right)$, its div
             + \frac{1}{r\sin\theta}\frac{\partial \left(\sin\theta X^\theta\right)}{\partial \theta}
             + \frac{1}{r\sin\theta}\frac{\partial X^\phi}{\partial \phi}
 \end{align}
-and the vector laplacian is
+and the vector Laplacian is
 \begin{align}
     \left(\Delta_L \mathbf{X}\right)^r &= \mathcal{D}^2 X^r 
             - \frac{2}{r^2}\left[ X^r + \frac{1}{\sin\theta}\frac{\partial \left(\sin\theta X^\theta\right)}{\partial \theta} 

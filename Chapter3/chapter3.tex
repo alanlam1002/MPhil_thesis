@@ -28,7 +28,7 @@ Note that the HRSC methods can be distinguished in \textit{finite-difference (co
 which evolves the \textit{pointwise values} of the solution,
 and \textit{finit-volume (conservative)} method which evolves the \textit{cell average} of the solution.
 Although the accuracy of finite-difference method can be extended to higher order easily,
-it is extremely diffcult to extend the method to general non-uniform grids \cite{merriman2003understanding}.
+it is extremely difficult to extend the method to general non-uniform grids \cite{merriman2003understanding}.
 On the other hand,
 the finite-volume methods are natural to conservative scheme as well as non-structured grid,
 but the multidimensional reconstruction algorithm is complicated and computational expensive especially for higher-order method.\\
@@ -36,7 +36,7 @@ In this section,
 we will first discuss the finite-volume conservative methods,
 and then focus on the \textit{Godunov methods} which guarantee the upwind property of conservative non-linear equations \cite{van1999introduction}.
 
-\subsection{Finite-volume conservative methods}
+\subsection{Finite-volume conservative methods}\label{section3.1.1}
 Given the conservative equation in orthogonal coordinate system $(x^1, x^2, x^3)$ in form
 \begin{align}\label{eq:finite_vol_cons}
     \partial_t \mathbf{q} + \frac{1}{\sqrt{\hat{\gamma}}}\hat{\nabla}_i \left( \sqrt{\hat{\gamma}} \mathbf{f}^i \right)
@@ -52,11 +52,11 @@ The cell bounds are given by
 \begin{align}
     (x^1_{i-1/2}, &x^1_{i+1/2}), & (x^2_{j-1/2}, &x^2_{j+1/2}), & (x^3_{k-1/2}, &x^3_{k+1/2}).
 \end{align}
-Thus, the mesh cell spacings are 
+Thus, the mesh cell spacing is
 \begin{align}
     \Delta x^1_i &= x^1_{i+1/2} - x^1_{i-1/2}, & \Delta x^2_j &= x^2_{j+1/2}- x^2_{j-1/2}, & \Delta x^3_k &= x^3_{k+1/2} - x^3_{k-1/2},
 \end{align}
-and the cell centres are
+and the cell centers are
 \begin{align}
     x^1_i &= \frac{1}{2} \left(x^1_{i+1/2} + x^1_{i-1/2}\right), & x^2_j &= \frac{1}{2} \left( x^2_{j+1/2}- x^2_{j-1/2} \right), 
     & x^3_k &= \frac{1}{2} \left( x^3_{k+1/2} - x^3_{k-1/2} \right).
@@ -92,7 +92,7 @@ Since the reference metric $\hat{\gamma}_{ij}$ is time-independent,
 the cell volume, cell surface and the volume-averaged 3-Christoffel symbols
 $\left\langle \hat{\Gamma}^i{}_{jk} \right\rangle$ in the geometrical source term
 are determined once the coordinate is chosen.
-We have included these quantities in Appendix.
+We have included these quantities in Appendix \ref{A2}.
 
 \subsection{Godunov methods}
 \label{section3.1.2}
@@ -253,12 +253,12 @@ $RP\left(\left\langle \mathbf{q} \right\rangle_{L}, \left\langle \mathbf{q} \rig
 at the cell interface $x_{j+1/2}$ involving the left state $\left\langle \mathbf{q} \right\rangle_{L}$
 and right state $\left\langle \mathbf{q} \right\rangle_{R}$.
 Although the exact solution of the Riemann problem is available in relativistic hydrodynamics,
-it is computational costy in multidimensional case.
+it is computational costly in multidimensional case.
 Therefore, an \textit{approximate Riemann solver} is used in \texttt{Gmunu}
 which is computationally less expensive and yet very accurate in general.
 Approximation Riemann solver can be divided into two types
 \begin{enumerate}[label=(\roman*)]
-    \item \textit{Complete Riemann solver} which contains all the charateristic fields of the exact solution, and
+    \item \textit{Complete Riemann solver} which contains all the characteristic fields of the exact solution, and
     \item \textit{Incomplete Riemann solver} which only contains a subset of them.
 \end{enumerate}
 In this section, we discuss some commonly used incomplete Riemann solver in \texttt{Gmunu}.
@@ -324,7 +324,7 @@ However, it is not a practical time integration scheme because
     \item Large amount of data for the previous time steps is need to be stored in higher-order scheme.
     \item Stability is not guaranteed.
 \end{enumerate}
-In constract, in the Runge-Kutta (RK) methods,
+In contrast, in the Runge-Kutta (RK) methods,
 we do not need to store large amount of data, 
 and it enables stable time integration for higher-order-accurate scheme.
 Consider a system of equations in form
@@ -367,12 +367,12 @@ Therefore, the time steps for the time integration can be obtained by
     \Delta t = c_{CFL} \min_k \left(\frac{\Delta x}{|\lambda_k|} \right),
 \end{align}
 where $c_{CFL}\leq 1$ is a dimensionless constant
-and $\lambda_k$ is the charateristic speed of the evolution system.
+and $\lambda_k$ is the characteristic speed of the evolution system.
 
 %********************************** %Third Section  *************************************
 \section{Atmosphere treatment}
 One of the challenge in astrophysical simulation is handle the interface between fluid and vacuum
-where the density $\rho$, pressurece $p$ and velocities $v^i$ vanish.
+where the density $\rho$, pressure $p$ and velocities $v^i$ vanish.
 In this section, we outline the positivity preserving limiter \cite{hu2013positivity,cheong2020gmunu_amr} used in $\texttt{Gmunu}$
 for atmosphere handling.
 
@@ -469,7 +469,7 @@ In the multigrid method, the key ingredients are
 For more comprehensive discussion of multigrid method,
 we refer the readers to \cite{briggs2000multigrid,trottenberg2000multigrid,young2014iterative,brandt2011multigrid}.
 
-\subsection{Cell-centred discretization and operator} %Section - 3.1.2
+\subsection{Cell-centered discretization and operator} %Section - 3.1.2
 \label{section3.1.2}
 Given a non-linear elliptic equation 
 \begin{align}
@@ -481,7 +481,7 @@ it can be discretized as
     \mathcal{L}_h \left(u_h \right) = f_h,
 \end{align}
 where $\mathcal{L}_h$ is the discretized operator with resolution $h$,
-$u_h$ and $f_h$ are solution and source term defined at the cell-centres.
+$u_h$ and $f_h$ are solution and source term defined at the cell-centers.
 
 \subsubsection{Laplacian operator}
 The Laplacian operator is one of the elliptic operators that commonly used in \texttt{Gmunu},
@@ -509,7 +509,7 @@ which has a similar form as the following
 \end{align}
 While the Laplacian operator in equation (\ref{eq:convection_diff}) is discretized using standard 5/7-point approximation,
 the convection term needs to be discretized using upwind method \cite{trottenberg2000multigrid}.
-In \texttt{Gmunu}, we adopts second-order accuracy lopsided spatial finite differencing as
+In \texttt{Gmunu}, we adopts second-order accuracy lopsided spatial finite difference as
 \begin{align}
     \left(\frac{\partial u}{\partial x} \right)_i &= \frac{1}{2 \Delta x}
     \begin{cases}
